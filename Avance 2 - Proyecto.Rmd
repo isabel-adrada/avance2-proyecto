@@ -1,0 +1,54 @@
+---
+title: "Avance 2 - Proyecto"
+author: "Isabel Adrada, Juan Diego de la Peña, Federico Terán, Samuel Troncoso"
+date: "2025-04-16"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(summarytools)
+library(pander)
+library(readr)
+AI_index_db <- read_csv("AI_index_db.csv")
+
+datos <- data.frame(AI_index_db)
+View(datos)
+
+select <- data.frame(datos $Commercial, datos $Talent, datos $Research, datos $Income.group, datos $Region, datos $Total.score)
+
+```
+
+## Introducción
+
+El objetivo general de este estudio es identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo.
+
+Objetivos específicos
+
+-   Determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce.
+
+-   Determinar la influencia de los factores relacionados a la implementación mediante el índice Talent.
+
+-   Determinar la influencia de los factores relacionados a la innovación mediante el índice Research.
+
+-   Determinar la influencia de los factores relacionados con los ingresos del país mediante la categorización de income Group.
+
+```{r cars}
+resumen <- descr(select)
+pander(resumen,caption = "Indicadores")
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+```{r, echo=FALSE}
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
