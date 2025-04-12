@@ -1,37 +1,40 @@
 ---
-title: "Avance 2 - Proyecto"
+title:  "Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial"
 author: "Isabel Adrada, Juan Diego de la Peña, Federico Terán, Samuel Troncoso"
 date: "2025-04-16"
-output: pdf_document
+output:
+  pdf_document:
+    latex_engine: xelatex
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(summarytools)
 library(pander)
 library(readr)
 AI_index_db <- read_csv("AI_index_db.csv")
 
 datos <- data.frame(AI_index_db)
-View(datos)
 
 select <- data.frame(datos $Commercial, datos $Talent, datos $Research, datos $Income.group, datos $Region, datos $Total.score)
 
 ```
 
+## Resumen
+
+resumen
+
+## Key words
+
+key words
+
 ## Introducción
 
-El objetivo general de este estudio es identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo.
+Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar los países y regiones con mayor potencial de adopción e implementacio ́n de estas herramientas. Este análisis es crucial para la toma de decisiones estratégicas, la definición de mercados objetivo y la planificación de la expansión geográfica. El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál se buscará determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, la influencia de los factores relacionados a la implementación mediante el índice Talent, la influencia de los factores relacionados a la innovación mediante el índice Research y la influencia de los factores relacionados con la ubicación geográfica del país mediante la categorización por Región.
 
-Objetivos específicos
+## Métodos
 
--   Determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce.
-
--   Determinar la influencia de los factores relacionados a la implementación mediante el índice Talent.
-
--   Determinar la influencia de los factores relacionados a la innovación mediante el índice Research.
-
--   Determinar la influencia de los factores relacionados con los ingresos del país mediante la categorización de income Group.
+## Resultados
 
 ```{r cars}
 resumen <- descr(select)
@@ -39,7 +42,13 @@ pander(resumen,caption = "Indicadores")
 
 ```
 
-## Including Plots
+### Índice Commerce
+
+### Índice Talent
+
+### Índice Research
+
+### Región
 
 You can also embed plots, for example:
 
@@ -51,4 +60,16 @@ plot(pressure)
 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Análisis de resultados
+
+### Índice Commerce
+
+### Índice Talent
+
+### Índice Research
+
+### Región
+
+## Conclusiones
+
+## Referencias
