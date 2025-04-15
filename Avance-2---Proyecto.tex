@@ -137,43 +137,55 @@ Posteriormente, con el propósito de indentificar las posibles variables con un 
 
 
 
-
 \begin{center}
 \includegraphics[width=\linewidth]{figura1.png}
 \end{center}
 Figura 1. Correlación lineal de Pearson índices.
 
-\section{Resultados}
-A continuación en la Tabla 2 se presentan las medidas de tendencia central, posición y disperción de las variables cuantitativas Índice Commerce, Research y Talent.
+Posteriormente, se realizó ... 
+... para cada uno de los índices con el fin de ...
 
+\section{Resultados}
+En la Tabla 2 se presentan las medidas de tendencia central, posición, disperción, covarianza y correlación lineal de Pearson con respecto al Total Score (AI Global Index) de las variables cuantitativas Índice Commerce, Research y Talent. 
+
+Todos los índices tienen un mínimo de 0 y un máximo de 100, por lo tanto, todos los rangos son también de 100, lo cuál no brinda mucha información acerca de la distribución de los datos, sin embargo facilita la comparación entre las estadísticas de las diferentes variables. El índice Commerce tiene la media más baja con 6.172, Talent y Research una media similiar al rededor de 16 y Total Score la mayor media con 23.915, sin embargo en todos los casos los datos son altamente heterogéneos, considerando que el coeficiente de variación de todas las variables es mayor al 50%, e incluso, para el caso de Commerce este supera el 100%. Para los índices con menos de tres modas se identifica que estas están alejadas de la media, y lo mismo sucede con la mediana, lo cuál es un indicador de que los índices no se distribuyen de normalmente. 
+
+En el caso de la covarianza, esta es positiva para todas las variables, lo cuál plantea la posibilidad de que estas tengan una relación lineal directa con el índice Total Score. Esto es confirmado con el coeficiente de correlación de Pearson, donde un valor superior a 0.8 indica hay una relación muy significativa, lo cuál es cierto para todos los casos, donde la variable Research presenta el indicador más alto con un coeficiente de 0.946.
+
+\end{multicols}
 
 \renewcommand{\arraystretch}{1.5}
-\begin{footnotesize}\begin{table}
-
-\caption{\label{tab:resultados}Estadísticas descriptivas por índice}
-\centering
-\begin{tabular}[t]{lrrrr}
+\begin{footnotesize}
+\begin{longtable}[t]{lllll}
+\caption{\label{tab:resultados}Estadísticas descriptivas por variable}\\
 \toprule
-  & Commercial & Talent & Research & Total\_Score\\
+Estadísticas & Índice\_Commerce & Índice\_Talent & Índice\_Research & Índice\_Total\_Score\\
 \midrule
-Media & 6.17 & 16.80 & 16.61 & 23.91\\
-dev.std & 14.03 & 15.21 & 17.41 & 15.12\\
-Rango & 100.00 & 100.00 & 100.00 & 100.00\\
-Min & 0.00 & 0.00 & 0.00 & 0.00\\
-Q1 & 0.70 & 7.36 & 3.03 & 14.81\\
+Media & 6.172 & 16.803 & 16.61 & 23.915\\
+Moda & 0.31 & > 3 modas & 32.63 & > 3 modas\\
+Desviación estándar & 14.03 & 15.215 & 17.414 & 15.124\\
+Mínimo & 0 & 0 & 0 & 0\\
+Q1 & 0.698 & 7.365 & 3.033 & 14.805\\
 \addlinespace
-Mediana & 2.58 & 13.45 & 12.93 & 23.22\\
-Q3 & 5.31 & 24.57 & 25.41 & 30.49\\
-Max & 100.00 & 100.00 & 100.00 & 100.00\\
-RIQ & 4.61 & 17.20 & 22.38 & 15.68\\
-CV & 227.31 & 90.55 & 104.84 & 63.24\\
+Mediana & 2.585 & 13.445 & 12.93 & 23.22\\
+Q3 & 5.308 & 24.567 & 25.413 & 30.488\\
+Máximo & 100 & 100 & 100 & 100\\
+Rango & 100 & 100 & 100 & 100\\
+IQR & 4.61 & 17.202 & 22.38 & 15.683\\
+\addlinespace
+CV & 227.317 & 90.549 & 104.84 & 63.241\\
+Covarianza - Total Score & 182.046 & 198.343 & 249.108 & NA\\
+Correlación lineal - Total Score & 0.858 & 0.862 & 0.946 & NA\\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{longtable}
 
 \end{footnotesize}\renewcommand{\arraystretch}{1}
 
-tabla de frecuencia univariada
+\begin{multicols}{2}
+
+Para otener una perspectiva más amplia de la distribución de los datos, en la Tabla 3 se presentan las frecuencias univariadas de las variables cuantitativas Índice Commerce, Research y Talent. 
+
+...
 
 \subsection{Índice Commerce}
 tabla de frecuencia bivariada (indice vs total socore)
@@ -182,17 +194,14 @@ histograma
 ojiva
 diagrama de cajas y bigotes
 
-
-\subsection{Índice Talent}
+\subsection{Índice Research}
 tabla de frecuencia bivariada (indice vs total socore)
-tabla con covarianza y coeficiente de correlacion de pearson
 histograma
 ojiva
 diagrama de cajas y bigotes
 
-\subsection{Índice Research}
+\subsection{Índice Talent}
 tabla de frecuencia bivariada (indice vs total socore)
-tabla con covarianza y coeficiente de correlacion de pearson
 histograma
 ojiva
 diagrama de cajas y bigotes
@@ -206,6 +215,7 @@ diagrama de torta
 
 \section{Conclusiones}
 \section{Referencias}
+
 \end{multicols}
 
 \end{document}
