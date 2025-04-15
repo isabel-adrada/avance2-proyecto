@@ -1,75 +1,210 @@
 ---
-title:  "Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial"
-author: "Isabel Adrada, Juan Diego de la Peña, Federico Terán, Samuel Troncoso"
-date: "2025-04-16"
+title: "Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial"
+author: "Adrada Isabel, De la Peña Juan, Terán Federico, Troncoso Samuel"
 output:
   pdf_document:
     latex_engine: xelatex
+    keep_tex: true
+    extra_dependencies: ["booktabs", "array", "float", "longtable"]
+header-includes:
+  - \usepackage{multicol}
+  - \usepackage{longtable}
+  - \setlength{\columnsep}{1cm}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+
+#Instalación de las libreriás requeridas
 library(summarytools)
 library(pander)
+library(ggplot2)
+library(dplyr)
+library(GGally)
+library(xtable)
 library(readr)
+```
+
+\begin{multicols}{2}
+
+\section{Resumen}
+...
+...
+
+\section{Key words}
+...
+...
+
+\section{Introducción}
+Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar los países y regiones con mayor potencial de adopción e implementacio ́n de estas herramientas. Este análisis es crucial para la toma de decisiones estratégicas, la definición de mercados objetivo y la planificación de la expansión geográfica. El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál se buscará determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, la influencia de los factores relacionados a la innovación mediante el índice Research, la influencia de los factores relacionados a la implementación mediante el índice Talent y la influencia de los factores relacionados con la ubicación geográfica del país mediante la categorización por Región.
+
+
+```{r dataframes, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+#Organización en dataframes
+
 AI_index_db <- read_csv("AI_index_db.csv")
 
 datos <- data.frame(AI_index_db)
 
+numFrame <-data.frame(datos $Talent, datos $Infrastructure, datos $Operating.Environment, datos $Research, datos $Development, datos $Government.Strategy, datos $Commercial, datos $Total.score)
+
 select <- data.frame(datos $Commercial, datos $Talent, datos $Research, datos $Income.group, datos $Region, datos $Total.score)
-
 ```
 
-## Resumen
+\section{Métodos}
+Para la definición de las variables a estudiar a partir de la base de datos AI Global Index trabajada en el presente estudio, se relalizó una exploración preliminar de los datos en la Tabla 1, donde se nombran las variables, se clasifican como cualitativas o cuantitativas, se categorizan como continuas o discretas, o nominal u ordinal según el caso y se realiza una descripción de las mismas.
 
-resumen
+\end{multicols}
 
-## Key words
+```{r tabla1, echo=FALSE, results='asis'}
 
-key words
+#Generación de dataframe de los datos de las variables
+variables <- data.frame(
+  Variable = c("Country", "Talent", "Infraestructure", "Operating Enviroment", "Research", "Development", "Government Strategy", "Commercial", "Total Score", "Region", "Cluster", "Income Group", "Political Regime"),
+  Clasificacion = c("Cualitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cualitativa", "Cualitativa", "Cualitativa", "Cualitativa"),
+  Categorizacion = c("Nominal", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Nominal", "Nominal", "Ordinal", "Nominal"),
+  Descripcion = c(
+    "Nombre del país donde se evalúa el AI Global Index.",
+    "Indicador de disponibilidad de profesionales calificados para la provisión de soluciones de inteligencia artificial.",
+    "Indicador de fiabilidad y la escala de la infraestructura de acceso, desde la electricidad e Internet, hasta las capacidades de superintarmética.",
+    "Indicador del contexto regulatorio y la opinión pública en torno a la inteligencia artificial.",
+    "Indicador del alcance de la investigación especializada y los investigadores; investigando la cantidad de publicaciones y citas en revistas académicas creíbles.",
+    "Indicador de desarrollo de plataformas y algoritmos fundamentales en los que se basan los proyectos innovadores de inteligencia artificial.",
+    "Indicador de la profundidad del compromiso del gobierno nacional con la inteligencia artificial; investigando los compromisos de gasto y las estrategias nacionales.",
+    "Indicador del nivel de actividad de puesta en marcha, inversión e iniciativas comerciales basadas en la inteligencia artificial.",
+    "Indicador AI Global Index que compara a las naciones en su nivel de inversión, innovación e implementación de la inteligencia artificial.",
+    "Agrupacion de países según su localización geográfica en regiones.",
+    "Agrupación de países según su historia de incursión en el desarrollo de tecnología relacionada con la Inteligencia Artificial.",
+    "Nivel de ingresos presentado en el país.",
+    "Tipo de régimen político presentado en el país."
+  )
+)
 
-## Introducción
-
-Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar los países y regiones con mayor potencial de adopción e implementacio ́n de estas herramientas. Este análisis es crucial para la toma de decisiones estratégicas, la definición de mercados objetivo y la planificación de la expansión geográfica. El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál se buscará determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, la influencia de los factores relacionados a la implementación mediante el índice Talent, la influencia de los factores relacionados a la innovación mediante el índice Research y la influencia de los factores relacionados con la ubicación geográfica del país mediante la categorización por Región.
-
-## Métodos
-
-## Resultados
-
-```{r cars}
-resumen <- descr(select)
-pander(resumen,caption = "Indicadores")
-
+# Ajuste del diseño de la tabla
+cat("\\renewcommand{\\arraystretch}{1.5}\n")
+cat("\\begin{footnotesize}")
+knitr::kable(variables, caption = "Variables y su clasificación", 
+             format = "latex", 
+             booktabs = TRUE, 
+             longtable = TRUE,
+             col.names = c("Variable", "Clasificación", "Categorización", "Descripción"),
+             align = c("l", "l", "l", "p{8cm}"))
+cat("\\end{footnotesize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
 ```
 
-### Índice Commerce
+\begin{multicols}{2}
 
-### Índice Talent
 
-### Índice Research
+Posteriormente, con el propósito de indentificar las posibles variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, se elaboró la figura 1, la cuál presenta una comparación de las distribuciones de las variables y sus respectivos coeficientes de correlación lineal de Pearson con el fin de reconocer los índices que presentan un mayor valor respecto al AI Global Index (Total Score), los cuáles fueron Commerce para el nivel de inversión, Research para la innovación y Talent para la implemetación. 
 
-### Región
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r figura1, echo=FALSE}
+figura1 <- ggpairs(numFrame, lower = list(continuous = "smooth"))
+ggsave("figura1.png", plot = figura1, width = 7, height = 7, dpi = 300)
 ```
 
-```{r, echo=FALSE}
+\begin{center}
+\includegraphics[width=\linewidth]{figura1.png}
+\end{center}
+Figura 1. Correlación lineal de Pearson índices.
 
+\section{Resultados}
+A continuación en la Tabla 2 se presentan las medidas de tendencia central, posición y disperción de las variables cuantitativas Índice Commerce, Research y Talent.
+
+
+```{r resultados, echo=FALSE, results='asis'}
+
+numeric_data <- data.frame(
+  Commercial = datos$Commercial,
+  Talent = datos$Talent,
+  Research = datos$Research,
+  Total_Score = datos$Total.score
+)
+
+custom_stats <- function(x) {
+  x <- x[!is.na(x)]
+  n <- length(x)
+  mean_val <- mean(x)
+  std_dev <- sd(x)
+  min_val <- min(x)
+  max_val <- max(x)
+  range_val <- max_val - min_val
+  q1 <- quantile(x, 0.25)
+  median_val <- median(x)
+  q3 <- quantile(x, 0.75)
+  iqr <- q3 - q1
+  cv <- (std_dev / mean_val) * 100  
+  
+  stats_df <- data.frame(
+    Statistic = c("Media", "dev.std", "Rango", "Min", "Q1", "Mediana", "Q3", "Max", "RIQ", "CV"),
+    Value = c(mean_val, std_dev, range_val, min_val, q1, median_val, q3, max_val, iqr, cv)
+  )
+  
+  return(stats_df)
+}
+
+commercial_stats <- custom_stats(numeric_data$Commercial)
+talent_stats <- custom_stats(numeric_data$Talent)
+research_stats <- custom_stats(numeric_data$Research)
+total_score_stats <- custom_stats(numeric_data$Total_Score)
+
+stats_df <- data.frame(
+  Statistic = commercial_stats$Statistic,
+  Commercial = commercial_stats$Value,
+  Talent = talent_stats$Value,
+  Research = research_stats$Value,
+  Total_Score = total_score_stats$Value
+)
+
+# Ajustar el formato
+rownames(stats_df) <- stats_df$Statistic
+stats_df$Statistic <- NULL
+
+cat("\\renewcommand{\\arraystretch}{1.5}\n")
+cat("\\begin{footnotesize}")
+knitr::kable(stats_df, caption = "Estadísticas descriptivas por índice", 
+             format = "latex", 
+             booktabs = TRUE,
+             digits = 2)
+cat("\\end{footnotesize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
 ```
 
-## Análisis de resultados
+tabla de frecuencia univariada
 
-### Índice Commerce
+\subsection{Índice Commerce}
+tabla de frecuencia bivariada (indice vs total socore)
+tabla con covarianza y coeficiente de correlacion de pearson
+histograma
+ojiva
+diagrama de cajas y bigotes
 
-### Índice Talent
 
-### Índice Research
+\subsection{Índice Talent}
+tabla de frecuencia bivariada (indice vs total socore)
+tabla con covarianza y coeficiente de correlacion de pearson
+histograma
+ojiva
+diagrama de cajas y bigotes
 
-### Región
+\subsection{Índice Research}
+tabla de frecuencia bivariada (indice vs total socore)
+tabla con covarianza y coeficiente de correlacion de pearson
+histograma
+ojiva
+diagrama de cajas y bigotes
 
-## Conclusiones
+\subsection{Región}
+tabla de frecuencia univariada
+tabla de frecuencia bivariada (region y total score)
+diagrama de torta
 
-## Referencias
+\section{Análisis de resultados}
+
+\section{Conclusiones}
+\section{Referencias}
+\end{multicols}
