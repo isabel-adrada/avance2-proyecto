@@ -69,7 +69,7 @@ Para la definición de las variables a estudiar a partir de la base de datos AI 
 
 #Generación de dataframe de los datos de las variables
 variables <- data.frame(
-  Variable = c("Country", "Talent", "Infraestructure", "Operating Enviroment", "Research", "Development", "Government Strategy", "Commercial", "Total Score", "Region", "Cluster", "Income Group", "Political Regime"),
+  Variable = c("Country", "Talent", "Infraestructure", "Operating Enviroment", "Research", "Development", "Government Strategy", "Commerce", "Total Score", "Region", "Cluster", "Income Group", "Political Regime"),
   Clasificacion = c("Cualitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cualitativa", "Cualitativa", "Cualitativa", "Cualitativa"),
   Categorizacion = c("Nominal", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Nominal", "Nominal", "Ordinal", "Nominal"),
   Descripcion = c(
@@ -107,7 +107,7 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 \begin{multicols}{2}
 
 
-Posteriormente, con el propósito de indentificar las posibles variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, se elaboró la figura 1, la cuál presenta una comparación de las distribuciones de las variables y sus respectivos coeficientes de correlación lineal de Pearson con el fin de reconocer los índices que presentan un mayor valor respecto al AI Global Index (Total Score), los cuáles fueron Commerce para el nivel de inversión, Research para la innovación y Talent para la implemetación. 
+Posteriormente, con el propósito de indentificar las posibles variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, se elaboró la Figura 1, la cuál presenta una comparación de las distribuciones de las variables y sus respectivos coeficientes de correlación lineal de Pearson con el fin de reconocer los índices que presentan un mayor valor respecto al AI Global Index (Total Score), los cuáles fueron Commerce para el nivel de inversión, Research para la innovación y Talent para la implemetación. 
 
 
 ```{r figura1, echo=FALSE}
@@ -128,7 +128,7 @@ Posteriormente, se realizó ...
 \section{Resultados}
 En la Tabla 2 se presentan las medidas de tendencia central y posición de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
 
-Para casi todos los casos, la medida de tendencia central moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre estos indicadores, planteando la posibilidad de una distribución de campana. Esto mismo ocurre para Europe con todos los indicadores, y en el caso del indicador Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
+Para casi todos los casos, la medida de tendencia central moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre estos indicadores, planteando la posibilidad de una distribución de campana, sin embargo esto debe ser confirmado gráficamente o mediante una prueba de simetría. Esto mismo ocurre para Europe con todos los indicadores, y en el caso del indicador Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
 
 El mínimo en todas las regiones para todos los ídices es menor a 10, excepto Total Score de Americas con un 13.27, por otro lado, el máximo entre regiones presenta discrepancias más significativas, donde el el caso de Americas el máximo es 100 para todos los índices, en Asia-Pacific todos los máximos se encuentran por encima de 40, mientras en Europe los máximos de todos los índices se ubican en 40.93 o menos, al igual que Middle East. En el caso de Africa, toos los máximos de los indicadores se encuentran por debajo de 10.
 
@@ -176,11 +176,9 @@ custom_stats_region <- function(df, var, total_score) {
   ))
 }
 
-# Obtener las regiones
 regiones <- unique(datos$Region)
 region_stats_list <- list()
 
-# Calcular las estadísticas por región
 for (i in 1:length(regiones)) {
   region <- regiones[i]
   
@@ -201,15 +199,13 @@ for (i in 1:length(regiones)) {
   region_stats_list[[i]] <- region_df
 }
 
-# Organizar las estadísticas por región
 region_stats <- bind_rows(region_stats_list)
 
-# Tabla 2: Medidas de tendencia central y posición
 tabla2 <- region_stats %>% 
   select(Region, Indice, Media, Moda, Mínimo, Q1, Mediana, Q3, Máximo) %>% 
   rename(`Región` = Region, `Índice` = Indice)
 
-# Mostrar la tabla en formato LaTeX
+#Ajuste del diseño de la tabla
 cat("\\renewcommand{\\arraystretch}{1.3}\n")
 cat("\\begin{scriptsize}")
 knitr::kable(tabla2, 
@@ -261,14 +257,15 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 ```
 
-
 \begin{multicols}{2}
-
-...
 
 \subsection{Índice Commerce}
 
-En la Tabla 4 se presentan las frecuencias bivariadas del indice Commerce y el índice Total Score, 
+En la Tabla 4 se presentan las frecuencias bivariadas del indice Commerce y el índice Total Score. En esta se puede apreciar como hay una alta concentración de los datos en la parte superior izquierda de la tabla, donde se indica que 55 de los 62 datos con un Índice Commerce entre 0 y 10 presentan un Total Score menor o igual a 40.
+
+60 de los 62 datos de los diferentes países presentan un Índice Commerce menor o igual a 30, indicando que la inversión e iniciativas comerciales de Inteligencia Artificial en el 96% de los países estudiados es baja.
+
+Hay un dato con un Índice Commerce entre 40 y 50 con un total score correspondiente en el rango de 60 y 70. El último dato presenta un Índice Commerce entre 90 y 100 y un Total Score entre 90 y 100, planteando claramente la presencia de un dato atípico por su gran lejanía de los demás datos obtenidos de los países estudiados.
 
 \end{multicols}
 
@@ -305,6 +302,7 @@ totales_columna <- colSums(tabla_df)
 tabla_df <- rbind(tabla_df, Total = totales_columna)
 tabla_df <- tibble::rownames_to_column(tabla_df, var = "A  \\   B")
 
+#Ajuste del diseño de la tabla
 cat("\\renewcommand{\\arraystretch}{1.3}\n")
 cat("\\begin{footnotesize}")
 print(
@@ -325,12 +323,12 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 El histograma presentado en la Figura 2 permite plasmar gráficamente la distribución de los datos de la variable índince Commerce. Su puede observar como en los casos de Americas, Asia-Pacific y Middle East los datos se encuentran concentrados hacia la izquierda del eje x, sin embargo presentan una asimetría positiva o sesgo a la derecha, donde la media es mayor a la mediana, indicando que posiblemente se presenten puntos atípicos hacia la derecha del eje x.
 
-En el caso de Europe, se observa que los datos se agrupan hacia la izquierda del eje x, sin embarrgo, aunque en el análisis de la Tabla 2 se teorizaba una posible distribución normal debido a la cercanía de la media, mediana y moda, no se muestra simetría en la gráfica,ya que esta muestra una distribución con mayor similitud a una exponencial.
+En el caso de Europe, se observa que los datos se agrupan hacia la izquierda del eje x, sin embargo, aunque en el análisis de la Tabla 2 se teorizaba una posible distribución normal debido a la cercanía de la media, mediana y moda, no se muestra simetría en la gráfica y se presenta una distribución con mayor similitud a una exponencial.
 
-En el caso de Africa, los datos se encuentran concentrados alrededor del 0
+En el caso de Africa, los datos se encuentran concentrados alrededor del 0, mostrando una distribución altamente compacta sin embargo el gráfico no permite confirmar la forma de distribión de los datos. 
 
 
-```{r figura2, echo=FALSE}
+```{r figura2, echo=FALSE, warning=FALSE}
 
 # Crear el histograma 
 figura2 <- ggplot(datos, aes(x = Commercial)) +
@@ -355,7 +353,14 @@ ggsave("figura2.png", plot = figura2, width = 8, height = 9, dpi = 300)
 Figura 2. Distribución del Índice Commerce agrupado por Región.
 
 
-La Ojiva en la Figura 3 presenta la distriución acumulada de los datos de manera porcental, lo cuál permite estimar los percentiles correspondientes a los diferentes puntajes del índice Commerce
+La Ojiva en la Figura 3 presenta la distriución acumulada de los datos de manera porcental, lo cuál permite estimar los percentiles correspondientes a los diferentes puntajes del índice Commerce.
+
+En el caso de Americas, al rededor del 87.5% de los datos tienen un índice Commmerce alrededor de 13 o menos, lo cuál indica una alta concentración de los datos a la izquierda del eje, sin embargo se presenta un salto abrupto en el índice que se distancia de los demás datos, indicando un posible dato atípico en el puntaje 100. Esto mismo ocurre en Middle East donde aproximadamente un 80% de los datos tienen un puntaje de alrededor de 7 o menos y se presenta salto abrupto en el índice a un puntaje alrededor de 27.
+
+Asia-Pacific y Europe presentan distribuciones similares, sin embargo en Europe los datos se ven más concentrados a la izquierda del eje. En ambos casos una mayoría cercana a 85% de los datos tienen un índice de aproximadmente 20 o menos en Asia-Pacific y 10 o menos en Europe. Posteriormente a este punto se presenta un incremento gradual en los puntajes para los datos restantes.
+
+En África cerca del 80% de los datos están concentrados en un puntaje cercano a 0, lo cuál indica que posiblemente no hay simetría en la distribución por lo cuál esta no es normal.
+
 
 ```{r figura3, echo=FALSE, warning=FALSE}
 
@@ -419,7 +424,14 @@ ggsave("figura3.png", plot = figura_ojiva, width = 8, height = 9, dpi = 300)
 Figura 3. Distribución acumulada del Índice Commerce agrupado por Región.
 
 
-El diagrama de cajas y bigotes presentado en la figura 4
+El diagrama de cajas y bigotes presentado en la Figura 4 presenta gráficamente las medidas de posición del Índice Commerce, la media e identifica los datos atípicos.
+
+En el caso de Africa se muestra una muy alta compacidad de los datos donde la media es cercana a la mediana, cuartiles 1 y 3 y los límites inferiores y superiores de los bigotes. En este caso se presenta un dato atípico que se encuentra en relativa cercanía del límite superior del bigote.
+
+En el caso de Americas se observa como el 50% de los datos son altamente compactos, los datos entre la mediana y el Q3 tienen una disperción más alta y la media se aleja en gran medida (con un valor más alto que el límite superior del bigote) de la mediana debido a la presencia de 1 dato atípico a una gran distancia del resto de los datos al presentar un índice de 100. Esto también se observa en Asia-Pacific y Middle East, sin embargo en estos casos aunque hay un dato atípico que aleja la media del resto de los datos, la media se encuentra en un valor cercano al cuartil tres.
+
+En el caso de Europe los datos se distribuyen de manera significativamente compacta. Aunque se presentan dos datos atípicos, la media se mantiene en relativa cercanía con la mediana.
+
 
 ```{r figura4, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -484,7 +496,6 @@ figura4 <- ggplot(datos, aes(x = Region, y = Commercial)) +
 ggsave("figura4.png", plot = figura4, width = 8, height = 5, dpi = 300)
 
 ```
-
 \begin{center}
 \includegraphics[width=\linewidth]{figura4.png}
 \end{center}

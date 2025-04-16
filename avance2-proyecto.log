@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.8)  16 APR 2025 10:30
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.8)  16 APR 2025 11:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -981,33 +981,34 @@ File: figura1.png Graphic file (type bmp)
 <figura1.png>
 [2] [3]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 289.
+(Font)              scaled to size 7.0pt on input line 291.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 289.
+(Font)              scaled to size 5.0pt on input line 291.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 289.
+(Font)              scaled to size 10.00092pt on input line 291.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 289.
+(Font)              scaled to size 7.00064pt on input line 291.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 289.
+(Font)              scaled to size 5.00046pt on input line 291.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 289.
+(Font)              scaled to size 9.99893pt on input line 291.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 289.
+(Font)              scaled to size 6.99925pt on input line 291.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 289.
+(Font)              scaled to size 4.99947pt on input line 291.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[4]
 File: figura2.png Graphic file (type bmp)
 <figura2.png>
-[4]
 File: figura3.png Graphic file (type bmp)
 <figura3.png>
+[5]
 File: figura4.png Graphic file (type bmp)
 <figura4.png>
-[5]
-Overfull \hbox (35.13885pt too wide) in paragraph at lines 354--355
+
+Overfull \hbox (35.13885pt too wide) in paragraph at lines 369--370
 \TU/lmr/m/n/10 https://www.kaggle.com/datasets/katerynameleshenko/ai-
  []
 
@@ -1022,10 +1023,10 @@ L3 programming layer <2025-01-18>
 Here is how much of TeX's memory you used:
  20375 strings out of 473832
  369756 string characters out of 5729482
- 968771 words of memory out of 5000000
+ 971771 words of memory out of 5000000
  43138 multiletter control sequences out of 15000+600000
  565362 words of font info for 86 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 90i,10n,114p,1013b,516s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,10n,114p,1013b,503s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on avance2-proyecto.pdf (6 pages).
