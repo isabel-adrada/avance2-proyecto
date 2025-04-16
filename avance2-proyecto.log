@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.8)  16 APR 2025 09:17
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.3.8)  16 APR 2025 10:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1001,23 +1001,17 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 File: figura2.png Graphic file (type bmp)
 <figura2.png>
+[4]
 File: figura3.png Graphic file (type bmp)
 <figura3.png>
-
-Overfull \vbox (59.03754pt too high) has occurred while \output is active []
-
-
-Overfull \vbox (59.03754pt too high) has occurred while \output is active []
-
-[4]
 File: figura4.png Graphic file (type bmp)
 <figura4.png>
-
+[5]
 Overfull \hbox (35.13885pt too wide) in paragraph at lines 354--355
 \TU/lmr/m/n/10 https://www.kaggle.com/datasets/katerynameleshenko/ai-
  []
 
-[5]
+
 
 [6] (./avance2-proyecto.aux)
  ***********
@@ -1028,10 +1022,10 @@ L3 programming layer <2025-01-18>
 Here is how much of TeX's memory you used:
  20375 strings out of 473832
  369756 string characters out of 5729482
- 967771 words of memory out of 5000000
+ 968771 words of memory out of 5000000
  43138 multiletter control sequences out of 15000+600000
  565362 words of font info for 86 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 90i,10n,114p,1013b,521s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,10n,114p,1013b,516s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
 Output written on avance2-proyecto.pdf (6 pages).

@@ -323,7 +323,12 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 \begin{multicols}{2}
 
-El histograma permite plasmar gráficamente la distribución de los datos de una variable. En la figura 2 se presenta
+El histograma presentado en la Figura 2 permite plasmar gráficamente la distribución de los datos de la variable índince Commerce. Su puede observar como en los casos de Americas, Asia-Pacific y Middle East los datos se encuentran concentrados hacia la izquierda del eje x, sin embargo presentan una asimetría positiva o sesgo a la derecha, donde la media es mayor a la mediana, indicando que posiblemente se presenten puntos atípicos hacia la derecha del eje x.
+
+En el caso de Europe, se observa que los datos se agrupan hacia la izquierda del eje x, sin embarrgo, aunque en el análisis de la Tabla 2 se teorizaba una posible distribución normal debido a la cercanía de la media, mediana y moda, no se muestra simetría en la gráfica,ya que esta muestra una distribución con mayor similitud a una exponencial.
+
+En el caso de Africa, los datos se encuentran concentrados alrededor del 0
+
 
 ```{r figura2, echo=FALSE}
 
@@ -331,6 +336,8 @@ El histograma permite plasmar gráficamente la distribución de los datos de una
 figura2 <- ggplot(datos, aes(x = Commercial)) +
   geom_histogram(bins = 10, fill = "steelblue", color = "white") +
   facet_wrap(~Region, ncol = 2, scales = "fixed") +  
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
   labs(x = "Puntaje del Índice Commerce",
        y = "Frecuencia") +
   theme_minimal() +
@@ -348,7 +355,7 @@ ggsave("figura2.png", plot = figura2, width = 8, height = 9, dpi = 300)
 Figura 2. Distribución del Índice Commerce agrupado por Región.
 
 
-La Ojiva en la Figura 3 presenta la distriución acumulada de los datos de manera porcental, lo cuál permite estimar los percentiles correspondientes
+La Ojiva en la Figura 3 presenta la distriución acumulada de los datos de manera porcental, lo cuál permite estimar los percentiles correspondientes a los diferentes puntajes del índice Commerce
 
 ```{r figura3, echo=FALSE, warning=FALSE}
 
@@ -484,15 +491,11 @@ ggsave("figura4.png", plot = figura4, width = 8, height = 5, dpi = 300)
 Figura 4. Distribución de las medidas de posición del Índice Commerce agrupado por Región.
 
 
-
-
-
 \subsection{Índice Research}
 tabla de frecuencia bivariada (indice vs total socore)
 histograma x region
 ojiva x region
 diagrama de cajas y bigotes x region
-prueba de independencia
 
 
 \subsection{Índice Talent}
@@ -500,7 +503,6 @@ tabla de frecuencia bivariada (indice vs total socore)
 histograma x region
 ojiva x region
 diagrama de cajas y bigotes x region
-prueba de independencia x region
 
 \subsection{Región}
 tabla de frecuencia univariada de los índices discriminados por región
