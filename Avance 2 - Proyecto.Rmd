@@ -1,15 +1,22 @@
 ---
-title: "Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial"
+title: Análisis de Variables que Influyen en la Inversión, Innovación e Implementación
+  de la Inteligencia Artificial
 author: "Adrada Isabel, De la Peña Juan, Terán Federico, Troncoso Samuel"
 output:
   pdf_document:
     latex_engine: xelatex
     keep_tex: true
-    extra_dependencies: ["booktabs", "array", "float", "longtable"]
+    extra_dependencies:
+    - booktabs
+    - array
+    - float
+    - longtable
+  html_document:
+    df_print: paged
 header-includes:
-  - \usepackage{multicol}
-  - \usepackage{longtable}
-  - \setlength{\columnsep}{1cm}
+- \usepackage{multicol}
+- \usepackage{longtable}
+- \setlength{\columnsep}{1cm}
 ---
 
 ```{r setup, include=FALSE}
@@ -26,12 +33,11 @@ library(readr)
 \begin{multicols}{2}
 
 \section{Resumen}
-...
-...
+Este estudio analiza las variables clave que influyen en la inversión, innovación e implementación de la inteligencia artificial (IA) a nivel global, utilizando el AI Global Index como referencia. Mediante un análisis estadístico descriptivo y correlacional, se identificaron los índices Commerce (inversión), Research (innovación) y Talent (implementación) como factores críticos, destacando su relación lineal significativa con el Total Score. Además, se exploró el impacto de la variable Región en la distribución geográfica del desarrollo de IA. Los resultados revelaron que Research presenta la correlación más fuerte (0.946), seguido de Talent y Commerce, sugiriendo que la innovación es el motor principal del avance en IA.
+
 
 \section{Key words}
-...
-...
+nteligencia artificial, AI Global Index, inversión, innovación, implementación, correlación de Pearson, análisis estadístico, regiones geográficas.
 
 \section{Introducción}
 Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar los países y regiones con mayor potencial de adopción e implementacio ́n de estas herramientas. Este análisis es crucial para la toma de decisiones estratégicas, la definición de mercados objetivo y la planificación de la expansión geográfica. El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál se buscará determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, la influencia de los factores relacionados a la innovación mediante el índice Research, la influencia de los factores relacionados a la implementación mediante el índice Talent y la influencia de los factores relacionados con la ubicación geográfica del país mediante la categorización por Región.
@@ -191,7 +197,7 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 \begin{multicols}{2}
 
-Para otener una perspectiva más amplia de la distribución de los datos, en la Tabla 3 se presentan las frecuencias univariadas de las variables cuantitativas Índice Commerce, Research y Talent. 
+Para obtener una perspectiva más amplia de la distribución de los datos, en la Tabla 3 se presentan las frecuencias univariadas de las variables cuantitativas Índice Commerce, Research y Talent. 
 
 ...
 
@@ -201,6 +207,7 @@ tabla con covarianza y coeficiente de correlacion de pearson
 histograma
 ojiva
 diagrama de cajas y bigotes
+
 
 \subsection{Índice Research}
 tabla de frecuencia bivariada (indice vs total socore)
