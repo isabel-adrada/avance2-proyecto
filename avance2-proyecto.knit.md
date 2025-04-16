@@ -1,106 +1,20 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
-%
-\documentclass[
-]{article}
-\usepackage{amsmath,amssymb}
-\usepackage{iftex}
-\ifPDFTeX
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-\fi
-\usepackage{lmodern}
-\ifPDFTeX\else
-  % xetex/luatex font selection
-\fi
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{xcolor}
-\usepackage[margin=1in]{geometry}
-\usepackage{longtable,booktabs,array}
-\usepackage{calc} % for calculating minipage widths
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-% Allow footnotes in longtable head/foot
-\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-\makesavenoteenv{longtable}
-\usepackage{graphicx}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-% Set default figure placement to htbp
-\makeatletter
-\def\fps@figure{htbp}
-\makeatother
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-\usepackage{multicol}
-\usepackage{longtable}
-\setlength{\columnsep}{1cm}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{float}
-\usepackage{longtable}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
-\usepackage{bookmark}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same}
-\hypersetup{
-  pdftitle={Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
+---
+title: "Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial"
+author: |
+  Adrada Isabel, De la Peña Juan, Terán Federico, Troncoso Samuel    
+  Pontificia Universidad Javeriana Cali
+output:
+  pdf_document:
+    latex_engine: xelatex
+    keep_tex: true
+    extra_dependencies: ["booktabs", "array", "float", "longtable"]
+header-includes:
+  - \usepackage{multicol}
+  - \usepackage{longtable}
+  - \setlength{\columnsep}{1cm}
+---
 
-\title{Análisis de Variables que Influyen en la Inversión, Innovación e
-Implementación de la Inteligencia Artificial}
-\author{Adrada Isabel, De la Peña Juan, Terán Federico, Troncoso
-Samuel\\
-Pontificia Universidad Javeriana Cali}
-\date{}
 
-\begin{document}
-\maketitle
 
 \begin{multicols}{2}
 
@@ -349,29 +263,21 @@ El indicador Commercial evalúa la capacidad de los países para convertir el co
 
 \end{multicols}
 
-\begin{longtable}[]{@{}lcccc@{}}
-\caption{Frecuencia del Indicador Commerce}\tabularnewline
-\toprule\noalign{}
-Intervalo & F.Abs & F.Rel & F.Abs.A & F.Rel.A \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-Intervalo & F.Abs & F.Rel & F.Abs.A & F.Rel.A \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-{[}0,10{]} & 55 & 0.89 & 55 & 0.89 \\
-(10,20{]} & 4 & 0.06 & 59 & 0.95 \\
-(20,30{]} & 1 & 0.02 & 60 & 0.97 \\
-(30,40{]} & 0 & 0.00 & 60 & 0.97 \\
-(40,50{]} & 1 & 0.02 & 61 & 0.98 \\
-(50,60{]} & 0 & 0.00 & 61 & 0.98 \\
-(60,70{]} & 0 & 0.00 & 61 & 0.98 \\
-(70,80{]} & 0 & 0.00 & 61 & 0.98 \\
-(80,90{]} & 0 & 0.00 & 61 & 0.98 \\
-(90,100{]} & 1 & 0.02 & 62 & 1.00 \\
-\end{longtable}
+
+Table: Frecuencia del Indicador Commerce
+
+|Intervalo | F.Abs | F.Rel | F.Abs.A | F.Rel.A |
+|:---------|:-----:|:-----:|:-------:|:-------:|
+|[0,10]    |  55   | 0.89  |   55    |  0.89   |
+|(10,20]   |   4   | 0.06  |   59    |  0.95   |
+|(20,30]   |   1   | 0.02  |   60    |  0.97   |
+|(30,40]   |   0   | 0.00  |   60    |  0.97   |
+|(40,50]   |   1   | 0.02  |   61    |  0.98   |
+|(50,60]   |   0   | 0.00  |   61    |  0.98   |
+|(60,70]   |   0   | 0.00  |   61    |  0.98   |
+|(70,80]   |   0   | 0.00  |   61    |  0.98   |
+|(80,90]   |   0   | 0.00  |   61    |  0.98   |
+|(90,100]  |   1   | 0.02  |   62    |  1.00   |
 
 \begin{multicols}{2}
 
@@ -389,29 +295,21 @@ El indicador *Research* mide la producción científica y capacidad investigador
 
 \end{multicols}
 
-\begin{longtable}[]{@{}lcccc@{}}
-\caption{Frecuencia del Índice Research}\tabularnewline
-\toprule\noalign{}
-Intervalo & F.Abs & F.Rel & F.Abs.A & F.Rel.A \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-Intervalo & F.Abs & F.Rel & F.Abs.A & F.Rel.A \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-{[}0,10{]} & 26 & 0.42 & 26 & 0.42 \\
-(10,20{]} & 14 & 0.23 & 40 & 0.65 \\
-(20,30{]} & 12 & 0.19 & 52 & 0.84 \\
-(30,40{]} & 8 & 0.13 & 60 & 0.97 \\
-(40,50{]} & 0 & 0.00 & 60 & 0.97 \\
-(50,60{]} & 0 & 0.00 & 60 & 0.97 \\
-(60,70{]} & 0 & 0.00 & 60 & 0.97 \\
-(70,80{]} & 1 & 0.02 & 61 & 0.98 \\
-(80,90{]} & 0 & 0.00 & 61 & 0.98 \\
-(90,100{]} & 1 & 0.02 & 62 & 1.00 \\
-\end{longtable}
+
+Table: Frecuencia del Índice Research
+
+|Intervalo | F.Abs | F.Rel | F.Abs.A | F.Rel.A |
+|:---------|:-----:|:-----:|:-------:|:-------:|
+|[0,10]    |  26   | 0.42  |   26    |  0.42   |
+|(10,20]   |  14   | 0.23  |   40    |  0.65   |
+|(20,30]   |  12   | 0.19  |   52    |  0.84   |
+|(30,40]   |   8   | 0.13  |   60    |  0.97   |
+|(40,50]   |   0   | 0.00  |   60    |  0.97   |
+|(50,60]   |   0   | 0.00  |   60    |  0.97   |
+|(60,70]   |   0   | 0.00  |   60    |  0.97   |
+|(70,80]   |   1   | 0.02  |   61    |  0.98   |
+|(80,90]   |   0   | 0.00  |   61    |  0.98   |
+|(90,100]  |   1   | 0.02  |   62    |  1.00   |
 
 \begin{multicols}{2}
 
@@ -427,30 +325,21 @@ La Tabla 6 revela una distribución desigual del talento en IA a nivel mundial, 
 
 \end{multicols}
 
-\begin{longtable}[]{@{}lcccc@{}}
-\caption{Frecuencia del Índice Talent}\tabularnewline
-\toprule\noalign{}
-Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-{[}0,10{]} & 22 & 0.35 & 22 & 0.35 \\
-(10,20{]} & 22 & 0.35 & 44 & 0.71 \\
-(20,30{]} & 11 & 0.18 & 55 & 0.89 \\
-(30,40{]} & 5 & 0.08 & 60 & 0.97 \\
-(40,50{]} & 1 & 0.02 & 61 & 0.98 \\
-(50,60{]} & 0 & 0.00 & 61 & 0.98 \\
-(60,70{]} & 0 & 0.00 & 61 & 0.98 \\
-(70,80{]} & 0 & 0.00 & 61 & 0.98 \\
-(80,90{]} & 0 & 0.00 & 61 & 0.98 \\
-(90,100{]} & 1 & 0.02 & 62 & 1.00 \\
-\end{longtable}
 
+Table: Frecuencia del Índice Talent
+
+|Intervalo | F.Absoluta | F.Relativa | F.Abs.Acum | F.Rel.Acum |
+|:---------|:----------:|:----------:|:----------:|:----------:|
+|[0,10]    |     22     |    0.35    |     22     |    0.35    |
+|(10,20]   |     22     |    0.35    |     44     |    0.71    |
+|(20,30]   |     11     |    0.18    |     55     |    0.89    |
+|(30,40]   |     5      |    0.08    |     60     |    0.97    |
+|(40,50]   |     1      |    0.02    |     61     |    0.98    |
+|(50,60]   |     0      |    0.00    |     61     |    0.98    |
+|(60,70]   |     0      |    0.00    |     61     |    0.98    |
+|(70,80]   |     0      |    0.00    |     61     |    0.98    |
+|(80,90]   |     0      |    0.00    |     61     |    0.98    |
+|(90,100]  |     1      |    0.02    |     62     |    1.00    |
 \begin{multicols}{2}
 
 La Tabla 6 revela una fuerte desigualdad en la distribución global de talento en IA. Estados Unidos destaca como líder absoluto (100 puntos), mientras que más del 40 por ciento de los países se concentra en el nivel más bajo (0-20 puntos). Esta brecha refleja las profundas asimetrías en desarrollo tecnológico, donde solo un puñado de naciones concentra las capacidades avanzadas.
@@ -473,5 +362,3 @@ El estudio revela que solo el 12 por ciento de los países (7/58) alcanza puntua
 [2]   W. Navidi, Statistics for Engineers and Scientists w/ CD-ROM. McGraw-Hill Sci./Eng./Math, 2004.
 
 \end{multicols}
-
-\end{document}

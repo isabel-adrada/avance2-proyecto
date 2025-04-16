@@ -35,7 +35,7 @@ library(kableExtra)
 Este estudio analiza las variables clave que influyen en la inversión, innovación e implementación de la inteligencia artificial (IA) a nivel global, utilizando el AI Global Index como referencia. Mediante un análisis estadístico descriptivo y correlacional, se identificaron los índices Commerce (inversión), Research (innovación) y Talent (implementación) como factores críticos, destacando su relación lineal significativa con el Total Score. Además, se exploró el impacto de la variable Región en la distribución geográfica del desarrollo de IA.
 
 \section{Key words}
-Inteligencia artificial, AI Global Index, inversión, innovación, implementación, correlación de Pearson, análisis estadístico, regiones geográficas.
+Inteligencia artificial, inversión, innovación, implementación, análisis estadístico.
 
 \section{Introducción}
 Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar las regiones con mayor potencial de adopción e implementación de estas herramientas. Este análisis es crucial para la toma de decisiones estratégicas, la definición de mercados objetivo y la planificación de estrategias de expansión geográfica, razón por lo cuál, debido a la incertidumbre respecto a los factores con mayor impacto en el potencial éxito de los planes de expansión operativa en diferentes partes del mundo, se plantea el interrogante ¿Qué variables tienen mayor influencia en los niveles de inversión, innovación e implementación de la inteligencia artificial según lo reflejado en el AI Global Index [1] (índice que compara diferentes países en estos niveles), y cómo varía esta influencia según la región geográfica?.
@@ -274,13 +274,10 @@ crear_intervalos <- function(data, variable, n_bins = 8) {
   breaks <- pretty(range(data[[variable]], na.rm = TRUE), n = n_bins)
   return(breaks)
 }
-
 commerce_breaks <- crear_intervalos(datos, "Commercial")
 total_score_breaks <- crear_intervalos(datos, "Total.score")
-
 commerce_labels <- paste0("(", commerce_breaks[-length(commerce_breaks)], ", ", commerce_breaks[-1], "]")
 score_labels <- paste0("(", total_score_breaks[-length(total_score_breaks)], ", ", total_score_breaks[-1], "]")
-
 datos$Commercial_interval <- cut(datos$Commercial, 
                                 breaks = commerce_breaks, 
                                 labels = commerce_labels, 
@@ -289,32 +286,30 @@ datos$TotalScore_interval <- cut(datos$Total.score,
                                 breaks = total_score_breaks, 
                                 labels = score_labels, 
                                 include.lowest = TRUE)
-
 tabla_contingencia <- table(datos$Commercial_interval, datos$TotalScore_interval)
-
 tabla_df <- as.data.frame.matrix(tabla_contingencia)
-
 tabla_df$Total <- rowSums(tabla_df)
-
 totales_columna <- colSums(tabla_df)
 tabla_df <- rbind(tabla_df, Total = totales_columna)
-tabla_df <- tibble::rownames_to_column(tabla_df, var = "A  \\   B")
+tabla4 <- tabla_df %>%
+  tibble::rownames_to_column(var = "A  -   B") %>%
+  dplyr::rename(`A - B` = `A  -   B`) %>% 
+  dplyr::select(`A - B`, everything()) 
 
-#Ajuste del diseño de la tabla
+colnames(tabla4) <- c("A   -   B", "[0, 10]", "(10, 20]", "(20, 30]", "(30, 40]", "(40, 50]", 
+                      "(50, 60]", "(60, 70]", "(70, 80]", "(80, 90]", "(90, 100]", "Total")
+
 cat("\\renewcommand{\\arraystretch}{1.3}\n")
-cat("\\begin{footnotesize}")
-print(
-  kable(tabla_df, 
-        caption = "Tabla de Frecuencia Bivariada Índice Commerce (A) vs Total Score (B)",
-        format = "latex",
-        booktabs = TRUE,
-        row.names = FALSE,
-        col.names = c("A   \\   B", score_labels, "Total")) %>%
-    kable_styling(latex_options = c("scale_down", "hold_position"))
-)
-cat("\\end{footnotesize}")
+cat("\\begin{scriptsize}")
+print(xtable::xtable(tabla4, 
+                   caption = "Tabla de Frecuencia Bivariada Índice Commerce (A) vs Total Score (B)"),
+      tabular.environment = "longtable",
+      floating = FALSE,
+      include.rownames = FALSE,
+      latex.environments = "",
+      caption.placement = "top")
+cat("\\end{scriptsize}")
 cat("\\renewcommand{\\arraystretch}{1}\n")
-
 ```
 
 \begin{multicols}{2}
@@ -355,7 +350,7 @@ La Ojiva en la Figura 3 presenta la distriución acumulada de los datos de maner
 
 En el caso de Americas, al rededor del 87.5\% de los datos tienen un índice Commmerce alrededor de 13 o menos, lo cuál indica una alta concentración de los datos a la izquierda del eje, sin embargo se presenta un salto abrupto en el índice que se distancia de los demás datos, indicando un posible dato atípico en el puntaje 100. Esto mismo ocurre en Middle East donde aproximadamente un 80\% de los datos tienen un puntaje de alrededor de 7 o menos y se presenta salto abrupto en el índice a un puntaje alrededor de 27.
 
-Asia-Pacific y Europe presentan distribuciones similares, sin embargo en Europe los datos se ven más concentrados a la izquierda del eje. En ambos casos una mayoría cercana a 85% de los datos tienen un índice de aproximadmente 20 o menos en Asia-Pacific y 10 o menos en Europe. Posteriormente a este punto se presenta un incremento gradual en los puntajes para los datos restantes.
+Asia-Pacific y Europe presentan distribuciones similares, sin embargo en Europe los datos se ven más concentrados a la izquierda del eje. En ambos casos una mayoría cercana a 85\% de los datos tienen un índice de aproximadmente 20 o menos en Asia-Pacific y 10 o menos en Europe. Posteriormente a este punto se presenta un incremento gradual en los puntajes para los datos restantes.
 
 En África cerca del 80\% de los datos están concentrados en un puntaje cercano a 0, lo cuál indica que posiblemente no hay simetría en la distribución por lo cuál esta no es normal.
 
@@ -426,7 +421,7 @@ El diagrama de cajas y bigotes presentado en la Figura 4 presenta gráficamente 
 
 En el caso de Africa se muestra una muy alta compacidad de los datos donde la media es cercana a la mediana, cuartiles 1 y 3 y los límites inferiores y superiores de los bigotes. En este caso se presenta un dato atípico que se encuentra en relativa cercanía del límite superior del bigote.
 
-En el caso de Americas se observa como el 50% de los datos son altamente compactos, los datos entre la mediana y el Q3 tienen una disperción más alta y la media se aleja en gran medida (con un valor más alto que el límite superior del bigote) de la mediana debido a la presencia de 1 dato atípico a una gran distancia del resto de los datos al presentar un índice de 100. Esto también se observa en Asia-Pacific y Middle East, sin embargo en estos casos aunque hay un dato atípico que aleja la media del resto de los datos, la media se encuentra en un valor cercano al cuartil tres.
+En el caso de Americas se observa como el 50\% de los datos son altamente compactos, los datos entre la mediana y el Q3 tienen una disperción más alta y la media se aleja en gran medida (con un valor más alto que el límite superior del bigote) de la mediana debido a la presencia de 1 dato atípico a una gran distancia del resto de los datos al presentar un índice de 100. Esto también se observa en Asia-Pacific y Middle East, sin embargo en estos casos aunque hay un dato atípico que aleja la media del resto de los datos, la media se encuentra en un valor cercano al cuartil tres.
 
 En el caso de Europe los datos se distribuyen de manera significativamente compacta. Aunque se presentan dos datos atípicos, la media se mantiene en relativa cercanía con la mediana.
 
@@ -498,7 +493,9 @@ ggsave("figura4.png", plot = figura4, width = 8, height = 5, dpi = 300)
 \begin{center}
 \includegraphics[width=\linewidth]{figura4.png}
 \end{center}
+
 El indicador Commercial evalúa la capacidad de los países para convertir el conocimiento en IA en aplicaciones comerciales y soluciones de mercado. La Tabla 5 presenta la distribución global de este indicador a través de intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en cada rango. Este análisis es clave para identificar qué economías están liderando la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
+
 \end{multicols}
 
 ```{r, echo=FALSE}
@@ -523,12 +520,15 @@ tabla_frecuencias_Commercial <- data.frame(
 
 # Mostrar la tabla con knitr::kable
 knitr::kable(tabla_frecuencias_Commercial, 
-             caption = "Distribución Global del Indicador Commercial",
+             caption = "Frecuencia del Indicador Commerce",
              align = c('l', 'c', 'c', 'c', 'c'),
              format.args = list(decimal.mark = "."))
 ```
+
 \begin{multicols}{2}
-La Tabla 5 revela una concentración extrema en la capacidad comercial, con más del 65% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100 puntos), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África y Latinoamérica.
+
+La Tabla 5 revela una concentración extrema en la capacidad comercial, con más del 65\% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100 puntos), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África y Latinoamérica.
+
 \subsection{Índice Research}
 
 tabla de frecuencia bivariada (indice vs total socore)
@@ -563,16 +563,14 @@ tabla_frecuencias_research <- data.frame(
 
 # Mostrar la tabla con formato mejorado
 knitr::kable(tabla_frecuencias_research, 
-             caption = "Distribución Global del Indicador Research",
+             caption = "Frecuencia del Índice Research",
              align = c('l', 'c', 'c', 'c', 'c'),
              format.args = list(decimal.mark = "."))
 ```
+
 \begin{multicols}{2}
 
-Los resultados revelan una concentración extrema en la capacidad investigadora: mientras el 60 por ciento de los países se ubica por debajo de los 30 puntos (F.Rel.Acum = 0.60), solo un selecto grupo (15 por ciento) supera los 70 puntos. Estados Unidos (100 puntos) y China (71.42) dominan claramente los intervalos superiores. Sin embargo, destaca que varios países europeos (Reino Unido 36.5, Alemania 35.84) mantienen capacidades significativas. La presencia casi nula de países africanos y latinoamericanos por encima de los 20 puntos (F.Abs = 2) evidencia un riesgo crítico de dependencia tecnológica.
-
-
-
+Los resultados revelan una concentración extrema en la capacidad investigadora: mientras el 60\% de los países se ubica por debajo de los 30 puntos (F.Rel.Acum = 0.60), solo un selecto grupo (15\%) supera los 70 puntos. Estados Unidos (100 puntos) y China (71.42) dominan claramente los intervalos superiores. Sin embargo, destaca que varios países europeos (Reino Unido 36.5, Alemania 35.84) mantienen capacidades significativas. La presencia casi nula de países africanos y latinoamericanos por encima de los 20 puntos (F.Abs = 2) evidencia un riesgo crítico de dependencia tecnológica.
 
 \subsection{Índice Talent}
 tabla de frecuencia bivariada (indice vs total socore)
@@ -580,7 +578,7 @@ histograma x region
 ojiva x region
 diagrama de cajas y bigotes x region
 
-La Tabla 6 revela una distribución desigual del talento en IA a nivel mundial, con una marcada concentración en los extremos: mientras el 42 por cietn de los países se ubica en el rango más bajo (0-20 puntos), solo un 18 pot ciento supera los 50 puntos. Las frecuencias acumuladas muestran que apenas el 30 por ciento de las naciones alcanza niveles competitivos (mayor igual a 40 puntos), destacando Estados Unidos (100 puntos) como caso excepcional. Esta polarización refleja brechas estructurales en la formación de profesionales calificados, donde economías desarrolladas capturan la mayor parte del talento global.
+La Tabla 6 revela una distribución desigual del talento en IA a nivel mundial, con una marcada concentración en los extremos: mientras el 42\% de los países se ubica en el rango más bajo (0-20 puntos), solo un 18 pot ciento supera los 50 puntos. Las frecuencias acumuladas muestran que apenas el 30 por ciento de las naciones alcanza niveles competitivos (mayor igual a 40 puntos), destacando Estados Unidos (100 puntos) como caso excepcional. Esta polarización refleja brechas estructurales en la formación de profesionales calificados, donde economías desarrolladas capturan la mayor parte del talento global.
 
 \end{multicols}
 
@@ -608,16 +606,16 @@ tabla_frecuencias_talent <- data.frame(
 
 # Mostrar la tabla con knitr::kable
 knitr::kable(tabla_frecuencias_talent, 
-             caption = "Distribución Global del Talento en IA",
+             caption = "Frecuencia del Índice Talent",
              align = c('l', 'c', 'c', 'c', 'c'))
 ```
 \begin{multicols}{2}
 
 La Tabla 6 revela una fuerte desigualdad en la distribución global de talento en IA. Estados Unidos destaca como líder absoluto (100 puntos), mientras que más del 40 por ciento de los países se concentra en el nivel más bajo (0-20 puntos). Esta brecha refleja las profundas asimetrías en desarrollo tecnológico, donde solo un puñado de naciones concentra las capacidades avanzadas.
+
 La escasez de países en rangos intermedios (30-60 puntos) es particularmente preocupante, pues muestra que pocas economías están logrando desarrollar talento competitivo. Estos resultados subrayan la urgencia de políticas globales para democratizar el acceso a formación especializada, especialmente en regiones en desarrollo donde el talento en IA resulta crítico para no quedar rezagados en la transformación digital.
 
 \subsection{Región}
-tabla de frecuencia univariada de los índices discriminados por región
 tabla de frecuencia bivariada (region y total score)
 diagrama de barras
 diagrama de torta
