@@ -1,0 +1,520 @@
+---
+title: "Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial"
+author: |
+  Adrada Isabel, De la Peña Juan, Terán Federico, Troncoso Samuel    
+  Pontificia Universidad Javeriana Cali
+output:
+  pdf_document:
+    latex_engine: xelatex
+    keep_tex: true
+    extra_dependencies: ["booktabs", "array", "float", "longtable"]
+header-includes:
+  - \usepackage{multicol}
+  - \usepackage{longtable}
+  - \setlength{\columnsep}{1cm}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+#Instalación de las libreriás requeridas
+library(ggplot2)
+library(dplyr)
+library(GGally)
+library(xtable)
+library(readr)
+library(knitr)
+library(forcats)
+library(tidyr)
+library(kableExtra)
+```
+
+\begin{multicols}{2}
+
+\section{Resumen}
+...
+...
+
+\section{Key words}
+...
+...
+
+\section{Introducción}
+Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar las regiones con mayor potencial de adopción e implementación de estas herramientas. Este análisis es crucial para la toma de decisiones estratégicas, la definición de mercados objetivo y la planificación de estrategias de expansión geográfica, razón por lo cuál, debido a la incertidumbre respecto a los factores con mayor impacto en el potencial éxito de los planes de expansión operativa en diferentes partes del mundo, se plantea el interrogante ¿Qué variables tienen mayor influencia en los niveles de inversión, innovación e implementación de la inteligencia artificial según lo reflejado en el AI Global Index [1] (índice que compara diferentes países en estos niveles), y cómo varía esta influencia según la región geográfica?.
+
+El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál, en primera instancia se identificaron los índices para cada factor mencionado con un mayor coeficiente de correlación lineal de Pearson de acuerdo a la metodología e interpretación plaenteada por Navidi [2], permitiendo el plateamiento de los objetivos específicos con el fin de determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, la innovación mediante el índice Research, la implementación mediante el índice Talent y la ubicación geográfica del país mediante la categorización por Región.
+
+A partir de los anteriores planteamientos se formula como hipótesis: la influencia del nivel de inversión (índice Commerce), innovación (índice Research) e implementación (índice Talent) de inteligencia artificial en el desempeño de los países según el AI Global Index (Total Score) presenta diferencias altamente significativas según la región geográfica.
+
+
+```{r dataframes, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+#Organización en dataframes
+AI_index_db <- read_csv("AI_index_db.csv")
+
+datos <- data.frame(AI_index_db)
+
+num <- data.frame(datos $Talent, datos $Infrastructure, datos $Operating.Environment, datos $Research, datos $Development, datos $Government.Strategy, datos $Commercial, datos $Total.score)
+
+numeric_data <- data.frame(Commercial = datos$Commercial, Research = datos$Research, Talent = datos$Talent, Total_Score = datos$Total.score)
+```
+
+\section{Métodos}
+Para la definición de las variables a estudiar a partir de la base de datos AI Global Index trabajada en el presente estudio, se relalizó una exploración preliminar de los datos en la Tabla 1, donde se nombran las variables, se clasifican como cualitativas o cuantitativas, se categorizan como continuas o discretas, o nominal u ordinal según el caso y se realiza una descripción de las mismas.
+
+\end{multicols}
+
+```{r tabla1, echo=FALSE, results='asis'}
+
+#Generación de dataframe de los datos de las variables
+variables <- data.frame(
+  Variable = c("Country", "Talent", "Infraestructure", "Operating Enviroment", "Research", "Development", "Government Strategy", "Commercial", "Total Score", "Region", "Cluster", "Income Group", "Political Regime"),
+  Clasificacion = c("Cualitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cuantitativa", "Cualitativa", "Cualitativa", "Cualitativa", "Cualitativa"),
+  Categorizacion = c("Nominal", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Continua", "Nominal", "Nominal", "Ordinal", "Nominal"),
+  Descripcion = c(
+    "Nombre del país donde se evalúa el AI Global Index.",
+    "Indicador de disponibilidad de profesionales calificados para la provisión de soluciones de inteligencia artificial.",
+    "Indicador de fiabilidad y la escala de la infraestructura de acceso, desde la electricidad e Internet, hasta las capacidades de superintarmética.",
+    "Indicador del contexto regulatorio y la opinión pública en torno a la inteligencia artificial.",
+    "Indicador del alcance de la investigación especializada y los investigadores; investigando la cantidad de publicaciones y citas en revistas académicas creíbles.",
+    "Indicador de desarrollo de plataformas y algoritmos fundamentales en los que se basan los proyectos innovadores de inteligencia artificial.",
+    "Indicador de la profundidad del compromiso del gobierno nacional con la inteligencia artificial; investigando los compromisos de gasto y las estrategias nacionales.",
+    "Indicador del nivel de actividad de puesta en marcha, inversión e iniciativas comerciales basadas en la inteligencia artificial.",
+    "Indicador AI Global Index que compara a las naciones en su nivel de inversión, innovación e implementación de la inteligencia artificial.",
+    "Agrupacion de países según su localización geográfica en regiones.",
+    "Agrupación de países según su historia de incursión en el desarrollo de tecnología relacionada con la Inteligencia Artificial.",
+    "Nivel de ingresos presentado en el país.",
+    "Tipo de régimen político presentado en el país."
+  )
+)
+
+# Ajuste del diseño de la tabla
+cat("\\renewcommand{\\arraystretch}{1.5}\n")
+cat("\\begin{footnotesize}")
+knitr::kable(variables, 
+             caption = "Variables y su clasificación", 
+             format = "latex", 
+             booktabs = TRUE, 
+             longtable = TRUE,
+             col.names = c("Variable", "Clasificación", "Categorización", "Descripción"),
+             align = c("l", "l", "l", "p{8cm}"))
+cat("\\end{footnotesize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
+
+```
+
+\begin{multicols}{2}
+
+
+Posteriormente, con el propósito de indentificar las posibles variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, se elaboró la figura 1, la cuál presenta una comparación de las distribuciones de las variables y sus respectivos coeficientes de correlación lineal de Pearson con el fin de reconocer los índices que presentan un mayor valor respecto al AI Global Index (Total Score), los cuáles fueron Commerce para el nivel de inversión, Research para la innovación y Talent para la implemetación. 
+
+
+```{r figura1, echo=FALSE}
+
+#Genreación del gráfico
+figura1 <- ggpairs(num, lower = list(continuous = "smooth"))
+ggsave("figura1.png", plot = figura1, width = 7, height = 7, dpi = 300)
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura1.png}
+\end{center}
+Figura 1. Correlación lineal de Pearson índices.
+
+Posteriormente, se realizó ... 
+... para cada uno de los índices con el fin de ...
+
+\section{Resultados}
+En la Tabla 2 se presentan las medidas de tendencia central y posición de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
+
+Para casi todos los casos, la medida de tendencia central moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre estos indicadores, planteando la posibilidad de una distribución de campana. Esto mismo ocurre para Europe con todos los indicadores, y en el caso del indicador Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
+
+El mínimo en todas las regiones para todos los ídices es menor a 10, excepto Total Score de Americas con un 13.27, por otro lado, el máximo entre regiones presenta discrepancias más significativas, donde el el caso de Americas el máximo es 100 para todos los índices, en Asia-Pacific todos los máximos se encuentran por encima de 40, mientras en Europe los máximos de todos los índices se ubican en 40.93 o menos, al igual que Middle East. En el caso de Africa, toos los máximos de los indicadores se encuentran por debajo de 10.
+
+\end{multicols}
+
+```{r tabla2, echo=FALSE, results='asis'}
+
+# Cálculo de las estadísticas
+custom_stats_region <- function(df, var, total_score) {
+  x <- df[[var]]
+  total <- df[[total_score]]
+  x <- x[!is.na(x)]
+  total <- total[!is.na(total)]
+  
+  mean_val <- round(mean(x), 2)
+  freq_table <- table(x)
+  mode_val <- as.numeric(names(freq_table)[freq_table == max(freq_table)])
+  mode_text <- if (length(mode_val) > 3) "> 3 modas" else paste(round(mode_val, 2), collapse = ", ")
+  std_dev <- round(sd(x), 2)
+  min_val <- round(min(x), 2)
+  q1 <- round(quantile(x, 0.25), 2)
+  median_val <- round(median(x), 2)
+  q3 <- round(quantile(x, 0.75), 2)
+  max_val <- round(max(x), 2)
+  range_val <- round(max_val - min_val, 2)
+  iqr <- round(q3 - quantile(x, 0.25), 2)
+  cv <- round((std_dev / mean_val) * 100, 2)
+  cov_val <- round(cov(x, total, use = "complete.obs"), 2)
+  cor_val <- round(cor(x, total, use = "complete.obs"), 2)
+
+  return(data.frame(
+    Media = mean_val,
+    Moda = mode_text,
+    Mínimo = min_val,
+    Q1 = q1,
+    Mediana = median_val,
+    Q3 = q3,
+    Máximo = max_val,
+    Rango = range_val,
+    RIQ = iqr,
+    `Desv est` = std_dev,
+    CV = cv,
+    `Cov Total Score` = cov_val,
+    `Corr Total Score` = cor_val
+  ))
+}
+
+# Obtener las regiones
+regiones <- unique(datos$Region)
+region_stats_list <- list()
+
+# Calcular las estadísticas por región
+for (i in 1:length(regiones)) {
+  region <- regiones[i]
+  
+  region_data <- datos %>% filter(Region == region)
+  
+  commerce_stats <- custom_stats_region(region_data, "Commercial", "Total.score")
+  talent_stats <- custom_stats_region(region_data, "Talent", "Total.score")
+  research_stats <- custom_stats_region(region_data, "Research", "Total.score")
+  total_stats <- custom_stats_region(region_data, "Total.score", "Total.score")
+  
+  region_df <- bind_rows(
+    cbind(Region = region, Indice = "Commerce", commerce_stats),
+    cbind(Region = region, Indice = "Talent", talent_stats),
+    cbind(Region = region, Indice = "Research", research_stats),
+    cbind(Region = region, Indice = "Total Score", total_stats)
+  )
+  
+  region_stats_list[[i]] <- region_df
+}
+
+# Organizar las estadísticas por región
+region_stats <- bind_rows(region_stats_list)
+
+# Tabla 2: Medidas de tendencia central y posición
+tabla2 <- region_stats %>% 
+  select(Region, Indice, Media, Moda, Mínimo, Q1, Mediana, Q3, Máximo) %>% 
+  rename(`Región` = Region, `Índice` = Indice)
+
+# Mostrar la tabla en formato LaTeX
+cat("\\renewcommand{\\arraystretch}{1.3}\n")
+cat("\\begin{scriptsize}")
+knitr::kable(tabla2, 
+             caption = "Medidas de tendencia central y posición", 
+             format = "latex", 
+             booktabs = TRUE, 
+             longtable = TRUE,
+             row.names = FALSE, 
+             align = "llrrrrrrr",
+             na.string = "")
+cat("\\end{scriptsize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
+
+```
+
+\begin{multicols}{2}
+
+En la Tabla 3 se presentan las medidas de disperción, covarianza y correlación lineal de Pearson con respecto al Total Score (AI Global Index) de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
+
+Americas presentan los rangos más amplios de todas las regiones que van desde 86.73 en Total Score hasta 100 en Research, para la maroría los demás casos de las regiones Asia-Pacific, Europe y Middle East, los rangos de los diferentes índices varían alrededor de 20 y 40 indicando menor variablidad de los datos con excepciones de los índices Research y Total Score de Asia-Pacific con 71.30 y  62.92 respectivamente. En el caso de Africa se presentan los rangos más bajos donde todos estàn por debajo de 10, lo cuál sugiere que los datos en la región se distribuyen de manera altamente compacta.
+
+Con respecto al coeeficiente de variación se puede afirmar que para la mayoría de los casos los datos son heterogéneos al presentar un coeficiente de variación mayor a 50, sin embargo, el índice Talent y Total Score en Europe presentan variación significativa ya que el coeficiente de variación se encuentra en el rango de 10 a 50.
+
+En el caso de la covarianza, esta es positiva para todas las variables, lo cuál plantea la posibilidad de que estas tengan una relación lineal directa con el índice Total Score. Esto es confirmado con el coeficiente de correlación de Pearson, donde un valor superior a 0.8 indica hay una relación muy significativa, lo cuál es cierto para todos los indicadores en Americas y Middle East, Research en Asia-Pacific y Talent y Research en Europe. Por otro lado, una coeficiente entre 0.6 y 0.78 indica una relación significativa, la cuál está presente en Europe para el indicador Commerce y en Africa para Talent y Research.
+
+
+\end{multicols}
+
+```{r tabla3, echo=FALSE, results='asis'}
+
+# Cálculo de las estadísticas
+tabla3 <- region_stats %>% 
+  select(Region, Indice, Rango, RIQ, `Desv.est`, CV, `Cov.Total.Score`, `Corr.Total.Score`) %>% 
+  rename(`Región` = Region, `Índice` = Indice, `Cov Total Score` = `Cov.Total.Score`, `Corr Total Score` = `Corr.Total.Score`)
+
+# Ajuste del diseño de la tabla
+cat("\\renewcommand{\\arraystretch}{1.3}\n")
+cat("\\begin{scriptsize}")
+knitr::kable(tabla3, 
+             caption = "Medidas de dispersión e indicadores por región e índice", 
+             format = "latex", 
+             booktabs = TRUE, 
+             longtable = TRUE,
+             row.names = FALSE,  
+             align = "llrrrrr",
+             na.string = "")
+cat("\\end{scriptsize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
+
+```
+
+
+\begin{multicols}{2}
+
+...
+
+\subsection{Índice Commerce}
+
+En la Tabla 4 se presentan las frecuencias bivariadas del indice Commerce y el índice Total Score, 
+
+\end{multicols}
+
+```{r tabla4, echo=FALSE, results='asis'}
+
+#Generación de la tabla
+crear_intervalos <- function(data, variable, n_bins = 8) {
+  breaks <- pretty(range(data[[variable]], na.rm = TRUE), n = n_bins)
+  return(breaks)
+}
+
+commerce_breaks <- crear_intervalos(datos, "Commercial")
+total_score_breaks <- crear_intervalos(datos, "Total.score")
+
+commerce_labels <- paste0("(", commerce_breaks[-length(commerce_breaks)], ", ", commerce_breaks[-1], "]")
+score_labels <- paste0("(", total_score_breaks[-length(total_score_breaks)], ", ", total_score_breaks[-1], "]")
+
+datos$Commercial_interval <- cut(datos$Commercial, 
+                                breaks = commerce_breaks, 
+                                labels = commerce_labels, 
+                                include.lowest = TRUE)
+datos$TotalScore_interval <- cut(datos$Total.score, 
+                                breaks = total_score_breaks, 
+                                labels = score_labels, 
+                                include.lowest = TRUE)
+
+tabla_contingencia <- table(datos$Commercial_interval, datos$TotalScore_interval)
+
+tabla_df <- as.data.frame.matrix(tabla_contingencia)
+
+tabla_df$Total <- rowSums(tabla_df)
+
+totales_columna <- colSums(tabla_df)
+tabla_df <- rbind(tabla_df, Total = totales_columna)
+tabla_df <- tibble::rownames_to_column(tabla_df, var = "A  \\   B")
+
+cat("\\renewcommand{\\arraystretch}{1.3}\n")
+cat("\\begin{footnotesize}")
+print(
+  kable(tabla_df, 
+        caption = "Tabla de Frecuencia Bivariada Índice Commerce (A) vs Total Score (B)",
+        format = "latex",
+        booktabs = TRUE,
+        row.names = FALSE,
+        col.names = c("A   \\   B", score_labels, "Total")) %>%
+    kable_styling(latex_options = c("scale_down", "hold_position"))
+)
+cat("\\end{footnotesize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
+
+```
+
+\begin{multicols}{2}
+
+El histograma permite plasmar gráficamente la distribución de los datos de una variable. En la figura 2 se presenta
+
+```{r figura2, echo=FALSE}
+
+# Crear el histograma 
+figura2 <- ggplot(datos, aes(x = Commercial)) +
+  geom_histogram(bins = 10, fill = "steelblue", color = "white") +
+  facet_wrap(~Region, ncol = 2, scales = "fixed") +  
+  labs(x = "Puntaje del Índice Commerce",
+       y = "Frecuencia") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 12),
+        axis.text = element_text(size = 8),
+        strip.text = element_text(size = 9, face = "bold"),
+        panel.spacing = unit(1, "lines"))
+ggsave("figura2.png", plot = figura2, width = 8, height = 9, dpi = 300)
+
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura2.png}
+\end{center}
+Figura 2. Distribución del Índice Commerce agrupado por Región.
+
+
+La Ojiva en la Figura 3 presenta la distriución acumulada de los datos de manera porcental, lo cuál permite estimar los percentiles correspondientes
+
+```{r figura3, echo=FALSE, warning=FALSE}
+
+# Generar diagrama
+prepare_ogive_data <- function(df, variable, region_var, bins = 10) {
+  df %>%
+    filter(!is.na(.data[[variable]])) %>%
+    group_by(.data[[region_var]]) %>%
+    do({
+      region_data <- .
+      breaks <- pretty(range(region_data[[variable]], na.rm = TRUE), n = bins)
+      h <- hist(region_data[[variable]], breaks = breaks, plot = FALSE)
+      cum_freq <- cumsum(h$counts) / sum(h$counts) * 100
+      data.frame(
+        Region = unique(region_data[[region_var]]),
+        bin = h$mids,
+        freq_acum_rel = cum_freq
+      )
+    }) %>%
+    ungroup()
+}
+
+ojiva_data <- prepare_ogive_data(datos, "Commercial", "Region", bins = 10)
+
+figura_ojiva <- ggplot(ojiva_data, aes(x = bin, y = freq_acum_rel)) +
+  geom_line(color = "darkblue", size = 1, aes(linetype = "Frecuencia\nacumulada\nporcentual")) +
+  geom_point(color = "darkblue", size = 2) +
+  geom_line(data = data.frame(bin = c(min(ojiva_data$bin), max(ojiva_data$bin)),
+            freq_acum_rel = 50,
+            Linea = "Percentil 50%"),
+          aes(x = bin, y = freq_acum_rel, linetype = Linea),
+          color = "red", size = 0.8) +
+  facet_wrap(~Region, ncol = 2, scales = "fixed") +
+  labs(
+    x = "Puntaje del Índice Commerce",
+    y = "Frecuencia Acumulada Relativa (%)",
+    linetype = "" 
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),
+    axis.text = element_text(size = 8),
+    strip.text = element_text(size = 9, face = "bold"),
+    panel.spacing = unit(1, "lines"),
+    legend.box = "vertical",
+    legend.background = element_rect(fill = alpha("white", 0.8), color =NA),
+    legend.margin = margin(4, 4, 4, 4),
+    legend.position = c(0.98, 0.02),
+    legend.justification = c(1, 0)
+  ) +
+  scale_linetype_manual(values = c("Frecuencia\nacumulada\nporcentual" = "solid", "Percentil 50%" = "dashed")) +
+  scale_y_continuous(limits = c(0, 100))
+
+ggsave("figura3.png", plot = figura_ojiva, width = 8, height = 9, dpi = 300)
+
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura3.png}
+\end{center}
+Figura 3. Distribución acumulada del Índice Commerce agrupado por Región.
+
+
+El diagrama de cajas y bigotes presentado en la figura 4
+
+```{r figura4, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Generación del. diagrama
+stats_boxplot <- datos %>%
+  group_by(Region) %>%
+  summarise(
+    q1 = quantile(Commercial, 0.25, na.rm = TRUE),
+    q3 = quantile(Commercial, 0.75, na.rm = TRUE),
+    iqr = IQR(Commercial, na.rm = TRUE),
+    lower_whisker = max(min(Commercial, na.rm = TRUE), q1 - 1.5 * iqr),
+    upper_whisker = min(max(Commercial, na.rm = TRUE), q3 + 1.5 * iqr),
+    mean_val = mean(Commercial, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+datos$Region <- factor(datos$Region)
+
+figura4 <- ggplot(datos, aes(x = Region, y = Commercial)) +
+  geom_boxplot(outlier.colour = "red",
+               outlier.shape = 16,
+               outlier.size = 2,
+               fill = "lightblue",
+               color = "black",
+               coef = 1.5) +
+  
+  geom_segment(data = stats_boxplot,
+               aes(x = as.numeric(factor(Region)) - 0.15, 
+                   xend = as.numeric(factor(Region)) + 0.15,
+                   y = lower_whisker, 
+                   yend = lower_whisker),
+               color = "black", linewidth = 0.5) +
+  
+  geom_segment(data = stats_boxplot,
+               aes(x = as.numeric(factor(Region)) - 0.15, 
+                   xend = as.numeric(factor(Region)) + 0.15,
+                   y = upper_whisker, 
+                   yend = upper_whisker),
+               color = "black", linewidth = 0.5) +
+  
+  stat_summary(fun = mean,
+               geom = "point",
+               shape = 18,
+               size = 3,
+               color = "darkblue") +
+  
+  labs(x = "Región",
+       y = "Índice Commerce") +
+  
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 9),
+    axis.text.y = element_text(size = 9),
+    plot.title = element_text(hjust = 0.5, size = 12)
+  ) +
+  annotate("text", x = max(as.numeric(factor(datos$Region))), 
+           y = max(datos$Commercial, na.rm = TRUE) * 0.92, 
+           label = "▲ Media", color = "darkblue", size = 3, hjust = 1) +
+  annotate("text", x = max(as.numeric(factor(datos$Region))), 
+           y = max(datos$Commercial, na.rm = TRUE) * 0.87, 
+           label = "● Valor atípico", color = "red", size = 3, hjust = 1)
+ggsave("figura4.png", plot = figura4, width = 8, height = 5, dpi = 300)
+
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura4.png}
+\end{center}
+Figura 4. Distribución de las medidas de posición del Índice Commerce agrupado por Región.
+
+
+
+
+
+\subsection{Índice Research}
+tabla de frecuencia bivariada (indice vs total socore)
+histograma x region
+ojiva x region
+diagrama de cajas y bigotes x region
+prueba de independencia
+
+
+\subsection{Índice Talent}
+tabla de frecuencia bivariada (indice vs total socore)
+histograma x region
+ojiva x region
+diagrama de cajas y bigotes x region
+prueba de independencia x region
+
+\subsection{Región}
+tabla de frecuencia univariada de los índices discriminados por región
+tabla de frecuencia bivariada (region y total score)
+diagrama de barras
+diagrama de torta
+
+\section{Análisis de resultados}
+
+\section{Conclusiones}
+
+\section{Referencias}
+[1]   “AI Global Index,” Kaggle, Apr. 26, 2023.         https://www.kaggle.com/datasets/katerynameleshenko/ai-index
+
+[2]   W. Navidi, Statistics for Engineers and Scientists w/ CD-ROM. McGraw-Hill Sci./Eng./Math, 2004.
+
+\end{multicols}
