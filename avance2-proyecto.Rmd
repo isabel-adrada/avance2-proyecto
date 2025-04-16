@@ -494,12 +494,41 @@ figura4 <- ggplot(datos, aes(x = Region, y = Commercial)) +
 ggsave("figura4.png", plot = figura4, width = 8, height = 5, dpi = 300)
 
 ```
+
 \begin{center}
 \includegraphics[width=\linewidth]{figura4.png}
 \end{center}
-Figura 4. Distribución de las medidas de posición del Índice Commerce agrupado por Región.
+El indicador Commercial evalúa la capacidad de los países para convertir el conocimiento en IA en aplicaciones comerciales y soluciones de mercado. La Tabla 5 presenta la distribución global de este indicador a través de intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en cada rango. Este análisis es clave para identificar qué economías están liderando la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
+\end{multicols}
 
+```{r, echo=FALSE}
+# Crear intervalos para la variable Commercial
+intervalos <- cut(datos$Commercial, breaks = seq(0, 100, by = 10), 
+                  include.lowest = TRUE, right = TRUE)
 
+# Calcular frecuencias
+frec_abs <- table(intervalos)
+frec_rel <- prop.table(frec_abs)
+frec_abs_acum <- cumsum(frec_abs)
+frec_rel_acum <- cumsum(frec_rel)
+
+# Crear la tabla de frecuencias con nombres abreviados
+tabla_frecuencias_Commercial <- data.frame(
+  Intervalo = levels(intervalos),
+  "F.Abs" = as.numeric(frec_abs),
+  "F.Rel" = round(as.numeric(frec_rel), 2),
+  "F.Abs.A" = as.numeric(frec_abs_acum),
+  "F.Rel.A" = round(as.numeric(frec_rel_acum), 2)
+)
+
+# Mostrar la tabla con knitr::kable
+knitr::kable(tabla_frecuencias_Commercial, 
+             caption = "Distribución Global del Indicador Commercial",
+             align = c('l', 'c', 'c', 'c', 'c'),
+             format.args = list(decimal.mark = "."))
+```
+\begin{multicols}{2}
+La Tabla 5 revela una concentración extrema en la capacidad comercial, con más del 65% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100 puntos), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África y Latinoamérica.
 \subsection{Índice Research}
 
 tabla de frecuencia bivariada (indice vs total socore)
@@ -594,7 +623,8 @@ diagrama de barras
 diagrama de torta
 
 \section{Análisis de resultados}
-
+El estudio realizado mediante tablas univariadas de frecuencias (absolutas, relativas y acumuladas) de los tres indicadores clave revela patrones estructurales preocupantes en el desarrollo global de la inteligencia artificial. El análisis muestra una concentración extrema de capacidades en un reducido grupo de países - principalmente Estados Unidos (con puntuaciones perfectas en Talent y Commercial), China (destacada en Research con 71.42 puntos) y algunas economías europeas -, que dominan simultáneamente los tres ámbitos. Esta triple brecha (formativa, científica y comercial), evidenciada por las frecuencias acumuladas donde el 80 por ciento de los países analizados muestra desempeños limitados (F.Rel.Acum mayor a 0.80 en intervalos menores a 30 puntos para los tres indicadores), crea un escenario crítico de dependencia tecnológica.
+El estudio revela que solo el 12 por ciento de los países (7/58) alcanza puntuaciones altas (mayores a 70 puntos) en los tres indicadores simultáneamente, mientras que el 65 por ciento muestra limitaciones críticas en Commercial (F.Rel.Acum=0.65 en menos de 20 puntos), porcentaje que supera en 20 puntos al de Research (45 por ciento). Destaca especialmente la brecha en Talent, donde Estados Unidos (100 puntos) quintuplica la media global (19.3 puntos), evidenciando una concentración extrema de capital humano especializado.
 \section{Conclusiones}
 
 \section{Referencias}
