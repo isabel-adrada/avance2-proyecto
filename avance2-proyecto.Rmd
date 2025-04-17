@@ -790,9 +790,13 @@ Figura 7. Distribución cajas y bigotes del Índice Research agrupado por Regió
 
 La Tabla 8 revela una distribución desigual del talento en IA a nivel mundial, con una marcada concentración en los extremos: mientras el 42\% de los países se ubica en el rango más bajo (0-20 puntos), solo un 18 pot ciento supera los 50 puntos. Las frecuencias acumuladas muestran que apenas el 30 por ciento de las naciones alcanza niveles competitivos (mayor igual a 40 puntos), destacando Estados Unidos (100 puntos) como caso excepcional. Esta polarización refleja brechas estructurales en la formación de profesionales calificados, donde economías desarrolladas capturan la mayor parte del talento global.
 
+La Tabla 8 revela una fuerte desigualdad en la distribución global de talento en IA. Estados Unidos destaca como líder absoluto (100 puntos), mientras que más del 40 por ciento de los países se concentra en el nivel más bajo (0-20 puntos). Esta brecha refleja las profundas asimetrías en desarrollo tecnológico, donde solo un puñado de naciones concentra las capacidades avanzadas.
+
+La escasez de países en rangos intermedios (30-60 puntos) es particularmente preocupante, pues muestra que pocas economías están logrando desarrollar talento competitivo. Estos resultados subrayan la urgencia de políticas globales para democratizar el acceso a formación especializada, especialmente en regiones en desarrollo donde el talento en IA resulta crítico para no quedar rezagados en la transformación digital.
+
 \end{multicols}
 
-```{r, echo=FALSE}
+```{r tabla8, echo=FALSE}
 datos <- read.csv("AI_index_db.csv")
 
 # Crear intervalos para la variable Talent
@@ -820,15 +824,208 @@ knitr::kable(tabla_frecuencias_talent,
              align = c('l', 'c', 'c', 'c', 'c'))
 ```
 
+
+```{r tabla9, echo=FALSE, results='asis'}
+
+#Generación de la tabla
+crear_intervalos <- function(data, variable, n_bins = 8) {
+  breaks <- pretty(range(data[[variable]], na.rm = TRUE), n = n_bins)
+  return(breaks)
+}
+talent_breaks <- crear_intervalos(datos, "Talent")
+total_score_breaks <- crear_intervalos(datos, "Total.score")
+research_labels <- paste0("(", talent_breaks[-length(talent_breaks)], ", ", talent_breaks[-1], "]")
+score_labels <- paste0("(", total_score_breaks[-length(total_score_breaks)], ", ", total_score_breaks[-1], "]")
+datos$Talent_interval <- cut(datos$Talent, 
+                                breaks = research_breaks, 
+                                labels = research_labels, 
+                                include.lowest = TRUE)
+datos$TotalScore_interval <- cut(datos$Total.score, 
+                                breaks = total_score_breaks, 
+                                labels = score_labels, 
+                                include.lowest = TRUE)
+tabla_contingencia <- table(datos$Talent_interval, datos$TotalScore_interval)
+tabla_df <- as.data.frame.matrix(tabla_contingencia)
+tabla_df$Total <- rowSums(tabla_df)
+totales_columna <- colSums(tabla_df)
+tabla_df <- rbind(tabla_df, Total = totales_columna)
+tabla5 <- tabla_df %>%
+  tibble::rownames_to_column(var = "A  -   B") %>%
+  dplyr::rename(`A - B` = `A  -   B`) %>% 
+  dplyr::select(`A - B`, everything()) 
+
+colnames(tabla5) <- c("A   -   B", "[0, 10]", "(10, 20]", "(20, 30]", "(30, 40]", "(40, 50]", 
+                      "(50, 60]", "(60, 70]", "(70, 80]", "(80, 90]", "(90, 100]", "Total")
+
+cat("\\renewcommand{\\arraystretch}{1.3}\n")
+cat("\\begin{scriptsize}")
+print(xtable::xtable(tabla5, 
+                   caption = "Tabla de Frecuencia Bivariada Índice Talent (A) vs Total Score (B)"),
+      tabular.environment = "longtable",
+      floating = FALSE,
+      include.rownames = FALSE,
+      latex.environments = "",
+      caption.placement = "top")
+cat("\\end{scriptsize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
+```
+
 \begin{multicols}{2}
 
-La Tabla 6 revela una fuerte desigualdad en la distribución global de talento en IA. Estados Unidos destaca como líder absoluto (100 puntos), mientras que más del 40 por ciento de los países se concentra en el nivel más bajo (0-20 puntos). Esta brecha refleja las profundas asimetrías en desarrollo tecnológico, donde solo un puñado de naciones concentra las capacidades avanzadas.
 
-La escasez de países en rangos intermedios (30-60 puntos) es particularmente preocupante, pues muestra que pocas economías están logrando desarrollar talento competitivo. Estos resultados subrayan la urgencia de políticas globales para democratizar el acceso a formación especializada, especialmente en regiones en desarrollo donde el talento en IA resulta crítico para no quedar rezagados en la transformación digital.
+```{r figura8, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Histograma de Talent por región
+histograma_talent <- ggplot(datos, aes(x = Talent)) +
+  geom_histogram(bins = 10, fill = "steelblue", color = "white") +
+  facet_wrap(~Region, ncol = 2, scales = "fixed") +  
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Puntaje del Índice Talent",
+       y = "Frecuencia") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 12),
+        axis.text = element_text(size = 8),
+        strip.text = element_text(size = 9, face = "bold"),
+        panel.spacing = unit(1, "lines"))
+
+ggsave("figura8.png", plot = histograma_talent, width = 8, height = 9, dpi = 300)
+
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura8.png}
+\end{center}
+Figura 8. Distribución del Índice Talent agrupado por Región.
+
+
+```{r figura9, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Distribución acumulada (ojiva) del índice Talent
+prepare_ogive_data <- function(df, variable, region_var, bins = 10) {
+  df %>%
+    filter(!is.na(.data[[variable]])) %>%
+    group_by(.data[[region_var]]) %>%
+    do({
+      region_data <- .
+      breaks <- pretty(range(region_data[[variable]], na.rm = TRUE), n = bins)
+      h <- hist(region_data[[variable]], breaks = breaks, plot = FALSE)
+      cum_freq <- cumsum(h$counts) / sum(h$counts) * 100
+      data.frame(
+        Region = unique(region_data[[region_var]]),
+        bin = h$mids,
+        freq_acum_rel = cum_freq
+      )
+    }) %>%
+    ungroup()
+}
+
+ojiva_talent_data <- prepare_ogive_data(datos, "Talent", "Region", bins = 10)
+
+figura_ojiva_talent <- ggplot(ojiva_talent_data, aes(x = bin, y = freq_acum_rel)) +
+  geom_line(color = "darkblue", size = 1, aes(linetype = "Frecuencia\nacumulada\nporcentual")) +
+  geom_point(color = "darkblue", size = 2) +
+  geom_line(data = data.frame(bin = c(min(ojiva_talent_data$bin), max(ojiva_talent_data$bin)),
+            freq_acum_rel = 50,
+            Linea = "Percentil 50%"),
+          aes(x = bin, y = freq_acum_rel, linetype = Linea),
+          color = "red", size = 0.8) +
+  facet_wrap(~Region, ncol = 2, scales = "fixed") +
+  labs(
+    x = "Puntaje del Índice Talent",
+    y = "Frecuencia Acumulada Relativa (%)",
+    linetype = "" 
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),
+    axis.text = element_text(size = 8),
+    strip.text = element_text(size = 9, face = "bold"),
+    panel.spacing = unit(1, "lines"),
+    legend.box = "vertical",
+    legend.background = element_rect(fill = alpha("white", 0.8), color = NA),
+    legend.margin = margin(4, 4, 4, 4),
+    legend.position = c(0.98, 0.02),
+    legend.justification = c(1, 0)
+  ) +
+  scale_linetype_manual(values = c("Frecuencia\nacumulada\nporcentual" = "solid", "Percentil 50%" = "dashed")) +
+  scale_y_continuous(limits = c(0, 100))
+
+ggsave("figura9.png", plot = figura_ojiva_talent, width = 8, height = 9, dpi = 300)
+
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura9.png}
+\end{center}
+Figura 9. Distribución acumulada del Índice Talent agrupado por Región.
+
+
+```{r}
+# Diagrama de cajas y bigotes del índice Talent
+stats_boxplot_talent <- datos %>%
+  group_by(Region) %>%
+  summarise(
+    q1 = quantile(Talent, 0.25, na.rm = TRUE),
+    q3 = quantile(Talent, 0.75, na.rm = TRUE),
+    iqr = IQR(Talent, na.rm = TRUE),
+    lower_whisker = max(min(Talent, na.rm = TRUE), q1 - 1.5 * iqr),
+    upper_whisker = min(max(Talent, na.rm = TRUE), q3 + 1.5 * iqr),
+    mean_val = mean(Talent, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+datos$Region <- factor(datos$Region)
+
+figura_boxplot_talent <- ggplot(datos, aes(x = Region, y = Talent)) +
+  geom_boxplot(outlier.colour = "red",
+               outlier.shape = 16,
+               outlier.size = 2,
+               fill = "lightblue",
+               color = "black",
+               coef = 1.5) +
+  
+  geom_segment(data = stats_boxplot_talent,
+               aes(x = as.numeric(factor(Region)) - 0.15, 
+                   xend = as.numeric(factor(Region)) + 0.15,
+                   y = lower_whisker, 
+                   yend = lower_whisker),
+               color = "black", linewidth = 0.5) +
+  
+  geom_segment(data = stats_boxplot_talent,
+               aes(x = as.numeric(factor(Region)) - 0.15, 
+                   xend = as.numeric(factor(Region)) + 0.15,
+                   y = upper_whisker, 
+                   yend = upper_whisker),
+               color = "black", linewidth = 0.5) +
+  
+  stat_summary(fun = mean,
+               geom = "point",
+               shape = 18,
+               size = 3,
+               color = "darkblue") +
+  
+  labs(x = "Región",
+       y = "Índice Talent") +
+  
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 9),
+    axis.text.y = element_text(size = 9),
+    plot.title = element_text(hjust = 0.5, size = 12)
+  ) +
+  annotate("text", x = max(as.numeric(factor(datos$Region))), 
+           y = max(datos$Talent, na.rm = TRUE) * 0.92, 
+           label = "▲ Media", color = "darkblue", size = 3, hjust = 1) +
+  annotate("text", x = max(as.numeric(factor(datos$Region))), 
+           y = max(datos$Talent, na.rm = TRUE) * 0.87, 
+           label = "● Valor atípico", color = "red", size = 3, hjust = 1)
+
+ggsave("figura_talent_boxplot.png", plot = figura_boxplot_talent, width = 8, height = 5, dpi = 300)
+```
+
 
 \subsection{Región}
-
-
 El diagrama de torta de distribución regional proporciona el contexto geopolítico esencial para interpretar las desigualdades en los indicadores de IA (Talent-Research-Commercial), revelando que la excelencia tecnológica no se distribuye aleatoriamente, sino que se concentra en regiones con ventajas históricas de inversión en educación e innovación. Esta visualización evidencia cómo la mayor representación proporcional de ciertas zonas (como América del Norte y Asia-Pacífico) correlaciona directamente con su dominio en los intervalos superiores de los tres indicadores, mientras que regiones con menor representación proporcional (África, Latinoamérica) aparecen sistemáticamente en los rangos inferiores, configurando un mapa de dependencia tecnológica global
 
 \includegraphics[width=\linewidth]{Efrain(torta).png}
