@@ -627,7 +627,7 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 \begin{multicols}{2}
 
-figura 5
+La Figura 5 muestra la distribución del Índice Research en distintas regiones del mundo. Se observa que la mayoría de las regiones, como África, Medio Oriente y América, presentan una fuerte concentración de países con puntajes bajos, lo que indica un nivel limitado de desarrollo en investigación. En cambio, Europa y Asia-Pacífico muestran distribuciones más variadas, con una mayor presencia de países en niveles intermedios e incluso altos, lo cual sugiere un mejor desempeño en términos de inversión y producción científica. También se destacan algunos casos atípicos en regiones como América y Asia-Pacífico, que muestran países con puntajes significativamente superiores al resto.
 
 ```{r figura5, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -831,6 +831,7 @@ knitr::kable(tabla_frecuencias_talent,
              align = c('l', 'c', 'c', 'c', 'c'))
 ```
 
+\\
 
 ```{r tabla9, echo=FALSE, results='asis'}
 
@@ -1037,13 +1038,6 @@ ggsave("figura10.png", plot = figura_boxplot_talent, width = 8, height = 5, dpi 
 \end{center}
 
 Figura 10. Distribución cajas y bigotes del Índice Talent agrupado por Región.
-
-
-\subsection{Región}
-El diagrama de torta de distribución regional proporciona el contexto geopolítico esencial para interpretar las desigualdades en los indicadores de IA (Talent-Research-Commercial), revelando que la excelencia tecnológica no se distribuye aleatoriamente, sino que se concentra en regiones con ventajas históricas de inversión en educación e innovación. Esta visualización evidencia cómo la mayor representación proporcional de ciertas zonas (como América del Norte y Asia-Pacífico) correlaciona directamente con su dominio en los intervalos superiores de los tres indicadores, mientras que regiones con menor representación proporcional (África, Latinoamérica) aparecen sistemáticamente en los rangos inferiores, configurando un mapa de dependencia tecnológica global
-
-\includegraphics[width=\linewidth]{Efrain(torta).png}
-
 
 \section{Análisis de resultados}
 El estudio realizado mediante tablas univariadas de frecuencias (absolutas, relativas y acumuladas) de los tres indicadores clave revela patrones estructurales preocupantes en el desarrollo global de la inteligencia artificial. El análisis muestra una concentración extrema de capacidades en un reducido grupo de países - principalmente Estados Unidos (con puntuaciones perfectas en Talent y Commercial), China (destacada en Research con 71.42 puntos) y algunas economías europeas -, que dominan simultáneamente los tres ámbitos. Esta triple brecha (formativa, científica y comercial), evidenciada por las frecuencias acumuladas donde el 80 por ciento de los países analizados muestra desempeños limitados (F.Rel.Acum mayor a 0.80 en intervalos menores a 30 puntos para los tres indicadores), crea un escenario crítico de dependencia tecnológica.
