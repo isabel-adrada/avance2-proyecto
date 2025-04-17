@@ -120,35 +120,11 @@ ggsave("figura1.png", plot = figura1, width = 7, height = 7, dpi = 300)
 \end{center}
 Figura 1. Correlación lineal de Pearson índices.
 
-\section*{Población y Muestra} % Using \section* for unnumbered sections
-La población considerada para este estudio corresponde a los países y regiones incluidas en el AI Global Index.
-La muestra se delimita a aquellos países con datos completos para las variables de interés:
-inversión, infraestructura, talento, ambiente operativo e investigación y desarrollo.
-Se seleccionaron X países según los criterios establecidos en la Figura 1, priorizando la disponibilidad
-de datos confiables y actualizados.
+La población considerada para este estudio corresponde a los países y regiones incluidas en el AI Global Index. La muestra se delimita a aquellos países con datos completos para las variables de interés: inversión, infraestructura, talento, ambiente operativo e investigación y desarrollo. 
 
-\section*{Unidad de Análisis}
-La unidad de análisis en este estudio es cada país individual, evaluado según las variables cuantitativas y cualitativas
-definidas en la Tabla 1.
+La unidad de análisis en este estudio son las regiones conformadas por los 62 países estudiados, evaluado según las variables cuantitativas y cualitativas definidas en la Tabla 1. Los criterios considerados para la selección de los países y regiones incluyen la sisponibilidad de datos en el AI Global Index, inclusión en las categorías de clasificación establecidas (ver Tabla 1) y representación geográfica equilibrada para evitar sesgos regionales.
 
-\section*{Criterios de Selección}
-Los criterios considerados para la selección de los países y regiones incluyen:
-\begin{enumerate}
-    \item Disponibilidad de datos en el AI Global Index.
-    \item Inclusión en las categorías de clasificación establecidas (ver Tabla 1).
-    \item Representación geográfica equilibrada para evitar sesgos regionales.
-\end{enumerate}
-
-\section*{Tipo de Análisis}
-El análisis realizado incluye:
-\begin{itemize}
-    \item Estadísticas descriptivas: medidas de tendencia central, dispersión y posición.
-    \item Correlación lineal de Pearson entre las variables cuantitativas y el índice total.
-    \item Comparación de medias para evaluar diferencias significativas entre subgrupos de países (por ejemplo, según ingresos).
-\end{itemize}
-
-Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables,
-como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
+El análisis realizado incluye estadísticas descriptivas: medidas de tendencia central, dispersión y posición, correlación lineal de Pearson entre las variables cuantitativas y el índice total y comparación de medias para evaluar diferencias significativas entre regiones. Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables, como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
 
 \section{Resultados}
 En la Tabla 2 se presentan las medidas de tendencia central y posición de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
@@ -596,6 +572,7 @@ knitr::kable(tabla_frecuencias_research,
 
 \begin{multicols}{2}
 
+tabla 7
 
 \end{multicols}
 
@@ -645,6 +622,93 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 ```
 
 \begin{multicols}{2}
+
+figura 5
+
+```{r figura5, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Crear el histograma 
+figura5 <- ggplot(datos, aes(x = Research)) +
+  geom_histogram(bins = 10, fill = "steelblue", color = "white") +
+  facet_wrap(~Region, ncol = 2, scales = "fixed") +  
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  labs(x = "Puntaje del Índice Research",
+       y = "Frecuencia") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 12),
+        axis.text = element_text(size = 8),
+        strip.text = element_text(size = 9, face = "bold"),
+        panel.spacing = unit(1, "lines"))
+ggsave("figura5.png", plot = figura5, width = 8, height = 9, dpi = 300)
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura5.png}
+\end{center}
+Figura 5. Distribución del Índice Research agrupado por Región.
+
+figura 6
+
+```{r figura6, echo=FALSE, warning=FALSE, message=FALSE}
+
+# Generar diagrama
+prepare_ogive_data <- function(df, variable, region_var, bins = 10) {
+  df %>%
+    filter(!is.na(.data[[variable]])) %>%
+    group_by(.data[[region_var]]) %>%
+    do({
+      region_data <- .
+      breaks <- pretty(range(region_data[[variable]], na.rm = TRUE), n = bins)
+      h <- hist(region_data[[variable]], breaks = breaks, plot = FALSE)
+      cum_freq <- cumsum(h$counts) / sum(h$counts) * 100
+      data.frame(
+        Region = unique(region_data[[region_var]]),
+        bin = h$mids,
+        freq_acum_rel = cum_freq
+      )
+    }) %>%
+    ungroup()
+}
+
+ojiva_data <- prepare_ogive_data(datos, "Research", "Region", bins = 10)
+
+figura_ojiva <- ggplot(ojiva_data, aes(x = bin, y = freq_acum_rel)) +
+  geom_line(color = "darkblue", size = 1, aes(linetype = "Frecuencia\nacumulada\nporcentual")) +
+  geom_point(color = "darkblue", size = 2) +
+  geom_line(data = data.frame(bin = c(min(ojiva_data$bin), max(ojiva_data$bin)),
+            freq_acum_rel = 50,
+            Linea = "Percentil 50%"),
+          aes(x = bin, y = freq_acum_rel, linetype = Linea),
+          color = "red", size = 0.8) +
+  facet_wrap(~Region, ncol = 2, scales = "fixed") +
+  labs(
+    x = "Puntaje del Índice Research",
+    y = "Frecuencia Acumulada Relativa (%)",
+    linetype = "" 
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 12),
+    axis.text = element_text(size = 8),
+    strip.text = element_text(size = 9, face = "bold"),
+    panel.spacing = unit(1, "lines"),
+    legend.box = "vertical",
+    legend.background = element_rect(fill = alpha("white", 0.8), color =NA),
+    legend.margin = margin(4, 4, 4, 4),
+    legend.position = c(0.98, 0.02),
+    legend.justification = c(1, 0)
+  ) +
+  scale_linetype_manual(values = c("Frecuencia\nacumulada\nporcentual" = "solid", "Percentil 50%" = "dashed")) +
+  scale_y_continuous(limits = c(0, 100))
+
+ggsave("figura6.png", plot = figura_ojiva, width = 8, height = 9, dpi = 300)
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura6.png}
+\end{center}
+Figura 6. Distribución acumulada del Índice Research agrupado por Región.
 
 
 \subsection{Índice Talent}

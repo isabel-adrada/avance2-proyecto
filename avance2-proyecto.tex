@@ -165,35 +165,11 @@ Posteriormente, con el propósito de indentificar las posibles variables con un 
 \end{center}
 Figura 1. Correlación lineal de Pearson índices.
 
-\section*{Población y Muestra} % Using \section* for unnumbered sections
-La población considerada para este estudio corresponde a los países y regiones incluidas en el AI Global Index.
-La muestra se delimita a aquellos países con datos completos para las variables de interés:
-inversión, infraestructura, talento, ambiente operativo e investigación y desarrollo.
-Se seleccionaron X países según los criterios establecidos en la Figura 1, priorizando la disponibilidad
-de datos confiables y actualizados.
+La población considerada para este estudio corresponde a los países y regiones incluidas en el AI Global Index. La muestra se delimita a aquellos países con datos completos para las variables de interés: inversión, infraestructura, talento, ambiente operativo e investigación y desarrollo. 
 
-\section*{Unidad de Análisis}
-La unidad de análisis en este estudio es cada país individual, evaluado según las variables cuantitativas y cualitativas
-definidas en la Tabla 1.
+La unidad de análisis en este estudio son las regiones conformadas por los 62 países estudiados, evaluado según las variables cuantitativas y cualitativas definidas en la Tabla 1. Los criterios considerados para la selección de los países y regiones incluyen la sisponibilidad de datos en el AI Global Index, inclusión en las categorías de clasificación establecidas (ver Tabla 1) y representación geográfica equilibrada para evitar sesgos regionales.
 
-\section*{Criterios de Selección}
-Los criterios considerados para la selección de los países y regiones incluyen:
-\begin{enumerate}
-    \item Disponibilidad de datos en el AI Global Index.
-    \item Inclusión en las categorías de clasificación establecidas (ver Tabla 1).
-    \item Representación geográfica equilibrada para evitar sesgos regionales.
-\end{enumerate}
-
-\section*{Tipo de Análisis}
-El análisis realizado incluye:
-\begin{itemize}
-    \item Estadísticas descriptivas: medidas de tendencia central, dispersión y posición.
-    \item Correlación lineal de Pearson entre las variables cuantitativas y el índice total.
-    \item Comparación de medias para evaluar diferencias significativas entre subgrupos de países (por ejemplo, según ingresos).
-\end{itemize}
-
-Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables,
-como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
+El análisis realizado incluye estadísticas descriptivas: medidas de tendencia central, dispersión y posición, correlación lineal de Pearson entre las variables cuantitativas y el índice total y comparación de medias para evaluar diferencias significativas entre regiones. Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables, como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
 
 \section{Resultados}
 En la Tabla 2 se presentan las medidas de tendencia central y posición de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
@@ -333,7 +309,7 @@ Hay un dato con un Índice Commerce entre 40 y 50 con un total score correspondi
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Wed Apr 16 21:19:53 2025
+% Wed Apr 16 21:33:58 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Commerce (A) vs Total Score (B)} \\ 
   \hline
@@ -410,6 +386,7 @@ Figura 4. Distribución cajas y bigoes del Índice Commerce agrupado por Región
 
 El indicador Research mide la producción científica y capacidad investigadora en inteligencia artificial, siendo un predictor clave del desarrollo tecnológico futuro. La Tabla 6 presenta su distribución global mediante frecuencias absolutas y relativas, permitiendo identificar los patrones de concentración del conocimiento especializado. Este análisis es fundamental para comprender qué países están liderando la generación de nuevo conocimiento en IA y qué regiones requieren fortalecer sus sistemas de investigación.
 
+Los resultados revelan una concentración extrema en la capacidad investigadora: mientras el 60\% de los países se ubica por debajo de los 30 puntos (F.Rel.Acum = 0.60), solo un selecto grupo (15\%) supera los 70 puntos. Estados Unidos (100 puntos) y China (71.42) dominan claramente los intervalos superiores. Sin embargo, destaca que varios países europeos (Reino Unido 36.5, Alemania 35.84) mantienen capacidades significativas. La presencia casi nula de países africanos y latinoamericanos por encima de los 20 puntos (F.Abs = 2) evidencia un riesgo crítico de dependencia tecnológica.
 
 \end{multicols}
 
@@ -439,13 +416,13 @@ Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
 
 \begin{multicols}{2}
 
-Los resultados revelan una concentración extrema en la capacidad investigadora: mientras el 60\% de los países se ubica por debajo de los 30 puntos (F.Rel.Acum = 0.60), solo un selecto grupo (15\%) supera los 70 puntos. Estados Unidos (100 puntos) y China (71.42) dominan claramente los intervalos superiores. Sin embargo, destaca que varios países europeos (Reino Unido 36.5, Alemania 35.84) mantienen capacidades significativas. La presencia casi nula de países africanos y latinoamericanos por encima de los 20 puntos (F.Abs = 2) evidencia un riesgo crítico de dependencia tecnológica.
+tabla 7
 
 \end{multicols}
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Wed Apr 16 21:19:56 2025
+% Wed Apr 16 21:34:02 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Research (A) vs Total Score (B)} \\ 
   \hline
@@ -469,6 +446,14 @@ A   -   B & [0, 10] & (10, 20] & (20, 30] & (30, 40] & (40, 50] & (50, 60] & (60
 
 \begin{multicols}{2}
 
+figura 5
+
+
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura5.png}
+\end{center}
+Figura 5. Distribución del Índice Research agrupado por Región.
 
 \subsection{Índice Talent}
 tabla de frecuencia bivariada (indice vs total socore)
