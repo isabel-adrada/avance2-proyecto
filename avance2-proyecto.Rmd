@@ -652,7 +652,10 @@ ggsave("figura5.png", plot = figura5, width = 8, height = 9, dpi = 300)
 \end{center}
 Figura 5. Distribución del Índice Research agrupado por Región.
 
-figura 6
+En la Figura 6 Africa presenta una distribución muy concentrada en valores bajos (menores a 5), lo cual indica poca variabilidad y bajo desempeño general en el índice. Americas, aunque hay un poco más de dispersión en comparación con África, la mayoría de los países también se concentran en valores menores a 30, con pocos casos en niveles altos. Asia-Pacific tiene una distribución más balanceada, con varios países en rangos intermedios y algunos casos en valores altos del índice. Supera el percentil 50 antes que otras regiones.Europe muestra una tendencia progresiva con valores mejor distribuidos. Muchos países alcanzan o superan el percentil 50, lo que indica un mejor desempeño relativo y Middle East: Tiene una distribución similar a África, con acumulaciones rápidas en valores bajos y pocos países con puntajes elevados.
+
+En general, se observa que Europa y Asia-Pacífico presentan un comportamiento más diverso y favorable en el Índice Research, mientras que regiones como África y Medio Oriente concentran sus frecuencias en los niveles más bajos.
+
 
 ```{r figura6, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -714,7 +717,11 @@ ggsave("figura6.png", plot = figura_ojiva, width = 8, height = 9, dpi = 300)
 \end{center}
 Figura 6. Distribución acumulada del Índice Research agrupado por Región.
 
-figura 7
+La Figura 7 compara las regiones usando diagramas de caja, que nos permiten ver cómo se distribuyen los datos, la mediana, y si hay valores atípicos (puntos rojos).
+
+África tiene una caja muy pequeña y pegada al valor mínimo. Eso muestra que los datos están muy concentrados en valores bajos y no hay mucha variación. En América, la mediana sigue siendo baja, pero la caja es un poco más grande. Además, hay un valor atípico bastante alto, lo que significa que hay al menos un país con un nivel de investigación mucho mayor al resto. Asia-Pacífico es la región con mayor dispersión. Su mediana es más alta y tiene varios valores extremos, lo cual indica que hay países con niveles muy diferentes entre sí.Europa muestra una distribución más equilibrada, con una mediana relativamente alta y sin valores atípicos tan extremos. Esto sugiere que la mayoría de sus países tienen un desempeño aceptable en investigación y Medio Oriente tiene una mediana baja y poca dispersión, aunque también se observa un valor atípico.
+
+En general, se nota que Europa y Asia-Pacífico destacan por tener mejores y más variados puntajes, mientras que África y Medio Oriente tienden a concentrarse en la parte baja del índice.
 
 ```{r figura7, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -961,7 +968,8 @@ ggsave("figura9.png", plot = figura_ojiva_talent, width = 8, height = 9, dpi = 3
 Figura 9. Distribución acumulada del Índice Talent agrupado por Región.
 
 
-```{r}
+```{r figura10, echo=FALSE, warning=FALSE, message=FALSE}
+
 # Diagrama de cajas y bigotes del índice Talent
 stats_boxplot_talent <- datos %>%
   group_by(Region) %>%
@@ -1021,8 +1029,14 @@ figura_boxplot_talent <- ggplot(datos, aes(x = Region, y = Talent)) +
            y = max(datos$Talent, na.rm = TRUE) * 0.87, 
            label = "● Valor atípico", color = "red", size = 3, hjust = 1)
 
-ggsave("figura_talent_boxplot.png", plot = figura_boxplot_talent, width = 8, height = 5, dpi = 300)
+ggsave("figura10.png", plot = figura_boxplot_talent, width = 8, height = 5, dpi = 300)
 ```
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura9.png}
+\end{center}
+
+Figura 10. Distribución cajas y bigotes del Índice Talent agrupado por Región.
 
 
 \subsection{Región}
