@@ -121,7 +121,9 @@ A partir de los anteriores planteamientos se formula como hipótesis: la influen
 
 
 \section{Métodos}
-Para la definición de las variables a estudiar a partir de la base de datos AI Global Index trabajada en el presente estudio, se relalizó una exploración preliminar de los datos en la Tabla 1, donde se nombran las variables, se clasifican como cualitativas o cuantitativas, se categorizan como continuas o discretas, o nominal u ordinal según el caso y se realiza una descripción de las mismas.
+
+Para la definición de las variables a estudiar a partir de la base de datos AI Global Index trabajada en el presente estudio, se relalizó una exploración preliminar de los datos en la Tabla 1, donde se nombran las variables, se clasifican como cualitativas o cuantitativas, se categorizan como continuas o discretas, o nominal u ordinal según el caso y se realiza una descripción de las mismas.\\
+
 
 \end{multicols}
 
@@ -154,6 +156,7 @@ Political Regime & Cualitativa & Nominal & Tipo de régimen político presentado
 
 \begin{multicols}{2}
 
+La población considerada para este estudio corresponde a todos los países del mundo, mientras la muestra se delimita a los países y regiones incluidas en el AI Global Index con datos completos para los factores inversión, innovación e implementación. La unidad de análisis en este estudio son las 5 regiones conformadas por los 62 países estudiados, evaluado según las variables cuantitativas y cualitativas definidas en la Tabla 1. 
 
 Posteriormente, con el propósito de indentificar las posibles variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, se elaboró la Figura 1, la cuál presenta una comparación de las distribuciones de las variables y sus respectivos coeficientes de correlación lineal de Pearson con el fin de reconocer los índices que presentan un mayor valor respecto al AI Global Index (Total Score), los cuáles fueron Commerce para el nivel de inversión, Research para la innovación y Talent para la implemetación. 
 
@@ -165,9 +168,8 @@ Posteriormente, con el propósito de indentificar las posibles variables con un 
 \end{center}
 Figura 1. Correlación lineal de Pearson índices.
 
-La población considerada para este estudio corresponde a los países y regiones incluidas en el AI Global Index. La muestra se delimita a aquellos países con datos completos para las variables de interés: inversión, infraestructura, talento, ambiente operativo e investigación y desarrollo. 
 
-La unidad de análisis en este estudio son las regiones conformadas por los 62 países estudiados, evaluado según las variables cuantitativas y cualitativas definidas en la Tabla 1. Los criterios considerados para la selección de los países y regiones incluyen la sisponibilidad de datos en el AI Global Index, inclusión en las categorías de clasificación establecidas (ver Tabla 1) y representación geográfica equilibrada para evitar sesgos regionales.
+Los criterios considerados para la selección de los países y regiones incluyen la sisponibilidad de datos en el AI Global Index, inclusión en las categorías de clasificación establecidas (ver Tabla 1) y representación geográfica equilibrada para evitar sesgos regionales.
 
 El análisis realizado incluye estadísticas descriptivas: medidas de tendencia central, dispersión y posición, correlación lineal de Pearson entre las variables cuantitativas y el índice total y comparación de medias para evaluar diferencias significativas entre regiones. Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables, como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
 
@@ -309,7 +311,7 @@ Hay un dato con un Índice Commerce entre 40 y 50 con un total score correspondi
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Wed Apr 16 21:33:58 2025
+% Wed Apr 16 22:00:19 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Commerce (A) vs Total Score (B)} \\ 
   \hline
@@ -416,13 +418,15 @@ Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
 
 \begin{multicols}{2}
 
-tabla 7
+La Tabla 7 presenta la distribución conjunta entre el Índice Research (A) y el Total Score (B), ambos agrupados en intervalos. A partir de los datos se puede observar que las frecuencias más altas se concentran en los rangos bajos de ambas variables. Por ejemplo, el intervalo [0,10] del Índice Research presenta un total de 26 observaciones, siendo el más frecuente, y dentro de este, los valores más altos se cruzan con [10,20] (14 observaciones) y [0,10] (9 observaciones) del Total Score.
+
+En contraste, a medida que aumentan los valores tanto del Índice Research como del Total Score, las frecuencias disminuyen significativamente, llegando incluso a ser cero en varios cruces. Esto sugiere que la mayoría de los datos se concentran en valores bajos de ambas variables.
 
 \end{multicols}
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Wed Apr 16 21:34:02 2025
+% Wed Apr 16 22:00:24 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Research (A) vs Total Score (B)} \\ 
   \hline
@@ -455,15 +459,34 @@ figura 5
 \end{center}
 Figura 5. Distribución del Índice Research agrupado por Región.
 
-\subsection{Índice Talent}
-tabla de frecuencia bivariada (indice vs total socore)
-histograma x region
-ojiva x region
-diagrama de cajas y bigotes x region
+figura 6
 
-La Tabla 7 revela una distribución desigual del talento en IA a nivel mundial, con una marcada concentración en los extremos: mientras el 42\% de los países se ubica en el rango más bajo (0-20 puntos), solo un 18 pot ciento supera los 50 puntos. Las frecuencias acumuladas muestran que apenas el 30 por ciento de las naciones alcanza niveles competitivos (mayor igual a 40 puntos), destacando Estados Unidos (100 puntos) como caso excepcional. Esta polarización refleja brechas estructurales en la formación de profesionales calificados, donde economías desarrolladas capturan la mayor parte del talento global.
+
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura6.png}
+\end{center}
+Figura 6. Distribución acumulada del Índice Research agrupado por Región.
+
+figura 7
+
+
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura7.png}
+\end{center}
+Figura 7. Distribución cajas y bigotes del Índice Research agrupado por Región.
+
+
+\subsection{Índice Talent}
+
+La Tabla 8 revela una distribución desigual del talento en IA a nivel mundial, con una marcada concentración en los extremos: mientras el 42\% de los países se ubica en el rango más bajo (0-20 puntos), solo un 18 pot ciento supera los 50 puntos. Las frecuencias acumuladas muestran que apenas el 30 por ciento de las naciones alcanza niveles competitivos (mayor igual a 40 puntos), destacando Estados Unidos (100 puntos) como caso excepcional. Esta polarización refleja brechas estructurales en la formación de profesionales calificados, donde economías desarrolladas capturan la mayor parte del talento global.
 
 \end{multicols}
+
+\begin{verbatim}
+## \begin{scriptsize}
+\end{verbatim}
 
 \begin{longtable}[]{@{}lcccc@{}}
 \caption{Frecuencia del Índice Talent}\tabularnewline
@@ -488,6 +511,10 @@ Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
 (80,90{]} & 0 & 0.00 & 61 & 0.98 \\
 (90,100{]} & 1 & 0.02 & 62 & 1.00 \\
 \end{longtable}
+
+\begin{verbatim}
+## \end{scriptsize}
+\end{verbatim}
 
 \begin{multicols}{2}
 
