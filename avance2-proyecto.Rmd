@@ -286,7 +286,42 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 \subsection{Índice Commerce}
 
-En la Tabla 4 se presentan las frecuencias bivariadas del indice Commerce y el índice Total Score. En esta se puede apreciar como hay una alta concentración de los datos en la parte superior izquierda de la tabla, donde se indica que 55 de los 62 datos con un Índice Commerce entre 0 y 10 presentan un Total Score menor o igual a 40.
+El indicador Commercial evalúa la capacidad de los países para convertir el conocimiento en IA en aplicaciones comerciales y soluciones de mercado. La Tabla 4 presenta la distribución global de este indicador a través de intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en cada rango. Este análisis es clave para identificar qué economías están liderando la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
+
+La Tabla 4 revela una concentración extrema en la capacidad comercial, con más del 65\% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100 puntos), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África y Latinoamérica.
+
+\end{multicols}
+
+```{r tabla4, echo=FALSE}
+# Crear intervalos para la variable Commercial
+intervalos <- cut(datos$Commercial, breaks = seq(0, 100, by = 10), 
+                  include.lowest = TRUE, right = TRUE)
+
+# Calcular frecuencias
+frec_abs <- table(intervalos)
+frec_rel <- prop.table(frec_abs)
+frec_abs_acum <- cumsum(frec_abs)
+frec_rel_acum <- cumsum(frec_rel)
+
+# Crear la tabla de frecuencias
+tabla_frecuencias_commercial <- data.frame(
+  Intervalo = levels(intervalos),
+  "F Absoluta" = as.numeric(frec_abs),
+  "F Relativa" = round(as.numeric(frec_rel), 2),
+  "F Abs Acum" = as.numeric(frec_abs_acum),
+  "F Rel Acum" = round(as.numeric(frec_rel_acum), 2)
+)
+
+# Mostrar la tabla con knitr::kable
+knitr::kable(tabla_frecuencias_commercial, 
+             caption = "Frecuencia del Índice Commercial",
+             align = c('l', 'c', 'c', 'c', 'c'))
+
+```
+
+\begin{multicols}{2}
+
+En la Tabla 5 se presentan las frecuencias bivariadas del indice Commerce y el índice Total Score. En esta se puede apreciar como hay una alta concentración de los datos en la parte superior izquierda de la tabla, donde se indica que 55 de los 62 datos con un Índice Commerce entre 0 y 10 presentan un Total Score menor o igual a 40.
 
 60 de los 62 datos de los diferentes países presentan un Índice Commerce menor o igual a 30, indicando que la inversión e iniciativas comerciales de Inteligencia Artificial en el 96\% de los países estudiados es baja.
 
@@ -294,7 +329,7 @@ Hay un dato con un Índice Commerce entre 40 y 50 con un total score correspondi
 
 \end{multicols}
 
-```{r tabla4, echo=FALSE, results='asis'}
+```{r tabla5, echo=FALSE, results='asis'}
 
 #Generación de la tabla
 crear_intervalos <- function(data, variable, n_bins = 8) {
@@ -520,50 +555,19 @@ ggsave("figura4.png", plot = figura4, width = 8, height = 5, dpi = 300)
 \begin{center}
 \includegraphics[width=\linewidth]{figura4.png}
 \end{center}
+Figura 4. Distribución cajas y bigoes del Índice Commerce agrupado por Región.
 
-El indicador Commercial evalúa la capacidad de los países para convertir el conocimiento en IA en aplicaciones comerciales y soluciones de mercado. La Tabla 5 presenta la distribución global de este indicador a través de intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en cada rango. Este análisis es clave para identificar qué economías están liderando la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
-
-\end{multicols}
-
-```{r, echo=FALSE}
-# Crear intervalos para la variable Commercial
-intervalos <- cut(datos$Commercial, breaks = seq(0, 100, by = 10), 
-                  include.lowest = TRUE, right = TRUE)
-
-# Calcular frecuencias
-frec_abs <- table(intervalos)
-frec_rel <- prop.table(frec_abs)
-frec_abs_acum <- cumsum(frec_abs)
-frec_rel_acum <- cumsum(frec_rel)
-
-# Crear la tabla de frecuencias
-tabla_frecuencias_commercial <- data.frame(
-  Intervalo = levels(intervalos),
-  "F Absoluta" = as.numeric(frec_abs),
-  "F Relativa" = round(as.numeric(frec_rel), 2),
-  "F Abs Acum" = as.numeric(frec_abs_acum),
-  "F Rel Acum" = round(as.numeric(frec_rel_acum), 2)
-)
-
-# Mostrar la tabla con knitr::kable
-knitr::kable(tabla_frecuencias_commercial, 
-             caption = "Frecuencia del Índice Commercial",
-             align = c('l', 'c', 'c', 'c', 'c'))
-
-```
-
-\begin{multicols}{2}
 
 \subsection{Índice Research}
 
-El indicador Research mide la producción científica y capacidad investigadora en inteligencia artificial, siendo un predictor clave del desarrollo tecnológico futuro. La Tabla 5 presenta su distribución global mediante frecuencias absolutas y relativas, permitiendo identificar los patrones de concentración del conocimiento especializado. Este análisis es fundamental para comprender qué países están liderando la generación de nuevo conocimiento en IA y qué regiones requieren fortalecer sus sistemas de investigación.
+El indicador Research mide la producción científica y capacidad investigadora en inteligencia artificial, siendo un predictor clave del desarrollo tecnológico futuro. La Tabla 6 presenta su distribución global mediante frecuencias absolutas y relativas, permitiendo identificar los patrones de concentración del conocimiento especializado. Este análisis es fundamental para comprender qué países están liderando la generación de nuevo conocimiento en IA y qué regiones requieren fortalecer sus sistemas de investigación.
 
-La Tabla 6 revela una concentración extrema en la capacidad comercial, con más del 65\% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100 puntos), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África y Latinoamérica.
+Los resultados revelan una concentración extrema en la capacidad investigadora: mientras el 60\% de los países se ubica por debajo de los 30 puntos (F.Rel.Acum = 0.60), solo un selecto grupo (15\%) supera los 70 puntos. Estados Unidos (100 puntos) y China (71.42) dominan claramente los intervalos superiores. Sin embargo, destaca que varios países europeos (Reino Unido 36.5, Alemania 35.84) mantienen capacidades significativas. La presencia casi nula de países africanos y latinoamericanos por encima de los 20 puntos (F.Abs = 2) evidencia un riesgo crítico de dependencia tecnológica.
 
 \end{multicols}
 
-```{r, echo=FALSE}
-# Crear intervalos para la variable Research
+```{r tabla6, echo=FALSE}
+
 # Crear intervalos para la variable Research
 intervalos <- cut(datos$Research, breaks = seq(0, 100, by = 10), 
                   include.lowest = TRUE, right = TRUE)
@@ -592,7 +596,56 @@ knitr::kable(tabla_frecuencias_research,
 
 \begin{multicols}{2}
 
-Los resultados revelan una concentración extrema en la capacidad investigadora: mientras el 60\% de los países se ubica por debajo de los 30 puntos (F.Rel.Acum = 0.60), solo un selecto grupo (15\%) supera los 70 puntos. Estados Unidos (100 puntos) y China (71.42) dominan claramente los intervalos superiores. Sin embargo, destaca que varios países europeos (Reino Unido 36.5, Alemania 35.84) mantienen capacidades significativas. La presencia casi nula de países africanos y latinoamericanos por encima de los 20 puntos (F.Abs = 2) evidencia un riesgo crítico de dependencia tecnológica.
+
+\end{multicols}
+
+```{r tabla7, echo=FALSE, results='asis'}
+
+#Generación de la tabla
+crear_intervalos <- function(data, variable, n_bins = 8) {
+  breaks <- pretty(range(data[[variable]], na.rm = TRUE), n = n_bins)
+  return(breaks)
+}
+research_breaks <- crear_intervalos(datos, "Research")
+total_score_breaks <- crear_intervalos(datos, "Total.score")
+research_labels <- paste0("(", research_breaks[-length(research_breaks)], ", ", research_breaks[-1], "]")
+score_labels <- paste0("(", total_score_breaks[-length(total_score_breaks)], ", ", total_score_breaks[-1], "]")
+datos$Research_interval <- cut(datos$Research, 
+                                breaks = research_breaks, 
+                                labels = research_labels, 
+                                include.lowest = TRUE)
+datos$TotalScore_interval <- cut(datos$Total.score, 
+                                breaks = total_score_breaks, 
+                                labels = score_labels, 
+                                include.lowest = TRUE)
+tabla_contingencia <- table(datos$Research_interval, datos$TotalScore_interval)
+tabla_df <- as.data.frame.matrix(tabla_contingencia)
+tabla_df$Total <- rowSums(tabla_df)
+totales_columna <- colSums(tabla_df)
+tabla_df <- rbind(tabla_df, Total = totales_columna)
+tabla5 <- tabla_df %>%
+  tibble::rownames_to_column(var = "A  -   B") %>%
+  dplyr::rename(`A - B` = `A  -   B`) %>% 
+  dplyr::select(`A - B`, everything()) 
+
+colnames(tabla5) <- c("A   -   B", "[0, 10]", "(10, 20]", "(20, 30]", "(30, 40]", "(40, 50]", 
+                      "(50, 60]", "(60, 70]", "(70, 80]", "(80, 90]", "(90, 100]", "Total")
+
+cat("\\renewcommand{\\arraystretch}{1.3}\n")
+cat("\\begin{scriptsize}")
+print(xtable::xtable(tabla5, 
+                   caption = "Tabla de Frecuencia Bivariada Índice Research (A) vs Total Score (B)"),
+      tabular.environment = "longtable",
+      floating = FALSE,
+      include.rownames = FALSE,
+      latex.environments = "",
+      caption.placement = "top")
+cat("\\end{scriptsize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
+```
+
+\begin{multicols}{2}
+
 
 \subsection{Índice Talent}
 tabla de frecuencia bivariada (indice vs total socore)
@@ -652,6 +705,10 @@ El estudio realizado mediante tablas univariadas de frecuencias (absolutas, rela
 El estudio revela que solo el 12\% de los países (7/58) alcanza puntuaciones altas (mayores a 70 puntos) en los tres indicadores simultáneamente, mientras que el 65\% muestra limitaciones críticas en el Índice Commerce (F.Rel.Acum=0.65 en menos de 20 puntos), porcentaje que supera en 20 puntos al de Research (45\%). Destaca especialmente la brecha en Talent, donde Estados Unidos (100 puntos) quintuplica la media global (19.3 puntos), evidenciando una concentración extrema de capital humano especializado.
 
 \section{Conclusiones}
+
+Los datos analizados revelan una realidad preocupante, y es que el avance de la inteligencia artificial no se está distribuyendo de manera equitativa en el mundo. Al examinar factores clave como la inversión (Commerce), la innovación (Research) y la formación de especialistas (Talent), queda claro que solo un puñado de países (principalmente Estados Unidos, China y algunas potencias europeas) concentran la mayor parte del progreso en este campo. Esto es preocupante por el hecho de que más del 60% de las naciones evaluadas muestran un rezago importante en los tres aspectos estudiados, con regiones como África y América Latina en una posición particularmente vulnerable. Esto no solo limita su capacidad para competir en el ámbito tecnológico, sino que las coloca en riesgo de quedar atrapadas en una relación de dependencia con los países más avanzados. Urge, por tanto, que los gobiernos implementen estrategias concretas para impulsar la investigación, atraer inversiones y, sobre todo, formar profesionales capacitados en IA.
+
+Otro hallazgo importante del estudio es que el éxito en inteligencia artificial no está ligado exclusivamente al PIB de un país. Factores como el apoyo estatal, la calidad de la infraestructura digital e incluso las leyes que regulan esta tecnología juegan un papel determinante. Para cerrar la brecha, se necesitan no solo recursos económicos, sino también voluntad política y cooperación internacional. La democratización de la IA no es un tema técnico; es un desafío social que exige acción inmediata.
 
 \section{Referencias}
 [1]   “AI Global Index,” Kaggle, Apr. 26, 2023.         https://www.kaggle.com/datasets/katerynameleshenko/ai-index
