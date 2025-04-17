@@ -509,20 +509,20 @@ frec_rel <- prop.table(frec_abs)
 frec_abs_acum <- cumsum(frec_abs)
 frec_rel_acum <- cumsum(frec_rel)
 
-# Crear la tabla de frecuencias con nombres abreviados
-tabla_frecuencias_Commercial <- data.frame(
+# Crear la tabla de frecuencias
+tabla_frecuencias_commercial <- data.frame(
   Intervalo = levels(intervalos),
-  "F.Abs" = as.numeric(frec_abs),
-  "F.Rel" = round(as.numeric(frec_rel), 2),
-  "F.Abs.A" = as.numeric(frec_abs_acum),
-  "F.Rel.A" = round(as.numeric(frec_rel_acum), 2)
+  "F Absoluta" = as.numeric(frec_abs),
+  "F Relativa" = round(as.numeric(frec_rel), 2),
+  "F Abs Acum" = as.numeric(frec_abs_acum),
+  "F Rel Acum" = round(as.numeric(frec_rel_acum), 2)
 )
 
 # Mostrar la tabla con knitr::kable
-knitr::kable(tabla_frecuencias_Commercial, 
-             caption = "Frecuencia del Indicador Commerce",
-             align = c('l', 'c', 'c', 'c', 'c'),
-             format.args = list(decimal.mark = "."))
+knitr::kable(tabla_frecuencias_commercial, 
+             caption = "Frecuencia del Índice Commercial",
+             align = c('l', 'c', 'c', 'c', 'c'))
+
 ```
 
 \begin{multicols}{2}
@@ -543,6 +543,7 @@ El indicador *Research* mide la producción científica y capacidad investigador
 
 ```{r, echo=FALSE}
 # Crear intervalos para la variable Research
+# Crear intervalos para la variable Research
 intervalos <- cut(datos$Research, breaks = seq(0, 100, by = 10), 
                   include.lowest = TRUE, right = TRUE)
 
@@ -552,20 +553,20 @@ frec_rel <- prop.table(frec_abs)
 frec_abs_acum <- cumsum(frec_abs)
 frec_rel_acum <- cumsum(frec_rel)
 
-# Crear la tabla de frecuencias con nombres abreviados
+# Crear la tabla de frecuencias
 tabla_frecuencias_research <- data.frame(
   Intervalo = levels(intervalos),
-  "F.Abs" = as.numeric(frec_abs),
-  "F.Rel" = round(as.numeric(frec_rel), 2),
-  "F.Abs.A" = as.numeric(frec_abs_acum),
-  "F.Rel.A" = round(as.numeric(frec_rel_acum), 2)
+  "F Absoluta" = as.numeric(frec_abs),
+  "F Relativa" = round(as.numeric(frec_rel), 2),
+  "F Abs Acum" = as.numeric(frec_abs_acum),
+  "F Rel Acum" = round(as.numeric(frec_rel_acum), 2)
 )
 
-# Mostrar la tabla con formato mejorado
+# Mostrar la tabla con el mismo formato
 knitr::kable(tabla_frecuencias_research, 
              caption = "Frecuencia del Índice Research",
-             align = c('l', 'c', 'c', 'c', 'c'),
-             format.args = list(decimal.mark = "."))
+             align = c('l', 'c', 'c', 'c', 'c'))
+
 ```
 
 \begin{multicols}{2}
