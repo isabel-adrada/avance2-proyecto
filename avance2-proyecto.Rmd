@@ -40,9 +40,13 @@ Inteligencia artificial, inversión, innovación, implementación, análisis est
 \section{Introducción}
 Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar las regiones con mayor potencial de adopción e implementación de estas herramientas. Este análisis es crucial para la toma de decisiones estratégicas, la definición de mercados objetivo y la planificación de estrategias de expansión geográfica, razón por lo cuál, debido a la incertidumbre respecto a los factores con mayor impacto en el potencial éxito de los planes de expansión operativa en diferentes partes del mundo, se plantea el interrogante ¿Qué variables tienen mayor influencia en los niveles de inversión, innovación e implementación de la inteligencia artificial según lo reflejado en el AI Global Index [1] (índice que compara diferentes países en estos niveles), y cómo varía esta influencia según la región geográfica?.
 
-El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál, en primera instancia se identificaron los índices para cada factor mencionado con un mayor coeficiente de correlación lineal de Pearson de acuerdo a la metodología e interpretación plaenteada por Navidi [2], permitiendo el plateamiento de los objetivos específicos con el fin de determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, la innovación mediante el índice Research, la implementación mediante el índice Talent y la ubicación geográfica del país mediante la categorización por Región.
+El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál, en primera instancia se identificaron los índices para cada factor mencionado con un mayor coeficiente de correlación lineal de Pearson de acuerdo a la metodología e interpretación plaenteada por Navidi [2], permitiendo el plateamiento de los objetivos específicos: determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, determinar la influencia de los factores relacionados con la innovación mediante el índice Research, determinar la influencia de los factores relacionados con la implementación mediante el índice Talent y determinar la influencia de los factores relacionados con la ubicación geográfica del país mediante la categorización por Región.
 
-A partir de los anteriores planteamientos se formula como hipótesis: la influencia del nivel de inversión (índice Commerce), innovación (índice Research) e implementación (índice Talent) de inteligencia artificial en el desempeño de los países según el AI Global Index (Total Score) presenta diferencias altamente significativas según la región geográfica.
+En primera instancia y considerando que el índice Research tiene el mayor índice de correlación lineal de Pearson con Total Score de las variables clave de los objetivos específicos, se formula la siguiente hipótesis: el valor medio del índice Research es menor a 20 puntos (teniendo en cuenta que 20 es un valor cercano al puntaje de Research en la región Asia-Pacific, la cuál obtuvo el puntaje más alto en esta categoría).
+
+Por otro lado, al contemplar la fundamental importancia de la perspectiva regional y las diferencias entre las mismas para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: por lo menos el 50% de los datos con un Total Score mayor a 20 son parte de la región Americas (al tener en cuenta que la región con un mayor Total Score es Américas).
+
+Finalmente, con el propósito de realizar una comparación regional para determinar cuáles son las regiones con un mayor potencial de desarrollo en inteligencia artificial se plantea la siguiente hipótesis sobre dos regiones que presentan los mayores puntajes en Total Score: el puntaje medio del índice Total Score en la región Americas es mayor al mismo en la región Asia-Pacific.
 
 
 ```{r dataframes, include=FALSE}
@@ -59,6 +63,10 @@ numeric_data <- data.frame(Commercial = datos$Commercial, Research = datos$Resea
 ```
 
 \section{Métodos}
+
+Para la realización de este estudio, en primera instancia es necesario definir la población y muestras a estudiar además de la realización de una revisión preliminar de las variables presentadas en la base de datos AI global Index, una presentación general de los datos incluyendo los países que conforman las regiones estudiadas, la relación lineal entre las diferentes variables a través de gráficos de disperción y el coeficiente de correlación lineal de Pearson (criterio utilizado para la definición de las variables a estudiar a través de los objetivos específicos), gráficos de líneas y medidas de tendencia central, posición y disperción de los datos.
+
+La población considerada para este estudio corresponde a todos los países del mundo, mientras la muestra se delimita a los países y regiones incluidas en el AI Global Index con datos completos para los factores inversión, innovación e implementación. La unidad de análisis en este estudio son las 5 regiones conformadas por los 62 países estudiados, evaluado según las variables cuantitativas y cualitativas definidas en la Tabla 1. 
 
 Para la definición de las variables a estudiar a partir de la base de datos AI Global Index trabajada en el presente estudio, se relalizó una exploración preliminar de los datos en la Tabla 1, donde se nombran las variables, se clasifican como cualitativas o cuantitativas, se categorizan como continuas o discretas, o nominal u ordinal según el caso y se realiza una descripción de las mismas.\\
 
@@ -106,7 +114,36 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 \begin{multicols}{2}
 
-La población considerada para este estudio corresponde a todos los países del mundo, mientras la muestra se delimita a los países y regiones incluidas en el AI Global Index con datos completos para los factores inversión, innovación e implementación. La unidad de análisis en este estudio son las 5 regiones conformadas por los 62 países estudiados, evaluado según las variables cuantitativas y cualitativas definidas en la Tabla 1. 
+En la Tabla 2 se presentan los diferentes países que conforma la unidad de análisis de este estudio; cada una de las 5 regiones con los países que las conforman (un total de 62 países a nivel mundial).
+
+\end{multicols}
+
+```{r tabla22, echo=FALSE, results='asis'}
+
+paises_por_region <- datos %>%
+  select(Country, Region) %>%
+  arrange(Region, Country) %>%
+  group_by(Region) %>%
+  summarise(Paises = paste(Country, collapse = ", "))
+
+colnames(paises_por_region) <- c("Región", "Países")
+
+# Ajuste del diseño de la tabla
+cat("\\renewcommand{\\arraystretch}{1.5}\n")
+cat("\\begin{footnotesize}")
+knitr::kable(paises_por_region, 
+             caption = "Países agrupados por región", 
+             format = "latex", 
+             booktabs = TRUE, 
+             longtable = TRUE,
+             col.names = c("Región", "Países"),
+             align = c("l", "p{12cm}"))
+cat("\\end{footnotesize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
+```
+
+\begin{multicols}{2}
+
 
 Posteriormente, con el propósito de indentificar las posibles variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, se elaboró la Figura 1, la cuál presenta una comparación de las distribuciones de las variables y sus respectivos coeficientes de correlación lineal de Pearson con el fin de reconocer los índices que presentan un mayor valor respecto al AI Global Index (Total Score), los cuáles fueron Commerce para el nivel de inversión, Research para la innovación y Talent para la implemetación. 
 
@@ -127,6 +164,7 @@ Figura 1. Correlación lineal de Pearson índices.
 Los criterios considerados para la selección de los países y regiones incluyen la sisponibilidad de datos en el AI Global Index, inclusión en las categorías de clasificación establecidas (ver Tabla 1) y representación geográfica equilibrada para evitar sesgos regionales.
 
 El análisis realizado incluye estadísticas descriptivas: medidas de tendencia central, dispersión y posición, correlación lineal de Pearson entre las variables cuantitativas y el índice total y comparación de medias para evaluar diferencias significativas entre regiones. Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables, como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
+
 
 \section{Resultados}
 En la Tabla 2 se presentan las medidas de tendencia central y posición de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
@@ -537,6 +575,18 @@ Figura 4. Distribución cajas y bigoes del Índice Commerce agrupado por Región
 
 
 \subsection{Índice Research}
+
+```{r media variables, echo=FALSE}
+
+mCommerce <- mean(datos $Commercial)
+mResearch <- mean(datos $Research)
+mTalent <- mean(datos $Talent)
+
+muestra <- sample(datos $Research, 30)
+mMuestra <- mean(muestra)
+dMuestra <- sd(muestra)
+
+```
 
 El indicador Research mide la producción científica y capacidad investigadora en inteligencia artificial, siendo un predictor clave del desarrollo tecnológico futuro. La Tabla 6 presenta su distribución global mediante frecuencias absolutas y relativas, permitiendo identificar los patrones de concentración del conocimiento especializado. Este análisis es fundamental para comprender qué países están liderando la generación de nuevo conocimiento en IA y qué regiones requieren fortalecer sus sistemas de investigación.
 
