@@ -42,11 +42,11 @@ Las compañıas involucradas en el desarrollo tecnológico con inteligencia arti
 
 El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál, en primera instancia se identificaron los índices para cada factor mencionado con un mayor coeficiente de correlación lineal de Pearson de acuerdo a la metodología e interpretación plaenteada por Navidi [2], permitiendo el plateamiento de los objetivos específicos: determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, determinar la influencia de los factores relacionados con la innovación mediante el índice Research, determinar la influencia de los factores relacionados con la implementación mediante el índice Talent y determinar la influencia de los factores relacionados con la ubicación geográfica del país mediante la categorización por Región.
 
-En primera instancia y considerando que el índice Research tiene el mayor índice de correlación lineal de Pearson con Total Score de las variables clave de los objetivos específicos, se formula la siguiente hipótesis: el valor medio del índice Research es menor a 20 puntos (teniendo en cuenta que 20 es un valor cercano al puntaje de Research en la región Asia-Pacific, la cuál obtuvo el puntaje más alto en esta categoría).
+En primera instancia y considerando que el índice Research tiene la más alta correlación lineal con Total Score de las variables presentadas, se formula la siguiente hipótesis: el valor medio del índice Research es menor o igual a 20 puntos (teniendo en cuenta que 20 es un valor cercano al puntaje de Research en la región Asia-Pacific, la cuál obtuvo el puntaje más alto en esta categoría).
 
-Por otro lado, al contemplar la fundamental importancia de la perspectiva regional y las diferencias entre las mismas para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: por lo menos el 50% de los datos con un Total Score mayor a 20 son parte de la región Americas (al tener en cuenta que la región con un mayor Total Score es Américas).
+Por otro lado, al contemplar la fundamental importancia de la perspectiva regional y las diferencias entre las mismas para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: por lo menos el 50% de los datos con un Total Score mayor o igual a 5 son parte de la región Africa y Asia-Pacific (al tener en cuenta que la región Africa tiene los algunos de los puntajes más bajos para las diferentes variables).
 
-Finalmente, con el propósito de realizar una comparación regional para determinar cuáles son las regiones con un mayor potencial de desarrollo en inteligencia artificial se plantea la siguiente hipótesis sobre dos regiones que presentan los mayores puntajes en Total Score: el puntaje medio del índice Total Score en la región Americas es mayor al mismo en la región Asia-Pacific.
+Finalmente, con el propósito de realizar una comparación regional para determinar cuáles son las zonas con un mayor potencial de desarrollo en inteligencia artificial se plantea la siguiente hipótesis sobre dos grupos regionales:el puntaje medio del índice Total Score en Europe es mayor a el promedio de Total Score en Estados Unidos (considerando que en múltiples sectores se considera a Europa y Estados Unidos como regiones altamente desarrolladas).
 
 
 ```{r dataframes, include=FALSE}
@@ -62,7 +62,7 @@ num <- data.frame(datos $Talent, datos $Infrastructure, datos $Operating.Environ
 numeric_data <- data.frame(Commercial = datos$Commercial, Research = datos$Research, Talent = datos$Talent, Total_Score = datos$Total.score)
 ```
 
-\section{Métodos}
+\section{Metodología}
 
 Para la realización de este estudio, en primera instancia es necesario definir la población y muestras a estudiar además de la realización de una revisión preliminar de las variables presentadas en la base de datos AI global Index, una presentación general de los datos incluyendo los países que conforman las regiones estudiadas, la relación lineal entre las diferentes variables a través de gráficos de disperción y el coeficiente de correlación lineal de Pearson (criterio utilizado para la definición de las variables a estudiar a través de los objetivos específicos), gráficos de líneas y medidas de tendencia central, posición y disperción de los datos.
 
@@ -114,7 +114,7 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 \begin{multicols}{2}
 
-En la Tabla 2 se presentan los diferentes países que conforma la unidad de análisis de este estudio; cada una de las 5 regiones con los países que las conforman (un total de 62 países a nivel mundial).
+En la Tabla 2 se presentan los diferentes países que conforma la unidad de análisis de este estudio; cada una de las 5 regiones con los países que las conforman (para un total de 62 países a nivel mundial).
 
 \end{multicols}
 
@@ -164,6 +164,62 @@ Figura 1. Correlación lineal de Pearson índices.
 Los criterios considerados para la selección de los países y regiones incluyen la sisponibilidad de datos en el AI Global Index, inclusión en las categorías de clasificación establecidas (ver Tabla 1) y representación geográfica equilibrada para evitar sesgos regionales.
 
 El análisis realizado incluye estadísticas descriptivas: medidas de tendencia central, dispersión y posición, correlación lineal de Pearson entre las variables cuantitativas y el índice total y comparación de medias para evaluar diferencias significativas entre regiones. Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables, como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
+
+Para la realización de las 3 pruebas de hipótesis presentadas en el estudio se realizó un muestreo aleatorio de las poblaciones corrrespondientes mediante la función sample para obtener muestras de 30 datos, asegurando que el tamaño de muestra sea grande (n >= 30) garantizando el cumplimiento del Teorema Central del Límite [3] para la realización de intérvalos de confianza y pruebas de hipótesis con resultados fidedignos.
+
+```{r muestras, echo=FALSE, include=FALSE}
+
+#Para la hipótesis "el valor medio del índice Research es menor a 20 puntos".
+set.seed(456)
+muestraResearch <- sample(datos $Research, 30)
+
+#Para la hipótesis "por lo menos el 50% de los datos con un Total Score mayor o igual a 5 son parte de la región Africa y Asia-Pacific".
+
+datosMayor5 <- c()
+
+datosMayor5 <- datos %>%
+  filter(Total.score >= 5) %>%
+  select(Total_Score = Total.score, Region)
+
+set.seed(123)
+
+muestraMayor5 <- datosMayor5 %>%
+  sample_n(min(30, nrow(datosMayor5)))
+
+conteoMayor5 <- nrow(datosMayor5)
+conteo_europa_asia <- sum(muestraMayor5$Region %in% c("Europe", "Asia-Pacific"))
+
+#Para la hipótesis "el puntaje medio del índice Total Score en Europe y Estados Unidos es mayor al mismo en el resto del mundo".
+
+europa_usa <- datos %>%
+  filter(Region == "Europe" | Country == "United States of America") %>%
+  select(Total_Score = Total.score, Region, Country)
+
+asia_africa_middleEast_america <- datos %>%
+  filter(!(Region == "Europe" | Country == "United States of America")) %>%
+  select(Total_Score = Total.score, Region, Country)
+
+set.seed(789)
+
+muestra_grupo1 <- sample(europa_usa$Total_Score, min(30, nrow(europa_usa)))
+muestra_grupo2 <- sample(asia_africa_middleEast_america$Total_Score, min(30, nrow(asia_africa_middleEast_america)))
+
+```
+
+
+```{r media, desv, prop muestras, echo=FALSE, include=FALSE}
+
+mResearch <- mean(datos $Research)
+dResearch <- sd(muestraResearch)
+
+proporcionEuropaAsia <- conteo_europa_asia/conteoMayor5
+
+mGrupo1 <- mean(muestra_grupo1)
+mGrupo2 <- mean(muestra_grupo2)
+dGrupo1 <- sd(muestra_grupo1)
+dGrupo2 <- sd(muestra_grupo2)
+
+```
 
 
 \section{Resultados}
@@ -575,18 +631,6 @@ Figura 4. Distribución cajas y bigoes del Índice Commerce agrupado por Región
 
 
 \subsection{Índice Research}
-
-```{r media variables, echo=FALSE}
-
-mCommerce <- mean(datos $Commercial)
-mResearch <- mean(datos $Research)
-mTalent <- mean(datos $Talent)
-
-muestra <- sample(datos $Research, 30)
-mMuestra <- mean(muestra)
-dMuestra <- sd(muestra)
-
-```
 
 El indicador Research mide la producción científica y capacidad investigadora en inteligencia artificial, siendo un predictor clave del desarrollo tecnológico futuro. La Tabla 6 presenta su distribución global mediante frecuencias absolutas y relativas, permitiendo identificar los patrones de concentración del conocimiento especializado. Este análisis es fundamental para comprender qué países están liderando la generación de nuevo conocimiento en IA y qué regiones requieren fortalecer sus sistemas de investigación.
 
@@ -1021,66 +1065,78 @@ Figura 9. Distribución acumulada del Índice Talent agrupado por Región.
 
 ```{r figura10, echo=FALSE, warning=FALSE, message=FALSE}
 
-# Diagrama de cajas y bigotes del índice Talent
-stats_boxplot_talent <- datos %>%
-  group_by(Region) %>%
-  summarise(
-    q1 = quantile(Talent, 0.25, na.rm = TRUE),
-    q3 = quantile(Talent, 0.75, na.rm = TRUE),
-    iqr = IQR(Talent, na.rm = TRUE),
-    lower_whisker = max(min(Talent, na.rm = TRUE), q1 - 1.5 * iqr),
-    upper_whisker = min(max(Talent, na.rm = TRUE), q3 + 1.5 * iqr),
-    mean_val = mean(Talent, na.rm = TRUE),
-    .groups = "drop"
-  )
+data_dist <- data.frame(x = seq(-3.5, 3.5, length.out = 1000))
+data_dist$y <- dnorm(data_dist$x)
 
-datos$Region <- factor(datos$Region)
+z1 <- (16.61 - 20)/(10.8946711/sqrt(30))
+z_crit <- qnorm(1-0.05)
 
-figura_boxplot_talent <- ggplot(datos, aes(x = Region, y = Talent)) +
-  geom_boxplot(outlier.colour = "red",
-               outlier.shape = 16,
-               outlier.size = 2,
-               fill = "lightblue",
-               color = "black",
-               coef = 1.5) +
+rejection_region <- data.frame(
+  x = seq(z_crit, 3.5, length.out = 100)
+)
+rejection_region$y <- dnorm(rejection_region$x)
+
+figura11 <- ggplot(data_dist, aes(x = x, y = y)) +
+  geom_line(size = 1) +
   
-  geom_segment(data = stats_boxplot_talent,
-               aes(x = as.numeric(factor(Region)) - 0.15, 
-                   xend = as.numeric(factor(Region)) + 0.15,
-                   y = lower_whisker, 
-                   yend = lower_whisker),
-               color = "black", linewidth = 0.5) +
+  geom_area(data = rejection_region, 
+            aes(x = x, y = y), 
+            fill = rgb(0.5, 0.8, 0.5, 0.5)) +
   
-  geom_segment(data = stats_boxplot_talent,
-               aes(x = as.numeric(factor(Region)) - 0.15, 
-                   xend = as.numeric(factor(Region)) + 0.15,
-                   y = upper_whisker, 
-                   yend = upper_whisker),
-               color = "black", linewidth = 0.5) +
+  geom_vline(xintercept = z_crit, 
+             linetype = "dashed", 
+             color = "black", 
+             size = 0.8) +
   
-  stat_summary(fun = mean,
-               geom = "point",
-               shape = 18,
-               size = 3,
-               color = "darkblue") +
+  geom_vline(xintercept = 0, 
+             size = 1) +
   
-  labs(x = "Región",
-       y = "Índice Talent") +
+  geom_point(aes(x = z1, y = 0), 
+             color = "red", 
+             size = 3) +
+  geom_segment(aes(x = z1, y = 0.05, xend = z1, yend = 0), 
+               arrow = arrow(length = unit(0.2, "cm")), 
+               color = "red", 
+               size = 0.8) +
+  
+  labs(x = "Z", 
+       y = "Densidad", 
+       title = "Prueba de Hipótesis (Cola Derecha)") +
+  
+  annotate("text", x = 0, y = 0.2, 
+           label = "Región de\nno rechazo", 
+           size = 4,
+           hjust = 0.5,
+           vjust = 0.5,
+           bg = "aliceblue") +
+  
+  annotate("text", x = z_crit + 0.5, y = 0.1, 
+           label = paste("Región de\nrechazo\n", 0.05), 
+           size = 4,
+           hjust = 0.5,
+           vjust = 0.5,
+           bg = "lightgreen") +
+  
+  annotate("text", x = z_crit, y = -0.02, 
+           label = paste("Za =", round(z_crit, 3)), 
+           size = 3,
+           hjust = 0) +
+  
+  annotate("text", x = z1, y = 0.07, 
+           label = paste("Z =", round(z1, 2)), 
+           color = "red", 
+           size = 3) +
   
   theme_minimal() +
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1, size = 9),
-    axis.text.y = element_text(size = 9),
-    plot.title = element_text(hjust = 0.5, size = 12)
+    plot.title = element_text(hjust = 0.5, size = 14),
+    axis.text = element_text(size = 10),
+    panel.grid.minor = element_blank()
   ) +
-  annotate("text", x = max(as.numeric(factor(datos$Region))), 
-           y = max(datos$Talent, na.rm = TRUE) * 0.92, 
-           label = "▲ Media", color = "darkblue", size = 3, hjust = 1) +
-  annotate("text", x = max(as.numeric(factor(datos$Region))), 
-           y = max(datos$Talent, na.rm = TRUE) * 0.87, 
-           label = "● Valor atípico", color = "red", size = 3, hjust = 1)
+  scale_x_continuous(breaks = c(-3, -2, -1, 0, 1, 2, 3)) +
+  scale_y_continuous(expand = c(0, 0))
 
-ggsave("figura10.png", plot = figura_boxplot_talent, width = 8, height = 5, dpi = 300)
+ggsave("figura11.png", plot = figura11, width = 8, height = 6, dpi = 300)
 ```
 
 \begin{center}
@@ -1089,14 +1145,144 @@ ggsave("figura10.png", plot = figura_boxplot_talent, width = 8, height = 5, dpi 
 
 Figura 10. Distribución cajas y bigotes del Índice Talent agrupado por Región.
 
-\section{Análisis de resultados}
-El estudio realizado mediante tablas univariadas de frecuencias (absolutas, relativas y acumuladas) de los tres indicadores clave revela patrones estructurales preocupantes en el desarrollo global de la inteligencia artificial. El análisis muestra una concentración extrema de capacidades en un reducido grupo de países - principalmente Estados Unidos (con puntuaciones perfectas en Talent y Commercial), China (destacada en Research con 71.42 puntos) y algunas economías europeas -, que dominan simultáneamente los tres ámbitos. Esta triple brecha (formativa, científica y comercial), evidenciada por las frecuencias acumuladas donde el 80 por ciento de los países analizados muestra desempeños limitados (F.Rel.Acum mayor a 0.80 en intervalos menores a 30 puntos para los tres indicadores), crea un escenario crítico de dependencia tecnológica.
+\section{Intérvalos de confianza}
 
-El estudio revela que solo el 12\% de los países (7/58) alcanza puntuaciones altas (mayores a 70 puntos) en los tres indicadores simultáneamente, mientras que el 65\% muestra limitaciones críticas en el Índice Commerce (F.Rel.Acum=0.65 en menos de 20 puntos), porcentaje que supera en 20 puntos al de Research (45\%). Destaca especialmente la brecha en Talent, donde Estados Unidos (100 puntos) quintuplica la media global (19.3 puntos), evidenciando una concentración extrema de capital humano especializado.
+Al obtener una muestra aleatoria del índice Research (variable cuantitativa) y determinar la media de la muestra y la desviación estándar, es necesario establecer el intérvalo de confianza donde se encuentra la media real de la población y la desviación estándar poblacional.
+
+Para obtener un intérvalo de confianza del 95\% se realizó el siguiente procedimiento:
+
+x̄ = `r mResearch`\\
+IC = 0.95\\
+IC = 1 - $\alpha$\\
+$\alpha$ = 0.05\\
+$\alpha$/2 = 0.025\\
+Z~$\alpha$/2~ = ± 1.96\\
+IC = (`r mResearch - 1.96`,  `r mResearch + 1.96`)\\
+
+El intérvalo oresentado indica que con una probabilidad del 95\%, la media de la población se encontrará entre `r mResearch - 1.96` y `r mResearch - 1.96`.
+
+ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
+
+\section{Prueba de hipótesis}
+
+```{r z, echo=FALSE, include=FALSE}
+
+z1 <- (mResearch - 20)/(dResearch/sqrt(30))
+z_crit <- qnorm(1 - 0.05)
+
+```
+
+En este estudio se planteó la siguiente hipòtesis: el valor medio del índice Research (variable cuantitativa) es menor o igual a 20 puntos. Para comprobar la veracidad de la anterior afirmación con un determinado nivel de significancia, es necesario realizar una prueba de hipótesis.
+
+A continuación se presenta la prueba de hipótesis siguiendo el método del valor crítico [4] (metodología de los 5 pasos) con el estadístico de prueba Z:
+
+n = 30\\
+x̄ = `r mResearch`\\
+s =  `r dResearch`\\
+
+Paso 1.\\
+Ho: µ $≤$ 20\\
+Ha: µ > 20\\
+
+Paso 2.\\
+$\alpha$ = 0.05
+
+Paso 3.\\
+Z = (x̄ - µ)/(s/√n)\\
+Z = ( `r mResearch` - 20)/(`r dResearch`/√30)\\
+Z = `r z1`\\
+
+Paso 4.
+
+Z crítico = Z(1 - $\alpha$)\\
+Z crítico = `r z_crit`\\
+
+A continuación se presenta gráficamente el posicionamiento de las regiones de rechazo y no rechazo y la ubicación de Z en las mismas.
+
+```{r figura11, echo=FALSE, warning=FALSE, message=FALSE}
+
+data_dist <- data.frame(x = seq(-3.5, 3.5, length.out = 1000))
+data_dist$y <- dnorm(data_dist$x) * 0.85  
+
+rejection_region <- data.frame(
+  x = seq(z_crit, 3.5, length.out = 100)
+)
+rejection_region$y <- dnorm(rejection_region$x) * 0.85 
+
+figura_prueba <- ggplot(data_dist, aes(x = x, y = y)) +
+  geom_line(size = 1) +
+  
+  geom_area(data = rejection_region, 
+            aes(x = x, y = y), 
+            fill = rgb(0.5, 0.8, 0.5, 0.5)) +
+  
+  geom_vline(xintercept = z_crit, 
+             linetype = "dashed", 
+             color = "black", 
+             size = 0.8) +
+  
+  geom_segment(aes(x = z1, y = 0.04, xend = z1, yend = 0), 
+               arrow = arrow(length = unit(0.2, "cm")), 
+               color = "red", 
+               size = 0.8) +
+  
+  labs(x = "Z", y = "")  +
+  
+  annotate("text", x = 0, y = 0.17, 
+           label = "Región de\nno rechazo", 
+           size = 4,
+           hjust = 0.5,
+           vjust = 0.5,
+           bg = "aliceblue") +
+  
+  annotate("text", x = z_crit + 0.5, y = 0.09, 
+           label = paste("Región de\nrechazo\n", 0.05), 
+           size = 4,
+           hjust = 0.5,
+           vjust = 0.5,
+           bg = "lightgreen") +
+  
+  annotate("text", x = z_crit + 0.2, y = 0.2, 
+           label = paste("Z crítico =", round(z_crit, 3)), 
+           size = 3,
+           hjust = 0) +
+  
+  annotate("text", x = z1, y = 0.05, 
+           label = paste("Z =", round(z1, 2)), 
+           color = "red", 
+           size = 3) +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14),
+    axis.text.x = element_text(size = 10),
+    axis.text.y = element_blank(),  
+    panel.grid.minor = element_blank()
+  ) +
+  scale_x_continuous(breaks = c(-3, -2, -1, 0, 1, 2, 3)) +
+  scale_y_continuous(expand = c(0, 0))
+
+ggsave("figura11.png", plot = figura_prueba, width = 8, height = 5, dpi = 300)
+```
+\begin{center}
+\includegraphics[width=\linewidth]{figura11.png}
+\end{center}
+
+Figura 11. Identificación de la región de rechazo
+
+Paso 5.
+
+Con un nivel de significancia de 0.05, se concluye que el el valor medio del índice Research es menor o igual a 20 puntos, ya que no se rechaza la hipótesis nula Ho: µ $≤$ 20 debido a que Z = `r z1` se encuentra en la región de no rechazo (región a la izquierda de Z crítico = `r z_crit`) como se aprecia en la figura 11.
+
+ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
 
 \section{Conclusiones}
 
 Los datos analizados revelan una realidad preocupante, y es que el avance de la inteligencia artificial no se está distribuyendo de manera equitativa en el mundo. Al examinar factores clave como la inversión (Commerce), la innovación (Research) y la formación de especialistas (Talent), queda claro que solo un puñado de países (principalmente Estados Unidos, China y algunas potencias europeas) concentran la mayor parte del progreso en este campo. Esto es preocupante por el hecho de que más del 60% de las naciones evaluadas muestran un rezago importante en los tres aspectos estudiados, con regiones como África y América Latina en una posición particularmente vulnerable. Esto no solo limita su capacidad para competir en el ámbito tecnológico, sino que las coloca en riesgo de quedar atrapadas en una relación de dependencia con los países más avanzados. Urge, por tanto, que los gobiernos implementen estrategias concretas para impulsar la investigación, atraer inversiones y, sobre todo, formar profesionales capacitados en IA.
+
+El estudio realizado mediante tablas univariadas de frecuencias (absolutas, relativas y acumuladas) de los tres indicadores clave revela patrones estructurales preocupantes en el desarrollo global de la inteligencia artificial. El análisis muestra una concentración extrema de capacidades en un reducido grupo de países - principalmente Estados Unidos (con puntuaciones perfectas en Talent y Commercial), China (destacada en Research con 71.42 puntos) y algunas economías europeas -, que dominan simultáneamente los tres ámbitos. Esta triple brecha (formativa, científica y comercial), evidenciada por las frecuencias acumuladas donde el 80 por ciento de los países analizados muestra desempeños limitados (F.Rel.Acum mayor a 0.80 en intervalos menores a 30 puntos para los tres indicadores), crea un escenario crítico de dependencia tecnológica.
+
+El estudio revela que solo el 12\% de los países (7/58) alcanza puntuaciones altas (mayores a 70 puntos) en los tres indicadores simultáneamente, mientras que el 65\% muestra limitaciones críticas en el Índice Commerce (F.Rel.Acum=0.65 en menos de 20 puntos), porcentaje que supera en 20 puntos al de Research (45\%). Destaca especialmente la brecha en Talent, donde Estados Unidos (100 puntos) quintuplica la media global (19.3 puntos), evidenciando una concentración extrema de capital humano especializado.
 
 Otro hallazgo importante del estudio es que el éxito en inteligencia artificial no está ligado exclusivamente al PIB de un país. Factores como el apoyo estatal, la calidad de la infraestructura digital e incluso las leyes que regulan esta tecnología juegan un papel determinante. Para cerrar la brecha, se necesitan no solo recursos económicos, sino también voluntad política y cooperación internacional. La democratización de la IA no es un tema técnico; es un desafío social que exige acción inmediata.
 

@@ -49,15 +49,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
@@ -81,9 +83,6 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -115,16 +114,16 @@ Las compañıas involucradas en el desarrollo tecnológico con inteligencia arti
 
 El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál, en primera instancia se identificaron los índices para cada factor mencionado con un mayor coeficiente de correlación lineal de Pearson de acuerdo a la metodología e interpretación plaenteada por Navidi [2], permitiendo el plateamiento de los objetivos específicos: determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, determinar la influencia de los factores relacionados con la innovación mediante el índice Research, determinar la influencia de los factores relacionados con la implementación mediante el índice Talent y determinar la influencia de los factores relacionados con la ubicación geográfica del país mediante la categorización por Región.
 
-En primera instancia y considerando que el índice Research tiene el mayor índice de correlación lineal de Pearson con Total Score de las variables clave de los objetivos específicos, se formula la siguiente hipótesis: el valor medio del índice Research es menor a 20 puntos (teniendo en cuenta que 20 es un valor cercano al puntaje de Research en la región Asia-Pacific, la cuál obtuvo el puntaje más alto en esta categoría).
+En primera instancia y considerando que el índice Research tiene la más alta correlación lineal con Total Score de las variables presentadas, se formula la siguiente hipótesis: el valor medio del índice Research es menor o igual a 20 puntos (teniendo en cuenta que 20 es un valor cercano al puntaje de Research en la región Asia-Pacific, la cuál obtuvo el puntaje más alto en esta categoría).
 
-Por otro lado, al contemplar la fundamental importancia de la perspectiva regional y las diferencias entre las mismas para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: por lo menos el 50% de los datos con un Total Score mayor a 20 son parte de la región Americas (al tener en cuenta que la región con un mayor Total Score es Américas).
+Por otro lado, al contemplar la fundamental importancia de la perspectiva regional y las diferencias entre las mismas para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: por lo menos el 50% de los datos con un Total Score mayor o igual a 5 son parte de la región Africa y Asia-Pacific (al tener en cuenta que la región Africa tiene los algunos de los puntajes más bajos para las diferentes variables).
 
-Finalmente, con el propósito de realizar una comparación regional para determinar cuáles son las regiones con un mayor potencial de desarrollo en inteligencia artificial se plantea la siguiente hipótesis sobre dos regiones que presentan los mayores puntajes en Total Score: el puntaje medio del índice Total Score en la región Americas es mayor al mismo en la región Asia-Pacific.
-
-
+Finalmente, con el propósito de realizar una comparación regional para determinar cuáles son las zonas con un mayor potencial de desarrollo en inteligencia artificial se plantea la siguiente hipótesis sobre dos grupos regionales:el puntaje medio del índice Total Score en Europe es mayor a el promedio de Total Score en Estados Unidos (considerando que en múltiples sectores se considera a Europa y Estados Unidos como regiones altamente desarrolladas).
 
 
-\section{Métodos}
+
+
+\section{Metodología}
 
 Para la realización de este estudio, en primera instancia es necesario definir la población y muestras a estudiar además de la realización de una revisión preliminar de las variables presentadas en la base de datos AI global Index, una presentación general de los datos incluyendo los países que conforman las regiones estudiadas, la relación lineal entre las diferentes variables a través de gráficos de disperción y el coeficiente de correlación lineal de Pearson (criterio utilizado para la definición de las variables a estudiar a través de los objetivos específicos), gráficos de líneas y medidas de tendencia central, posición y disperción de los datos.
 
@@ -164,7 +163,7 @@ Political Regime & Cualitativa & Nominal & Tipo de régimen político presentado
 
 \begin{multicols}{2}
 
-En la Tabla 2 se presentan los diferentes países que conforma la unidad de análisis de este estudio; cada una de las 5 regiones con los países que las conforman (un total de 62 países a nivel mundial).
+En la Tabla 2 se presentan los diferentes países que conforma la unidad de análisis de este estudio; cada una de las 5 regiones con los países que las conforman (para un total de 62 países a nivel mundial).
 
 \end{multicols}
 
@@ -202,6 +201,13 @@ Figura 1. Correlación lineal de Pearson índices.
 Los criterios considerados para la selección de los países y regiones incluyen la sisponibilidad de datos en el AI Global Index, inclusión en las categorías de clasificación establecidas (ver Tabla 1) y representación geográfica equilibrada para evitar sesgos regionales.
 
 El análisis realizado incluye estadísticas descriptivas: medidas de tendencia central, dispersión y posición, correlación lineal de Pearson entre las variables cuantitativas y el índice total y comparación de medias para evaluar diferencias significativas entre regiones. Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables, como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
+
+Para la realización de las 3 pruebas de hipótesis presentadas en el estudio se realizó un muestreo aleatorio de las poblaciones corrrespondientes mediante la función sample para obtener muestras de 30 datos, asegurando que el tamaño de muestra sea grande (n >= 30) garantizando el cumplimiento del Teorema Central del Límite [3] para la realización de intérvalos de confianza y pruebas de hipótesis con resultados fidedignos.
+
+
+
+
+
 
 
 \section{Resultados}
@@ -342,7 +348,7 @@ Hay un dato con un Índice Commerce entre 40 y 50 con un total score correspondi
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Sun May 11 10:22:37 2025
+% Tue May 13 10:09:54 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Commerce (A) vs Total Score (B)} \\ 
   \hline
@@ -417,8 +423,6 @@ Figura 4. Distribución cajas y bigoes del Índice Commerce agrupado por Región
 
 \subsection{Índice Research}
 
-
-
 El indicador Research mide la producción científica y capacidad investigadora en inteligencia artificial, siendo un predictor clave del desarrollo tecnológico futuro. La Tabla 6 presenta su distribución global mediante frecuencias absolutas y relativas, permitiendo identificar los patrones de concentración del conocimiento especializado. Este análisis es fundamental para comprender qué países están liderando la generación de nuevo conocimiento en IA y qué regiones requieren fortalecer sus sistemas de investigación.
 
 Los resultados revelan una concentración extrema en la capacidad investigadora: mientras el 60\% de los países se ubica por debajo de los 30 puntos (F.Rel.Acum = 0.60), solo un selecto grupo (15\%) supera los 70 puntos. Estados Unidos (100 puntos) y China (71.42) dominan claramente los intervalos superiores. Sin embargo, destaca que varios países europeos (Reino Unido 36.5, Alemania 35.84) mantienen capacidades significativas. La presencia casi nula de países africanos y latinoamericanos por encima de los 20 puntos (F.Abs = 2) evidencia un riesgo crítico de dependencia tecnológica.
@@ -459,7 +463,7 @@ En contraste, a medida que aumentan los valores tanto del Índice Research como 
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Sun May 11 10:22:40 2025
+% Tue May 13 10:09:54 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Research (A) vs Total Score (B)} \\ 
   \hline
@@ -556,7 +560,7 @@ Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Sun May 11 10:22:42 2025
+% Tue May 13 10:09:55 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Talent (A) vs Total Score (B)} \\ 
   \hline
@@ -605,14 +609,74 @@ Figura 9. Distribución acumulada del Índice Talent agrupado por Región.
 
 Figura 10. Distribución cajas y bigotes del Índice Talent agrupado por Región.
 
-\section{Análisis de resultados}
-El estudio realizado mediante tablas univariadas de frecuencias (absolutas, relativas y acumuladas) de los tres indicadores clave revela patrones estructurales preocupantes en el desarrollo global de la inteligencia artificial. El análisis muestra una concentración extrema de capacidades en un reducido grupo de países - principalmente Estados Unidos (con puntuaciones perfectas en Talent y Commercial), China (destacada en Research con 71.42 puntos) y algunas economías europeas -, que dominan simultáneamente los tres ámbitos. Esta triple brecha (formativa, científica y comercial), evidenciada por las frecuencias acumuladas donde el 80 por ciento de los países analizados muestra desempeños limitados (F.Rel.Acum mayor a 0.80 en intervalos menores a 30 puntos para los tres indicadores), crea un escenario crítico de dependencia tecnológica.
+\section{Intérvalos de confianza}
 
-El estudio revela que solo el 12\% de los países (7/58) alcanza puntuaciones altas (mayores a 70 puntos) en los tres indicadores simultáneamente, mientras que el 65\% muestra limitaciones críticas en el Índice Commerce (F.Rel.Acum=0.65 en menos de 20 puntos), porcentaje que supera en 20 puntos al de Research (45\%). Destaca especialmente la brecha en Talent, donde Estados Unidos (100 puntos) quintuplica la media global (19.3 puntos), evidenciando una concentración extrema de capital humano especializado.
+Al obtener una muestra aleatoria del índice Research (variable cuantitativa) y determinar la media de la muestra y la desviación estándar, es necesario establecer el intérvalo de confianza donde se encuentra la media real de la población y la desviación estándar poblacional.
+
+Para obtener un intérvalo de confianza del 95\% se realizó el siguiente procedimiento:
+
+x̄ = 16.61\\
+IC = 0.95\\
+IC = 1 - $\alpha$\\
+$\alpha$ = 0.05\\
+$\alpha$/2 = 0.025\\
+Z~$\alpha$/2~ = ± 1.96\\
+IC = (14.65,  18.57)\\
+
+El intérvalo oresentado indica que con una probabilidad del 95\%, la media de la población se encontrará entre 14.65 y 14.65.
+
+ESPACIO PARA VARIABLE CUALITATIVA
+
+\section{Intérvalos de confianza}
+
+
+
+En este estudio se planteó la siguiente hipòtesis: el valor medio del índice Research (variable cuantitativa) es menor o igual a 20 puntos. Para comprobar la veracidad de la anterior afirmación con un determinado nivel de significancia, es necesario realizar una prueba de hipótesis.
+
+A continuación se presenta la prueba de hipótesis siguiendo el método del valor crítico [4] (metodología de los 5 pasos) con el estadístico de prueba Z:
+
+n = 30\\
+x̄ = 16.61\\
+s =  10.8946711\\
+
+Paso 1.\\
+Ho: µ $≤$ 20\\
+Ha: µ > 20\\
+
+Paso 2.\\
+$\alpha$ = 0.05
+
+Paso 3.\\
+Z = (x̄ - µ)/(s/√n)\\
+Z = ( 16.61 - 20)/(10.8946711/√30)\\
+Z = -1.7043006\\
+
+Paso 4.
+
+Z crítico = Z(1 - $\alpha$)\\
+Z crítico = 1.6448536\\
+
+A continuación se presenta gráficamente el posicionamiento de las regiones de rechazo y no rechazo y el posicionamiento de Z en las mismas.
+
+
+\begin{center}
+\includegraphics[width=\linewidth]{figura11.png}
+\end{center}
+
+Figura 11. Identificación de la región de rechazo
+
+Paso 5.
+
+Con un nivel de significancia de 0.05, se concluye que el el valor medio del índice Research es menor o igual a 20 puntos, ya que no se rechaza la hipótesis nula Ho: µ $≤$ 20 debido a que Z = -1.7043006 se encuentra en la región de no rechazo (región a la izquierda de Z crítico = 1.6448536) como se aprecia en la figura 11.
+
 
 \section{Conclusiones}
 
 Los datos analizados revelan una realidad preocupante, y es que el avance de la inteligencia artificial no se está distribuyendo de manera equitativa en el mundo. Al examinar factores clave como la inversión (Commerce), la innovación (Research) y la formación de especialistas (Talent), queda claro que solo un puñado de países (principalmente Estados Unidos, China y algunas potencias europeas) concentran la mayor parte del progreso en este campo. Esto es preocupante por el hecho de que más del 60% de las naciones evaluadas muestran un rezago importante en los tres aspectos estudiados, con regiones como África y América Latina en una posición particularmente vulnerable. Esto no solo limita su capacidad para competir en el ámbito tecnológico, sino que las coloca en riesgo de quedar atrapadas en una relación de dependencia con los países más avanzados. Urge, por tanto, que los gobiernos implementen estrategias concretas para impulsar la investigación, atraer inversiones y, sobre todo, formar profesionales capacitados en IA.
+
+El estudio realizado mediante tablas univariadas de frecuencias (absolutas, relativas y acumuladas) de los tres indicadores clave revela patrones estructurales preocupantes en el desarrollo global de la inteligencia artificial. El análisis muestra una concentración extrema de capacidades en un reducido grupo de países - principalmente Estados Unidos (con puntuaciones perfectas en Talent y Commercial), China (destacada en Research con 71.42 puntos) y algunas economías europeas -, que dominan simultáneamente los tres ámbitos. Esta triple brecha (formativa, científica y comercial), evidenciada por las frecuencias acumuladas donde el 80 por ciento de los países analizados muestra desempeños limitados (F.Rel.Acum mayor a 0.80 en intervalos menores a 30 puntos para los tres indicadores), crea un escenario crítico de dependencia tecnológica.
+
+El estudio revela que solo el 12\% de los países (7/58) alcanza puntuaciones altas (mayores a 70 puntos) en los tres indicadores simultáneamente, mientras que el 65\% muestra limitaciones críticas en el Índice Commerce (F.Rel.Acum=0.65 en menos de 20 puntos), porcentaje que supera en 20 puntos al de Research (45\%). Destaca especialmente la brecha en Talent, donde Estados Unidos (100 puntos) quintuplica la media global (19.3 puntos), evidenciando una concentración extrema de capital humano especializado.
 
 Otro hallazgo importante del estudio es que el éxito en inteligencia artificial no está ligado exclusivamente al PIB de un país. Factores como el apoyo estatal, la calidad de la infraestructura digital e incluso las leyes que regulan esta tecnología juegan un papel determinante. Para cerrar la brecha, se necesitan no solo recursos económicos, sino también voluntad política y cooperación internacional. La democratización de la IA no es un tema técnico; es un desafío social que exige acción inmediata.
 
