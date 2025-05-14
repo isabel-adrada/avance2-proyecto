@@ -38,15 +38,22 @@ Este estudio analiza las variables clave que influyen en la inversión, innovaci
 Inteligencia artificial, inversión, innovación, implementación, análisis estadístico.
 
 \section{Introducción}
-Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar las regiones con mayor potencial de adopción e implementación de estas herramientas. Este análisis es crucial para la toma de decisiones estratégicas, la definición de mercados objetivo y la planificación de estrategias de expansión geográfica, razón por lo cuál, debido a la incertidumbre respecto a los factores con mayor impacto en el potencial éxito de los planes de expansión operativa en diferentes partes del mundo, se plantea el interrogante ¿Qué variables tienen mayor influencia en los niveles de inversión, innovación e implementación de la inteligencia artificial según lo reflejado en el AI Global Index [1] (índice que compara diferentes países en estos niveles), y cómo varía esta influencia según la región geográfica?.
+Las compañıas involucradas en el desarrollo tecnológico con inteligencia artificial (IA) necesitan identificar las regiones con mayor potencial de adopción e implementación de estas herramientas. Este análisis es crucial para la definición de mercados objetivo y la planificación de estrategias de expansión geográfica, razón por lo cuál, debido a la incertidumbre respecto a los factores con mayor impacto en el potencial éxito de los planes de expansión operativa en diferentes partes del mundo, se plantea el interrogante ¿Qué variables tienen mayor influencia en los niveles de inversión, innovación e implementación de la inteligencia artificial según lo reflejado en el AI Global Index [1] (índice que compara diferentes países en estos niveles), y cómo varía esta influencia según la región geográfica?
 
-El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál, en primera instancia se identificaron los índices para cada factor mencionado con un mayor coeficiente de correlación lineal de Pearson de acuerdo a la metodología e interpretación plaenteada por Navidi [2], permitiendo el plateamiento de los objetivos específicos: determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce, determinar la influencia de los factores relacionados con la innovación mediante el índice Research, determinar la influencia de los factores relacionados con la implementación mediante el índice Talent y determinar la influencia de los factores relacionados con la ubicación geográfica del país mediante la categorización por Región.
+El objetivo general de este estudio radica en identificar las variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, reflejado en el AI global index de diferentes regiones del mundo, por lo cuál, en primera instancia se identificaron los índices para cada factor mencionado con un mayor coeficiente de correlación lineal de Pearson de acuerdo a la metodología e interpretación plaenteada por Navidi [2], permitiendo el plateamiento de los objetivos específicos:
 
-En primera instancia y considerando que el índice Research tiene la más alta correlación lineal con Total Score de las variables presentadas, se formula la siguiente hipótesis: el valor medio del índice Research es menor o igual a 20 puntos (teniendo en cuenta que 20 es un valor cercano al puntaje de Research en la región Asia-Pacific, la cuál obtuvo el puntaje más alto en esta categoría).
+\begin{itemize}
+\item Determinar la influencia de los factores relacionados con la inversión mediante el índice Commerce en el desarrollo de la IA.
+\item Determinar la influencia de los factores relacionados con la innovación mediante el índice Research en el desarrollo de la IA.
+\item Determinar la influencia de los factores relacionados con la implementación mediante el índice Talent en el desarrollo de la IA.
+\item Determinar la influencia de la ubicación geográfica en el desarrollo de la IA mediante la categorización por Región.
+\end{itemize}
 
-Por otro lado, al contemplar la fundamental importancia de la perspectiva regional y las diferencias entre las mismas para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: por lo menos el 50% de los datos con un Total Score mayor o igual a 5 son parte de la región Africa y Asia-Pacific (al tener en cuenta que la región Africa tiene los algunos de los puntajes más bajos para las diferentes variables).
+En primera instancia y considerando que el índice Research tiene la más alta correlación lineal con Total Score de las variables presentadas, se formula la siguiente hipótesis: la media del índice Research es $≤$ a 20 puntos (teniendo en cuenta que el puntaje regional más alto de Research es 20.72).
 
-Finalmente, con el propósito de realizar una comparación regional para determinar cuáles son las zonas con un mayor potencial de desarrollo en inteligencia artificial se plantea la siguiente hipótesis sobre dos grupos regionales:el puntaje medio del índice Total Score en Europe es mayor a el promedio de Total Score en Estados Unidos (considerando que en múltiples sectores se considera a Europa y Estados Unidos como regiones altamente desarrolladas).
+Por otro lado, al contemplar las diferencias regionales para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: por lo menos el 80\% de los datos con un Total Score $≥$ a 5 son parte de la región Africa (al tener en cuenta que la región Africa tiene los algunos de los puntajes más bajos para las diferentes variables).
+
+Finalmente, con el propósito de realizar una comparación regional para determinar cuáles son las zonas con mayor potencial de desarrollo en IA se plantea la siguiente hipótesis sobre dos grupos regionales: el puntaje medio del índice Total Score en Europe es mayor a el promedio de Total Score en Estados Unidos (considerando que en múltiples sectores se considera a Europa y Estados Unidos como regiones altamente desarrolladas).
 
 
 ```{r dataframes, include=FALSE}
@@ -64,7 +71,7 @@ numeric_data <- data.frame(Commercial = datos$Commercial, Research = datos$Resea
 
 \section{Metodología}
 
-Para la realización de este estudio, en primera instancia es necesario definir la población y muestras a estudiar además de la realización de una revisión preliminar de las variables presentadas en la base de datos AI global Index, una presentación general de los datos incluyendo los países que conforman las regiones estudiadas, la relación lineal entre las diferentes variables a través de gráficos de disperción y el coeficiente de correlación lineal de Pearson (criterio utilizado para la definición de las variables a estudiar a través de los objetivos específicos), gráficos de líneas y medidas de tendencia central, posición y disperción de los datos.
+Para la realización de este estudio, es necesario definir la población y muestra a estudiar además de la realización de una revisión preliminar de las variables presentadas en la base de datos AI global Index, una presentación de los datos incluyendo los países que conforman las regiones estudiadas, la relación lineal entre las diferentes variables a través de gráficos de disperción y el coeficiente de correlación lineal de Pearson (criterio utilizado para la definición de las variables a estudiar a través de los objetivos específicos) y medidas de tendencia central, posición y disperción de los datos.
 
 La población considerada para este estudio corresponde a todos los países del mundo, mientras la muestra se delimita a los países y regiones incluidas en el AI Global Index con datos completos para los factores inversión, innovación e implementación. La unidad de análisis en este estudio son las 5 regiones conformadas por los 62 países estudiados, evaluado según las variables cuantitativas y cualitativas definidas en la Tabla 1. 
 
@@ -114,7 +121,7 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 \begin{multicols}{2}
 
-En la Tabla 2 se presentan los diferentes países que conforma la unidad de análisis de este estudio; cada una de las 5 regiones con los países que las conforman (para un total de 62 países a nivel mundial).
+En la Tabla 2 se presenta la consitución de la unidad de análisis de este estudio; cada una de las 5 regiones con los países que las conforman (para un total de 62 países a nivel mundial) con el fin de proporcionar claridad sobre la proveniencia de los datos regionales que se presentan en este informe, ya que los datos referentes a las regiones no abarcan la totalidad de los países pertenecientes a las mismas y las regiones están formadas por diferentes cantidades de paises.
 
 \end{multicols}
 
@@ -145,7 +152,7 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 \begin{multicols}{2}
 
 
-Posteriormente, con el propósito de indentificar las posibles variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, se elaboró la Figura 1, la cuál presenta una comparación de las distribuciones de las variables y sus respectivos coeficientes de correlación lineal de Pearson con el fin de reconocer los índices que presentan un mayor valor respecto al AI Global Index (Total Score), los cuáles fueron Commerce para el nivel de inversión, Research para la innovación y Talent para la implemetación. 
+Posteriormente, con el propósito de indentificar las posibles variables con un mayor grado de influencia en el nivel de inversión, innovación e implementación de la inteligencia artificial, se elaboró la Figura 1, la cuál presenta una comparación de las distribuciones y disperciones de las variables y con respectivos coeficientes de correlación lineal de Pearson con el fin de reconocer los índices que presentan un mayor valor respecto al AI Global Index (Total Score), los cuáles fueron Commerce para el nivel de inversión, Research para la innovación y Talent para la implemetación. 
 
 
 ```{r figura1, echo=FALSE}
@@ -159,9 +166,6 @@ ggsave("figura1.png", plot = figura1, width = 7, height = 7, dpi = 300)
 \includegraphics[width=\linewidth]{figura1.png}
 \end{center}
 Figura 1. Correlación lineal de Pearson índices.
-
-
-Los criterios considerados para la selección de los países y regiones incluyen la sisponibilidad de datos en el AI Global Index, inclusión en las categorías de clasificación establecidas (ver Tabla 1) y representación geográfica equilibrada para evitar sesgos regionales.
 
 El análisis realizado incluye estadísticas descriptivas: medidas de tendencia central, dispersión y posición, correlación lineal de Pearson entre las variables cuantitativas y el índice total y comparación de medias para evaluar diferencias significativas entre regiones. Posteriormente, se emplearon métodos de análisis multivariado para explorar relaciones más complejas entre las variables, como el análisis de componentes principales (ACP) para identificar patrones latentes en los datos.
 
@@ -225,7 +229,7 @@ dGrupo2 <- sd(muestra_grupo2)
 \section{Resultados}
 En la Tabla 2 se presentan las medidas de tendencia central y posición de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
 
-Para casi todos los casos, la medida de tendencia central moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre estos indicadores, planteando la posibilidad de una distribución de campana, sin embargo esto debe ser confirmado gráficamente o mediante una prueba de simetría. Esto mismo ocurre para Europe con todos los indicadores, y en el caso del indicador Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
+Para casi todos los casos, la medida de tendencia central moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre los indicadores, planteando la posibilidad de una distribución de campana, sin embargo esto debe ser confirmado gráficamente. Esto mismo ocurre para Europe con todos los indicadores, y en el caso del indicador Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
 
 El mínimo en todas las regiones para todos los ídices es menor a 10, excepto Total Score de Americas con un 13.27, por otro lado, el máximo entre regiones presenta discrepancias más significativas, donde el el caso de Americas el máximo es 100 para todos los índices, en Asia-Pacific todos los máximos se encuentran por encima de 40, mientras en Europe los máximos de todos los índices se ubican en 40.93 o menos, al igual que Middle East. En el caso de Africa, toos los máximos de los indicadores se encuentran por debajo de 10.
 
@@ -322,11 +326,11 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 En la Tabla 3 se presentan las medidas de disperción, covarianza y correlación lineal de Pearson con respecto al Total Score (AI Global Index) de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
 
-Americas presentan los rangos más amplios de todas las regiones que van desde 86.73 en Total Score hasta 100 en Research, para la maroría los demás casos de las regiones Asia-Pacific, Europe y Middle East, los rangos de los diferentes índices varían alrededor de 20 y 40 indicando menor variablidad de los datos con excepciones de los índices Research y Total Score de Asia-Pacific con 71.30 y  62.92 respectivamente. En el caso de Africa se presentan los rangos más bajos donde todos estàn por debajo de 10, lo cuál sugiere que los datos en la región se distribuyen de manera altamente compacta.
+Americas presentan los rangos más amplios de todas las regiones que van desde 86.73 en Total Score hasta 100 en Research, para Asia-Pacific, Europe y Middle East, los rangos de los diferentes índices varían alrededor de 20 y 40 indicando menor variablidad de los datos con excepciones de los índices Research y Total Score de Asia-Pacific con 71.30 y  62.92 respectivamente. En el caso de Africa se presentan los rangos más bajos donde todos están por debajo de 10, lo cuál sugiere que los datos en la región se distribuyen de manera compacta.
 
-Con respecto al coeeficiente de variación se puede afirmar que para la mayoría de los casos los datos son heterogéneos al presentar un coeficiente de variación mayor a 50, sin embargo, el índice Talent y Total Score en Europe presentan variación significativa ya que el coeficiente de variación se encuentra en el rango de 10 a 50.
+Con respecto al coeeficiente de variación se puede afirmar que para la mayoría de los casos los datos son heterogéneos al presentar un coeficiente > a 50, sin embargo, el índice Talent y Total Score en Europe presentan variación significativa ya que el CV se encuentra en el rango de 10 a 50.
 
-En el caso de la covarianza, esta es positiva para todas las variables, lo cuál plantea la posibilidad de que estas tengan una relación lineal directa con el índice Total Score. Esto es confirmado con el coeficiente de correlación de Pearson, donde un valor superior a 0.8 indica hay una relación muy significativa, lo cuál es cierto para todos los indicadores en Americas y Middle East, Research en Asia-Pacific y Talent y Research en Europe. Por otro lado, una coeficiente entre 0.6 y 0.78 indica una relación significativa, la cuál está presente en Europe para el indicador Commerce y en Africa para Talent y Research.
+En el caso de la covarianza, esta es positiva para todas las variables, lo cuál plantea la posibilidad de que estas tengan una relación lineal directa con el índice Total Score. Esto es confirmado con el coeficiente de correlación de Pearson, donde un valor superior a 0.8 indica hay una relación muy significativa, lo cuál es cierto para todos los indicadores en Americas y Middle East, Research en Asia-Pacific y Talent y Research en Europe. Por otro lado, una coeficiente entre 0.6 y 0.8 indica una relación significativa, la cuál está presente en Europe para Commerce y en Africa para Talent y Research.
 
 
 \end{multicols}
@@ -358,7 +362,7 @@ cat("\\renewcommand{\\arraystretch}{1}\n")
 
 \subsection{Índice Commerce}
 
-El indicador Commercial evalúa la capacidad de los países para convertir el conocimiento en IA en aplicaciones comerciales y soluciones de mercado. La Tabla 4 presenta la distribución global de este indicador a través de intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en cada rango. Este análisis es clave para identificar qué economías están liderando la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
+El indicador Commerce evalúa la capacidad de los países para convertir el conocimiento de IA en aplicaciones comerciales y soluciones de mercado. La Tabla 4 presenta la distribución global de este indicador en intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en cada rango. Este análisis es clave para identificar las economías líderes en la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
 
 La Tabla 4 revela una concentración extrema en la capacidad comercial, con más del 65\% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100 puntos), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África y Latinoamérica.
 
@@ -1062,92 +1066,9 @@ ggsave("figura9.png", plot = figura_ojiva_talent, width = 8, height = 9, dpi = 3
 \end{center}
 Figura 9. Distribución acumulada del Índice Talent agrupado por Región.
 
-
-```{r figura10, echo=FALSE, warning=FALSE, message=FALSE}
-
-data_dist <- data.frame(x = seq(-3.5, 3.5, length.out = 1000))
-data_dist$y <- dnorm(data_dist$x)
-
-z1 <- (16.61 - 20)/(10.8946711/sqrt(30))
-z_crit <- qnorm(1-0.05)
-
-rejection_region <- data.frame(
-  x = seq(z_crit, 3.5, length.out = 100)
-)
-rejection_region$y <- dnorm(rejection_region$x)
-
-figura11 <- ggplot(data_dist, aes(x = x, y = y)) +
-  geom_line(size = 1) +
-  
-  geom_area(data = rejection_region, 
-            aes(x = x, y = y), 
-            fill = rgb(0.5, 0.8, 0.5, 0.5)) +
-  
-  geom_vline(xintercept = z_crit, 
-             linetype = "dashed", 
-             color = "black", 
-             size = 0.8) +
-  
-  geom_vline(xintercept = 0, 
-             size = 1) +
-  
-  geom_point(aes(x = z1, y = 0), 
-             color = "red", 
-             size = 3) +
-  geom_segment(aes(x = z1, y = 0.05, xend = z1, yend = 0), 
-               arrow = arrow(length = unit(0.2, "cm")), 
-               color = "red", 
-               size = 0.8) +
-  
-  labs(x = "Z", 
-       y = "Densidad", 
-       title = "Prueba de Hipótesis (Cola Derecha)") +
-  
-  annotate("text", x = 0, y = 0.2, 
-           label = "Región de\nno rechazo", 
-           size = 4,
-           hjust = 0.5,
-           vjust = 0.5,
-           bg = "aliceblue") +
-  
-  annotate("text", x = z_crit + 0.5, y = 0.1, 
-           label = paste("Región de\nrechazo\n", 0.05), 
-           size = 4,
-           hjust = 0.5,
-           vjust = 0.5,
-           bg = "lightgreen") +
-  
-  annotate("text", x = z_crit, y = -0.02, 
-           label = paste("Za =", round(z_crit, 3)), 
-           size = 3,
-           hjust = 0) +
-  
-  annotate("text", x = z1, y = 0.07, 
-           label = paste("Z =", round(z1, 2)), 
-           color = "red", 
-           size = 3) +
-  
-  theme_minimal() +
-  theme(
-    plot.title = element_text(hjust = 0.5, size = 14),
-    axis.text = element_text(size = 10),
-    panel.grid.minor = element_blank()
-  ) +
-  scale_x_continuous(breaks = c(-3, -2, -1, 0, 1, 2, 3)) +
-  scale_y_continuous(expand = c(0, 0))
-
-ggsave("figura11.png", plot = figura11, width = 8, height = 6, dpi = 300)
-```
-
-\begin{center}
-\includegraphics[width=\linewidth]{figura9.png}
-\end{center}
-
-Figura 10. Distribución cajas y bigotes del Índice Talent agrupado por Región.
-
 \section{Intérvalos de confianza}
 
-Al obtener una muestra aleatoria del índice Research (variable cuantitativa) y determinar la media de la muestra y la desviación estándar, es necesario establecer el intérvalo de confianza donde se encuentra la media real de la población y la desviación estándar poblacional.
+Al obtener una muestra aleatoria del índice Research (variable cuantitativa) y determinar la media de la muestra y la desviación estándar, es necesario establecer el intérvalo de confianza donde se encuentra la media real de la población.
 
 Para obtener un intérvalo de confianza del 95\% se realizó el siguiente procedimiento:
 
@@ -1159,7 +1080,7 @@ $\alpha$/2 = 0.025\\
 Z~$\alpha$/2~ = ± 1.96\\
 IC = (`r mResearch - 1.96`,  `r mResearch + 1.96`)\\
 
-El intérvalo oresentado indica que con una probabilidad del 95\%, la media de la población se encontrará entre `r mResearch - 1.96` y `r mResearch - 1.96`.
+El intérvalo presentado indica que con una probabilidad del 95\%, la media de la población se encuentra entre `r mResearch - 1.96` y `r mResearch - 1.96`.
 
 ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
 
@@ -1197,9 +1118,9 @@ Paso 4.
 Z crítico = Z(1 - $\alpha$)\\
 Z crítico = `r z_crit`\\
 
-A continuación se presenta gráficamente el posicionamiento de las regiones de rechazo y no rechazo y la ubicación de Z en las mismas.
+En la figura 10 se presenta gráficamente el posicionamiento de las regiones de rechazo y no rechazo y la ubicación de Z en las mismas.
 
-```{r figura11, echo=FALSE, warning=FALSE, message=FALSE}
+```{r figura10, echo=FALSE, warning=FALSE, message=FALSE}
 
 data_dist <- data.frame(x = seq(-3.5, 3.5, length.out = 1000))
 data_dist$y <- dnorm(data_dist$x) * 0.85  
@@ -1262,19 +1183,163 @@ figura_prueba <- ggplot(data_dist, aes(x = x, y = y)) +
   scale_x_continuous(breaks = c(-3, -2, -1, 0, 1, 2, 3)) +
   scale_y_continuous(expand = c(0, 0))
 
-ggsave("figura11.png", plot = figura_prueba, width = 8, height = 5, dpi = 300)
+ggsave("figura10.png", plot = figura_prueba, width = 8, height = 5, dpi = 300)
+
+```
+\begin{center}
+\includegraphics[width=\linewidth]{figura10.png}
+\end{center}
+
+Figura 10. Identificación de la región de rechazo
+
+Paso 5.
+
+Con un nivel de significancia de 0.05, se concluye que el valor medio del índice Research es menor o igual a 20 puntos, ya que no se rechaza la hipótesis nula Ho: µ $≤$ 20 debido a que Z = `r z1` se encuentra en la región de no rechazo (región a la izquierda de Z crítico = `r z_crit`) como se aprecia en la figura 10.
+
+ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
+
+ESPACIO PARA DOS POBLACIONES (seguir el mismo formato)
+
+
+\section{Modelo de regresión lineal}
+
+Con el objetivo de determinar la influencia de los factores relacionados con la innovación mediante el índice Research en el desarrollo de la IA, se busca plantear un modelo de regresión lineal [5]. Para esto, se debe establecer la presencia de una relación lineal significativa (con un coeficiente de correlación lineal de Pearson $≥$ a 0.6 o $≤$ a -0.6) y visualizar la relación en un diagrama de disperción.
+
+```{r corrResearch}
+
+cResearch <- round(cor(datos $Research, datos $Total.score), 3)
+
+```
+
+
+En la figura 11 se presenta el diagrama de disperción del índice Research y Total Score, donde se aprecia la presencia de una relación lineal entre las mismas, la cuál se ve reflejada en el coeficiente de correlación lineal de ambas variables, que es de `r cResearch`, indicando una relación lineal directa muy significativa ya que el coeficiente es mayor a 0.6. Este análisis preliminar de la relación de las variables permite determinar que es apropiado realizar un modelo de regresión lineal de las mismas.
+
+
+```{r figura11, echo=FALSE, warning=FALSE, message=FALSE}
+
+grafico_dispersion <- ggplot(datos, aes(x = Research, y = Total.score)) +
+  geom_point(size = 3, alpha = 0.7, color = "steelblue") +
+  
+  geom_smooth(method = "lm", color = "darkred", se = TRUE, alpha = 0.2, 
+              linetype = "dashed", linewidth = 1) +
+  
+  labs(
+    x = "Índice Research",
+    y = "Total Score") +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.text = element_text(size = 10),
+    panel.grid.minor = element_blank()
+  ) +
+  
+  annotate("text", x = max(datos$Research) * 0.2, y = max(datos$Total.score) * 0.95,
+           label = paste("Correlación: r = 0.95"),
+           size = 4, hjust = 0, color = "darkblue", fontface = "bold") +
+  
+  annotate("text", x = max(datos$Research) * 0.2, y = max(datos$Total.score) * 0.90,
+           label = paste("Ecuación: y = 0.82x + 10.27"),
+           size = 4, hjust = 0, color = "darkred")
+
+ggsave("figura11.png", plot = grafico_dispersion, width = 8, height = 6, dpi = 300)
+
 ```
 \begin{center}
 \includegraphics[width=\linewidth]{figura11.png}
 \end{center}
 
-Figura 11. Identificación de la región de rechazo
+Figura 11. Disperción de los datos del índice Research y el índice Total Score
 
-Paso 5.
+Las variables del modelo serán el índice Research (variable independiente X) y Total Score (variable dependiente Y). El modelo de regresión lineal es de la forma y = ßo + ß1X + $\epsilon$, donde ß0 es la ordenada de origen de la línea, ß1 es la pendiente de la línea y $\epsilon$ es un componente error aleatorio.
 
-Con un nivel de significancia de 0.05, se concluye que el el valor medio del índice Research es menor o igual a 20 puntos, ya que no se rechaza la hipótesis nula Ho: µ $≤$ 20 debido a que Z = `r z1` se encuentra en la región de no rechazo (región a la izquierda de Z crítico = `r z_crit`) como se aprecia en la figura 11.
+```{r coeficientes}
 
-ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
+regresion = lm(datos$Total.score ~ datos$Research, data=datos)
+coefs <- summary(regresion)$coefficients
+rownames(coefs) <- c("$\\beta_0$", "$\\beta_1$")
+coef_table <- as.data.frame(coefs)
+colnames(coef_table) <- c("Estimación", "Error Estándar", "Valor t", "Valor p")
+r_squared <- summary(regresion)$r.squared
+adj_r_squared <- summary(regresion)$adj.r.squared
+f_stat <- summary(regresion)$fstatistic
+p_value <- pf(f_stat[1], f_stat[2], f_stat[3], lower.tail = FALSE)
+
+b0 <- round(coefs[1, 1], 3)
+b1 <- round(coefs[2, 1], 3)
+Raj <- round(adj_r_squared, 3)
+rp <- Raj * 100
+
+```
+
+En la Tabla 11 se presenta una estimación de los coeficientes del modelo, el error estándar, el Valor t y el Valor p correspondiente (Pr(>|t|)). 
+
+```{r tabla11, echo=FALSE, results='asis'}
+
+kable(coef_table, 
+      format = "latex", 
+      digits = 4,
+      booktabs = TRUE,
+      escape = FALSE,  
+      align = "lrrrr", 
+      caption = "Coeficientes del modelo") %>%
+  kable_styling(font_size = 9, latex_options = "HOLD_position") %>%
+  print()
+
+```
+
+El coeficiente ßo (intercepto) tiene un valor de  `r b0` y el coeficiente ß1 tiene un valor de `r b1`, generando un modelo de regresión lineal:\\
+
+Y = ßo + ß1X + $\epsilon$\\
+Y = `r b0` + `r b1`* X + $\epsilon$\\
+Total Score = `r b0` + `r b1` * Research + $\epsilon$\\
+
+Para determinar la bondad del modelo se utiliza el coeficiente de determinación $R^2$ el cuál mide la exactitud de las predicciones que produce el modelo de regresión lineal, además, el coeficiente de determinación ajustado $R^2_{A}$ considera también la relación del número de parámetros con el número de datos, haciendolo más adecuado para establecer la bondad de las predicciones. A memdida que el valor de $R^2_{A}$ se acerca más a 1 se considera que el modelo es más preciso. En este caso, $R^2_{A}$ es `r Raj`, por lo que el `r rp`\% de la variabilidad de las predicciones de Total Score pueden ser explicadas con el molode de regresión con la variable Research.
+
+```{r estadisticos, echo=FALSE, results='asis'}
+
+cat("$R^2$: ", round(r_squared, 4), "\n\n")
+cat("$R^2$ Ajustado: ", round(adj_r_squared, 4), "\n\n")
+cat("Estadístico F: ", round(f_stat[1], 2), " con ", f_stat[2], " y ", f_stat[3], " grados de libertad\n\n")
+cat("Valor p: ", format.pval(p_value, digits = 4), "\n\n")
+
+```
+
+Lo supuestos respecto a $\epsilon$ son: los errores $\epsilon$i son aleatorios e independientes lo cuál puede ser comprobado con un diagrama de disperción de los residuos
+
+```{r figura12, echo=FALSE, warning=FALSE, message=FALSE}
+
+df_residuos <- data.frame(
+  Ajustados = fitted(regresion),
+  Residuos = residuals(regresion),
+  Residuos_estandarizados = rstandard(regresion)
+)
+
+grafico_residuos <- ggplot(df_residuos, aes(x = Ajustados, y = Residuos)) +
+  geom_point(size = 3, alpha = 0.7, color = "steelblue") +
+  
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkred", size = 1) +
+  
+  labs(
+    x = "Valores ajustados",
+    y = "Residuos",
+  ) +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.text = element_text(size = 10),
+    panel.grid.minor = element_blank()
+  )
+
+ggsave("figura12.png", plot = grafico_residuos, width = 8, height = 6, dpi = 300)
+
+```
+\begin{center}
+\includegraphics[width=\linewidth]{figura12.png}
+\end{center}
+
+el siguiente supuesto indica que la media de la distribución de probabilidad de $\epsilon$ es 0, lo cuá
 
 \section{Conclusiones}
 
