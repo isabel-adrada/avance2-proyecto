@@ -213,8 +213,8 @@ muestra_grupo2 <- sample(asia_africa_middleEast_america$Total_Score, min(30, nro
 
 ```{r media, desv, prop muestras, echo=FALSE, include=FALSE}
 
-mResearch <- mean(datos $Research)
-dResearch <- sd(muestraResearch)
+mResearch <- round(mean(datos $Research), 2)
+dResearch <- round(sd(muestraResearch), 2)
 
 proporcionEuropaAsia <- conteo_europa_asia/conteoMayor5
 
@@ -1068,19 +1068,33 @@ Figura 9. Distribución acumulada del Índice Talent agrupado por Región.
 
 \section{Intérvalos de confianza}
 
-Al obtener una muestra aleatoria del índice Research (variable cuantitativa) y determinar la media de la muestra y la desviación estándar, es necesario establecer el intérvalo de confianza donde se encuentra la media real de la población.
+Al obtener una muestra aleatoria del índice Research (variable cuantitativa) con 30 datos y determinar la media de la muestra y la desviación estándar, es necesario establecer el intérvalo de confianza donde se encuentra la media real de la población.
 
 Para obtener un intérvalo de confianza del 95\% se realizó el siguiente procedimiento:
 
+```{r margen de error, include=FALSE}
+
+zalfa2 <- round(abs(qnorm(0.025)), 3)
+m1 <- round((mResearch - zalfa2 * dResearch/sqrt(30)), 2)
+m2 <- round((mResearch + zalfa2 * dResearch/sqrt(30)), 2)
+
+```
+
+
+n = 30\\
 x̄ = `r mResearch`\\
+s = `r dResearch`\\
 IC = 0.95\\
 IC = 1 - $\alpha$\\
 $\alpha$ = 0.05\\
 $\alpha$/2 = 0.025\\
-Z~$\alpha$/2~ = ± 1.96\\
-IC = (`r mResearch - 1.96`,  `r mResearch + 1.96`)\\
+Z~$\alpha$/2~ = ± `r zalfa2`\\
+Márgen de error = Z~$\alpha$/2~ * s/√n\\
+Márgen de error = `r zalfa2` * `r dResearch`/√30\\
+IC = (x̄ ± Márgen de error\\
+IC = (`r m1`,  `r m2`)\\
 
-El intérvalo presentado indica que con una probabilidad del 95\%, la media de la población se encuentra entre `r mResearch - 1.96` y `r mResearch - 1.96`.
+El intérvalo presentado indica que con una probabilidad del 95\%, la media de la población se encuentra entre `r m1` y `r m2`.
 
 ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
 
