@@ -1627,7 +1627,7 @@ residuos_plot <- ggplot(data.frame(Ajustados = ajustados, Residuos = residuos),
                         aes(x = Ajustados, y = Residuos)) +
   geom_point(color = "steelblue", alpha = 0.7) +
   geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
-  labs(x = "Valores ajustados", y = "Residuos", title = "Dispersión de residuos") +
+  labs(x = "Valores ajustados", y = "Residuos") +
   theme_minimal() +
   theme(
     plot.title = element_text(size = 11, face = "bold"),
@@ -1641,6 +1641,7 @@ ggsave("modelo_multip_residuos.png", plot = residuos_plot, width = 8, height = 6
 \begin{center}
 \includegraphics[width=\linewidth]{modelo_multip_residuos.png}
 \end{center}
+Figura 14. Dispersión de los residuos.
 
 
 ```{r modelo_multip_normalidad, echo=FALSE, message=FALSE, warning=FALSE}
@@ -1653,7 +1654,7 @@ qq_data <- data.frame(sample = residuos)
 qq_plot <- ggplot(qq_data, aes(sample = sample)) +
   stat_qq(color = "steelblue", alpha = 0.7) +
   stat_qq_line(color = "darkred", linetype = "dashed") +
-  labs(title = "Gráfico Q-Q", x = "Cuantiles teóricos", y = "Cuantiles muestrales") +
+  labs(x = "Cuantiles teóricos", y = "Cuantiles muestrales") +
   theme_minimal() +
   theme(
     plot.title = element_text(size = 11, face = "bold"),
@@ -1667,6 +1668,7 @@ ggsave("modelo_multip_normalidad.png", plot = qq_plot, width = 8, height = 6, dp
 \begin{center}
 \includegraphics[width=\linewidth]{modelo_multip_normalidad.png}
 \end{center}
+Figura 15. Gráfico Q-Q.
 
 
 \subsubsection*{Reflexión e interpretación}
