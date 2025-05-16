@@ -232,7 +232,7 @@ dGrupo2 <- sd(muestra_grupo2)
 \section{Resultados}
 En la Tabla 3 se presentan las medidas de tendencia central y posición de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
 
-Para casi todos los casos, la medida de tendencia central moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre los indicadores, planteando la posibilidad de una distribución de campana, sin embargo esto debe ser confirmado gráficamente. Esto mismo ocurre para Europe con todos los indicadores, y en el caso del indicador Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
+Para casi todos los casos, la moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre los indicadores, planteando la posibilidad de una distribución de campana, sin embargo esto debe ser confirmado gráficamente. Esto mismo ocurre para Europe con todos los indicadores, y en Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
 
 El mínimo en todas las regiones para todos los ídices es menor a 10, excepto Total Score de Americas con un 13.27, por otro lado, el máximo entre regiones presenta discrepancias más significativas, donde el el caso de Americas el máximo es 100 para todos los índices, en Asia-Pacific todos los máximos se encuentran por encima de 40, mientras en Europe los máximos de todos los índices se ubican en 40.93 o menos, al igual que Middle East. En el caso de Africa, toos los máximos de los indicadores se encuentran por debajo de 10.
 
@@ -1212,7 +1212,7 @@ ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
 ESPACIO PARA DOS POBLACIONES (seguir el mismo formato)
 
 
-\section{Modelo de regresión lineal}
+\section{Modelo de regresión lineal simple}
 
 Con el objetivo de determinar la influencia de los factores relacionados con la innovación mediante el índice Research en el desarrollo de la IA, se busca plantear un modelo de regresión lineal [5] simple. Para esto, se debe establecer la presencia de una relación lineal significativa (con un coeficiente de correlación lineal de Pearson $≥$ a 0.6 o $≤$ a -0.6) y visualizar la relación en un diagrama de disperción.
 

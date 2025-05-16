@@ -49,15 +49,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
@@ -82,9 +84,6 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -221,7 +220,7 @@ Finalmente se realizaron dos modelos de regresión lineal, uno simple y uno múl
 \section{Resultados}
 En la Tabla 3 se presentan las medidas de tendencia central y posición de las variables cuantitativas Índice Commerce, Research y Talent discriminadas de forma regional. 
 
-Para casi todos los casos, la medida de tendencia central moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre los indicadores, planteando la posibilidad de una distribución de campana, sin embargo esto debe ser confirmado gráficamente. Esto mismo ocurre para Europe con todos los indicadores, y en el caso del indicador Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
+Para casi todos los casos, la moda presentó más de tres valores, lo cuál no brinda mucha información acerca de los datos. En el caso de la media y mediana en Americas y Middle East, todos los índices difieren drásticamente, lo cuál indica que la distribución de los datos no es normal. En el caso Asia-Pacific, para el indicador Research y Total Score hay una alta cercanía entre los indicadores, planteando la posibilidad de una distribución de campana, sin embargo esto debe ser confirmado gráficamente. Esto mismo ocurre para Europe con todos los indicadores, y en Commerce hay una moda única que también es significativamente cercana a la media y mediana. Finalmente para Africa se presenta una alta cercanía de la mediana y la media en los índices Commerce, Talent y Research.
 
 El mínimo en todas las regiones para todos los ídices es menor a 10, excepto Total Score de Americas con un 13.27, por otro lado, el máximo entre regiones presenta discrepancias más significativas, donde el el caso de Americas el máximo es 100 para todos los índices, en Asia-Pacific todos los máximos se encuentran por encima de 40, mientras en Europe los máximos de todos los índices se ubican en 40.93 o menos, al igual que Middle East. En el caso de Africa, toos los máximos de los indicadores se encuentran por debajo de 10.
 
@@ -270,7 +269,7 @@ Americas presentan los rangos más amplios de todas las regiones que van desde 8
 
 Con respecto al coeeficiente de variación se puede afirmar que para la mayoría de los casos los datos son heterogéneos al presentar un coeficiente > a 50, sin embargo, el índice Talent y Total Score en Europe presentan variación significativa ya que el CV se encuentra en el rango de 10 a 50.
 
-En el caso de la covarianza, esta es positiva para todas las variables, lo cuál plantea la posibilidad de que estas tengan una relación lineal directa con el índice Total Score. Esto es confirmado con el coeficiente de correlación de Pearson, donde un valor superior a 0.8 indica hay una relación muy significativa, lo cuál es cierto para todos los indicadores en Americas y Middle East, Research en Asia-Pacific y Talent y Research en Europe. Por otro lado, una coeficiente entre 0.6 y 0.8 indica una relación significativa, la cuál está presente en Europe para Commerce y en Africa para Talent y Research.
+En el caso de la covarianza, esta es positiva para todas las variables, lo cuál plantea la posibilidad de una relación lineal directa con el índice Total Score. Esto es confirmado con el coeficiente de correlación lineal de Pearson, donde un valor superior a 0.8 indica hay una relación muy significativa, lo cuál es cierto para todos los indicadores en Americas y Middle East, Research en Asia-Pacific, Talent y Research en Europe. Por otro lado, una coeficiente entre 0.6 y 0.8 indica una relación significativa, la cuál está presente en Europe para Commerce y en Africa para Talent y Research.
 
 
 \end{multicols}
@@ -314,9 +313,9 @@ Africa & Total Score & 8.49 & 7.41 & 4.22 & 65.63 & 17.78 & 1.00\\
 
 \subsection{Índice Commerce}
 
-El indicador Commerce evalúa la capacidad de los países para convertir el conocimiento de IA en aplicaciones comerciales y soluciones de mercado. La Tabla 4 presenta la distribución global de este indicador en intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en cada rango. Este análisis es clave para identificar las economías líderes en la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
+El indicador Commerce evalúa la capacidad de los países para convertir el conocimiento de IA en aplicaciones comerciales. La Tabla 5 presenta la distribución del indicador en intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en por rango. Este análisis es clave para identificar las economías líderes en la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
 
-La Tabla 5 revela una concentración extrema en la capacidad comercial, con más del 65\% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100 puntos), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África y Latinoamérica.
+La Tabla 5 revela una concentración extrema en la capacidad comercial, con más del 65\% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África.
 
 \end{multicols}
 
@@ -354,7 +353,7 @@ En el rango de 5 a 30 se concentra la siguiente porción más significativa de l
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Fri May 16 00:47:02 2025
+% Fri May 16 06:49:36 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Región vs Índice Commerce} \\ 
   \hline
@@ -464,7 +463,7 @@ En contraste, a medida que aumentan los valores tanto del Índice Research como 
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Fri May 16 00:47:05 2025
+% Fri May 16 06:49:37 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Research (A) vs Total Score (B)} \\ 
   \hline
@@ -561,7 +560,7 @@ Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Fri May 16 00:47:08 2025
+% Fri May 16 06:49:38 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Talent (A) vs Total Score (B)} \\ 
   \hline
@@ -620,6 +619,7 @@ $\alpha$/2 = 0.025\\
 Z~$\alpha$/2~ = ± 1.96\\
 Márgen de error = Z~$\alpha$/2~ * s/√n\\
 Márgen de error = 1.96 * 10.89/√30\\
+Márgen de error = 3.8969365\\
 IC = (x̄ ± Márgen de error)\\
 IC = (12.71,  20.51)\\
 
@@ -644,7 +644,7 @@ Ho: µ $≤$ 20\\
 Ha: µ > 20\\
 
 Paso 2.\\
-$\alpha$ = 0.05
+$\alpha$ = 0.05\\
 
 Paso 3.\\
 Z = (x̄ - µ)/(s/√n)\\
@@ -673,7 +673,7 @@ ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
 ESPACIO PARA DOS POBLACIONES (seguir el mismo formato)
 
 
-\section{Modelo de regresión lineal}
+\section{Modelo de regresión lineal simple}
 
 Con el objetivo de determinar la influencia de los factores relacionados con la innovación mediante el índice Research en el desarrollo de la IA, se busca plantear un modelo de regresión lineal [5] simple. Para esto, se debe establecer la presencia de una relación lineal significativa (con un coeficiente de correlación lineal de Pearson $≥$ a 0.6 o $≤$ a -0.6) y visualizar la relación en un diagrama de disperción.
 
@@ -723,8 +723,8 @@ Para determinar la bondad del modelo se utiliza el coeficiente de determinación
 
 $R^2$ = 0.8947\\
 $R^2_{A}$ = 0.8929\\
-Estadístico F = `rf` con 1 y 60 grados de libertad\\
-Valor p = < 2.2e-16
+Estadístico F = 509.71 con 1 y 60 grados de libertad\\
+Valor p = < 2.2e-16\\
 
 Hay 4 supuestos respecto a $\epsilon$ [6] del modelo de regrersión lineal que se deben cumplir para verificar la validez de las predicciones del modelo, estos supuestos son: 
 
@@ -807,7 +807,6 @@ Figura 13. Distribución los residuos de los pronósticos de Total Score.
 
 
 Con el fin de comprobar la fiabilidad del modelo, en primera instancia, se observa gráficamente en la Figura 11 y se identifica a través del coeficiente de correlación lineal de Pearson que hay una relación lineal muy significativa de 0.946 entre las variables índice Research y Total Score. Por otro lado, la bondad del modelo medida por el coeficiente de determinación es de 0.893, valor que brinda una alta confiabilidad a las predicciones del modelo, indicando que el 89.3\% de la variabilidad de las predicciones de Total Score pueden ser explicadas con el modelo de regresión lineal mediante la variable Research. Es necesario considerar que las predicciones de un modelo solo son válidas dentro del rango de la muestra estudiada, en este caso, esta corresponde a (0 - 100). Debido a que el rango de las muestras coincide con el rango de los resultados posibles (0 - 100), es válido realizar predicciones  para Total Score con cualquier valor del índice Research. Finalmente debido al cumplimiento de los supuestos probado anteriormente, puede considerarse fiable pronosticar con el modelo construido.
-
 
 \subsection{Modelo de Regresión Lineal Múltiple}
 
@@ -933,17 +932,19 @@ Luego de verificar los supuestos y confirmar la significancia global del modelo,
 \textbf{Recomendación:}  
 Para mejorar el desempeño global en inteligencia artificial, los países deberían enfocar recursos en fortalecer sus capacidades de investigación. Este modelo puede emplearse para simular escenarios y priorizar políticas de inversión en los tres frentes analizados.
 
-
-
 \section{Conclusiones}
 
-Los datos analizados revelan una realidad preocupante, y es que el avance de la inteligencia artificial no se está distribuyendo de manera equitativa en el mundo. Al examinar factores clave como la inversión (Commerce), la innovación (Research) y la formación de especialistas (Talent), queda claro que solo un puñado de países (principalmente Estados Unidos, China y algunas potencias europeas) concentran la mayor parte del progreso en este campo. Esto es preocupante por el hecho de que más del 60% de las naciones evaluadas muestran un rezago importante en los tres aspectos estudiados, con regiones como África y América Latina en una posición particularmente vulnerable. Esto no solo limita su capacidad para competir en el ámbito tecnológico, sino que las coloca en riesgo de quedar atrapadas en una relación de dependencia con los países más avanzados. Urge, por tanto, que los gobiernos implementen estrategias concretas para impulsar la investigación, atraer inversiones y, sobre todo, formar profesionales capacitados en IA.
+Los datos analizados revelan una realidad preocupante: el avance de la inteligencia artificial no se distribuye de manera equitativa en el mundo. Al examinar factores clave como la inversión (Commerce), la innovación (Research) y la formación de especialistas (Talent), queda claro que solo un pequeño grupo de países —principalmente Estados Unidos, China y algunas potencias europeas— concentra la mayor parte del progreso en este campo.
 
-El estudio realizado mediante tablas univariadas de frecuencias (absolutas, relativas y acumuladas) de los tres indicadores clave revela patrones estructurales preocupantes en el desarrollo global de la inteligencia artificial. El análisis muestra una concentración extrema de capacidades en un reducido grupo de países - principalmente Estados Unidos (con puntuaciones perfectas en Talent y Commercial), China (destacada en Research con 71.42 puntos) y algunas economías europeas -, que dominan simultáneamente los tres ámbitos. Esta triple brecha (formativa, científica y comercial), evidenciada por las frecuencias acumuladas donde el 80 por ciento de los países analizados muestra desempeños limitados (F.Rel.Acum mayor a 0.80 en intervalos menores a 30 puntos para los tres indicadores), crea un escenario crítico de dependencia tecnológica.
+Más del 60% de las naciones evaluadas muestra un rezago significativo en los tres aspectos estudiados, con regiones como África y América Latina en una posición particularmente vulnerable. Esta concentración no solo limita la capacidad competitiva de estas regiones, sino que las expone a una creciente dependencia tecnológica de los países más avanzados. Se requiere, por tanto, que los gobiernos implementen estrategias concretas para fomentar la investigación, atraer inversiones y formar profesionales altamente capacitados en IA.
 
-El estudio revela que solo el 12\% de los países (7/58) alcanza puntuaciones altas (mayores a 70 puntos) en los tres indicadores simultáneamente, mientras que el 65\% muestra limitaciones críticas en el Índice Commerce (F.Rel.Acum=0.65 en menos de 20 puntos), porcentaje que supera en 20 puntos al de Research (45\%). Destaca especialmente la brecha en Talent, donde Estados Unidos (100 puntos) quintuplica la media global (19.3 puntos), evidenciando una concentración extrema de capital humano especializado.
+El análisis mediante frecuencias univariadas y bivariadas de los tres indicadores clave revela patrones estructurales preocupantes. Se observa una concentración extrema de capacidades en un reducido grupo de países: Estados Unidos, con puntuaciones perfectas en Talent y Commerce, y China, destacada en Research con 71.42 puntos, lideran con una ventaja sustancial. Esta triple brecha —formativa, científica y comercial— se refleja en los valores acumulados, donde el 80% de los países presenta desempeños inferiores a los 30 puntos en los tres indicadores, lo cual genera un escenario crítico de dependencia y vulnerabilidad global.
 
-Otro hallazgo importante del estudio es que el éxito en inteligencia artificial no está ligado exclusivamente al PIB de un país. Factores como el apoyo estatal, la calidad de la infraestructura digital e incluso las leyes que regulan esta tecnología juegan un papel determinante. Para cerrar la brecha, se necesitan no solo recursos económicos, sino también voluntad política y cooperación internacional. La democratización de la IA no es un tema técnico; es un desafío social que exige acción inmediata.
+El estudio también evidencia que solo el 12% de los países (7 de 58) alcanza simultáneamente puntuaciones altas (más de 70 puntos) en los tres indicadores, mientras que el 65% muestra limitaciones críticas en el índice Commerce (menos de 20 puntos). La brecha es particularmente grave en el índice Talent, donde Estados Unidos —con 100 puntos— quintuplica la media global (19.3 puntos), dejando en evidencia una concentración extrema del capital humano especializado.
+
+Un punto relevante que debe considerarse es el posible sesgo estructural en los datos, especialmente en relación con Estados Unidos, que presenta valores extremos (máximos) en prácticamente todos los indicadores. Esta desproporción puede distorsionar la percepción del desarrollo relativo de los demás países, haciendo que sus desempeños se vean menos destacados en comparación. Este efecto se acentúa en los análisis de correlación y regresión, donde los valores atípicos influyen en los resultados agregados. Por tanto, futuros estudios deberían considerar técnicas de normalización o análisis por clusters regionales para evitar que un solo país —por más desarrollado que sea— defina las tendencias globales.
+
+Finalmente, el estudio confirma que el éxito en inteligencia artificial no depende exclusivamente del Producto Interno Bruto. Factores como el compromiso político, la infraestructura digital, la calidad educativa y los marcos regulatorios tienen un peso determinante. Para cerrar la brecha, no basta con recursos financieros: se necesita visión estratégica, cooperación internacional y voluntad de democratizar el conocimiento. La IA no es solo una tecnología del futuro; es un reflejo de las desigualdades del presente. Democratizarla es, ante todo, un imperativo social.
 
 \section{Referencias}
 [1]   “AI Global Index,” Kaggle, Apr. 26, 2023.         https://www.kaggle.com/datasets/katerynameleshenko/ai-index
