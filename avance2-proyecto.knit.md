@@ -1,106 +1,21 @@
-% Options for packages loaded elsewhere
-\PassOptionsToPackage{unicode}{hyperref}
-\PassOptionsToPackage{hyphens}{url}
-%
-\documentclass[
-]{article}
-\usepackage{amsmath,amssymb}
-\usepackage{iftex}
-\ifPDFTeX
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provide euro and other symbols
-\else % if luatex or xetex
-  \usepackage{unicode-math} % this also loads fontspec
-  \defaultfontfeatures{Scale=MatchLowercase}
-  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-\fi
-\usepackage{lmodern}
-\ifPDFTeX\else
-  % xetex/luatex font selection
-\fi
-% Use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\IfFileExists{microtype.sty}{% use microtype if available
-  \usepackage[]{microtype}
-  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\makeatletter
-\@ifundefined{KOMAClassName}{% if non-KOMA class
-  \IfFileExists{parskip.sty}{%
-    \usepackage{parskip}
-  }{% else
-    \setlength{\parindent}{0pt}
-    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
-}{% if KOMA class
-  \KOMAoptions{parskip=half}}
-\makeatother
-\usepackage{xcolor}
-\usepackage[margin=1in]{geometry}
-\usepackage{longtable,booktabs,array}
-\usepackage{calc} % for calculating minipage widths
-% Correct order of tables after \paragraph or \subparagraph
-\usepackage{etoolbox}
-\makeatletter
-\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
-\makeatother
-% Allow footnotes in longtable head/foot
-\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
-\makesavenoteenv{longtable}
-\usepackage{graphicx}
-\makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
-% Set default figure placement to htbp
-\def\fps@figure{htbp}
-\makeatother
-\setlength{\emergencystretch}{3em} % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
-\usepackage{multicol}
-\usepackage{longtable}
-\setlength{\columnsep}{1cm}
-\usepackage{enumitem}
-\usepackage{booktabs}
-\usepackage{array}
-\usepackage{float}
-\usepackage{longtable}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
-\usepackage{bookmark}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\urlstyle{same}
-\hypersetup{
-  pdftitle={Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial},
-  hidelinks,
-  pdfcreator={LaTeX via pandoc}}
+---
+title: "Análisis de Variables que Influyen en la Inversión, Innovación e Implementación de la Inteligencia Artificial"
+author: |
+  Adrada Isabel, De la Peña Juan, Terán Federico, Troncoso Samuel    
+  Pontificia Universidad Javeriana Cali
+output:
+  pdf_document:
+    latex_engine: xelatex
+    keep_tex: true
+    extra_dependencies: ["booktabs", "array", "float", "longtable"]
+header-includes:
+  - \usepackage{multicol}
+  - \usepackage{longtable}
+  - \setlength{\columnsep}{1cm}
+  - \usepackage{enumitem}
+---
 
-\title{Análisis de Variables que Influyen en la Inversión, Innovación e
-Implementación de la Inteligencia Artificial}
-\author{Adrada Isabel, De la Peña Juan, Terán Federico, Troncoso
-Samuel\\
-Pontificia Universidad Javeriana Cali}
-\date{}
 
-\begin{document}
-\maketitle
 
 \begin{multicols}{2}
 
@@ -319,29 +234,21 @@ La Tabla 5 revela una concentración extrema en la capacidad comercial, con más
 
 \end{multicols}
 
-\begin{longtable}[]{@{}lcccc@{}}
-\caption{Frecuencia del Índice Commerce}\tabularnewline
-\toprule\noalign{}
-Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-{[}0,10{]} & 55 & 0.89 & 55 & 0.89 \\
-(10,20{]} & 4 & 0.06 & 59 & 0.95 \\
-(20,30{]} & 1 & 0.02 & 60 & 0.97 \\
-(30,40{]} & 0 & 0.00 & 60 & 0.97 \\
-(40,50{]} & 1 & 0.02 & 61 & 0.98 \\
-(50,60{]} & 0 & 0.00 & 61 & 0.98 \\
-(60,70{]} & 0 & 0.00 & 61 & 0.98 \\
-(70,80{]} & 0 & 0.00 & 61 & 0.98 \\
-(80,90{]} & 0 & 0.00 & 61 & 0.98 \\
-(90,100{]} & 1 & 0.02 & 62 & 1.00 \\
-\end{longtable}
+
+Table: Frecuencia del Índice Commerce
+
+|Intervalo | F.Absoluta | F.Relativa | F.Abs.Acum | F.Rel.Acum |
+|:---------|:----------:|:----------:|:----------:|:----------:|
+|[0,10]    |     55     |    0.89    |     55     |    0.89    |
+|(10,20]   |     4      |    0.06    |     59     |    0.95    |
+|(20,30]   |     1      |    0.02    |     60     |    0.97    |
+|(30,40]   |     0      |    0.00    |     60     |    0.97    |
+|(40,50]   |     1      |    0.02    |     61     |    0.98    |
+|(50,60]   |     0      |    0.00    |     61     |    0.98    |
+|(60,70]   |     0      |    0.00    |     61     |    0.98    |
+|(70,80]   |     0      |    0.00    |     61     |    0.98    |
+|(80,90]   |     0      |    0.00    |     61     |    0.98    |
+|(90,100]  |     1      |    0.02    |     62     |    1.00    |
 
 \begin{multicols}{2}
 
@@ -429,29 +336,21 @@ Los resultados revelan una concentración extrema en la capacidad investigadora:
 
 \end{multicols}
 
-\begin{longtable}[]{@{}lcccc@{}}
-\caption{Frecuencia del Índice Research}\tabularnewline
-\toprule\noalign{}
-Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-{[}0,10{]} & 26 & 0.42 & 26 & 0.42 \\
-(10,20{]} & 14 & 0.23 & 40 & 0.65 \\
-(20,30{]} & 12 & 0.19 & 52 & 0.84 \\
-(30,40{]} & 8 & 0.13 & 60 & 0.97 \\
-(40,50{]} & 0 & 0.00 & 60 & 0.97 \\
-(50,60{]} & 0 & 0.00 & 60 & 0.97 \\
-(60,70{]} & 0 & 0.00 & 60 & 0.97 \\
-(70,80{]} & 1 & 0.02 & 61 & 0.98 \\
-(80,90{]} & 0 & 0.00 & 61 & 0.98 \\
-(90,100{]} & 1 & 0.02 & 62 & 1.00 \\
-\end{longtable}
+
+Table: Frecuencia del Índice Research
+
+|Intervalo | F.Absoluta | F.Relativa | F.Abs.Acum | F.Rel.Acum |
+|:---------|:----------:|:----------:|:----------:|:----------:|
+|[0,10]    |     26     |    0.42    |     26     |    0.42    |
+|(10,20]   |     14     |    0.23    |     40     |    0.65    |
+|(20,30]   |     12     |    0.19    |     52     |    0.84    |
+|(30,40]   |     8      |    0.13    |     60     |    0.97    |
+|(40,50]   |     0      |    0.00    |     60     |    0.97    |
+|(50,60]   |     0      |    0.00    |     60     |    0.97    |
+|(60,70]   |     0      |    0.00    |     60     |    0.97    |
+|(70,80]   |     1      |    0.02    |     61     |    0.98    |
+|(80,90]   |     0      |    0.00    |     61     |    0.98    |
+|(90,100]  |     1      |    0.02    |     62     |    1.00    |
 
 \begin{multicols}{2}
 
@@ -532,31 +431,23 @@ La escasez de países en rangos intermedios (30-60 puntos) es particularmente pr
 
 \end{multicols}
 
-\begin{longtable}[]{@{}lcccc@{}}
-\caption{Frecuencia del Índice Talent}\tabularnewline
-\toprule\noalign{}
-Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
-\midrule\noalign{}
-\endfirsthead
-\toprule\noalign{}
-Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
-\midrule\noalign{}
-\endhead
-\bottomrule\noalign{}
-\endlastfoot
-{[}0,10{]} & 22 & 0.35 & 22 & 0.35 \\
-(10,20{]} & 22 & 0.35 & 44 & 0.71 \\
-(20,30{]} & 11 & 0.18 & 55 & 0.89 \\
-(30,40{]} & 5 & 0.08 & 60 & 0.97 \\
-(40,50{]} & 1 & 0.02 & 61 & 0.98 \\
-(50,60{]} & 0 & 0.00 & 61 & 0.98 \\
-(60,70{]} & 0 & 0.00 & 61 & 0.98 \\
-(70,80{]} & 0 & 0.00 & 61 & 0.98 \\
-(80,90{]} & 0 & 0.00 & 61 & 0.98 \\
-(90,100{]} & 1 & 0.02 & 62 & 1.00 \\
-\end{longtable}
 
-\textbackslash{}
+Table: Frecuencia del Índice Talent
+
+|Intervalo | F.Absoluta | F.Relativa | F.Abs.Acum | F.Rel.Acum |
+|:---------|:----------:|:----------:|:----------:|:----------:|
+|[0,10]    |     22     |    0.35    |     22     |    0.35    |
+|(10,20]   |     22     |    0.35    |     44     |    0.71    |
+|(20,30]   |     11     |    0.18    |     55     |    0.89    |
+|(30,40]   |     5      |    0.08    |     60     |    0.97    |
+|(40,50]   |     1      |    0.02    |     61     |    0.98    |
+|(50,60]   |     0      |    0.00    |     61     |    0.98    |
+|(60,70]   |     0      |    0.00    |     61     |    0.98    |
+|(70,80]   |     0      |    0.00    |     61     |    0.98    |
+|(80,90]   |     0      |    0.00    |     61     |    0.98    |
+|(90,100]  |     1      |    0.02    |     62     |    1.00    |
+
+\\
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
@@ -944,6 +835,7 @@ Residuals & Residuals & 58 & 1059.4294 & 18.2660 & NA & NA\\
 
 \end{footnotesize}\renewcommand{\arraystretch}{1}
 
+
 \begin{multicols}{2}
 
 Como el valor p es menor a 0.05, se rechaza \( H_0 \), concluyendo que el modelo tiene utilidad estadística global.
@@ -1024,5 +916,3 @@ Finalmente, el estudio confirma que el éxito en inteligencia artificial no depe
 
 
 \end{multicols}
-
-\end{document}

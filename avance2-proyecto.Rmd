@@ -52,7 +52,7 @@ El objetivo general de este estudio radica en identificar las variables con un m
 
 En primera instancia y considerando que el índice Research tiene la más alta correlación lineal con Total Score de las variables presentadas, se formula la siguiente hipótesis: la media del índice Research es $≤$ a 20 puntos (teniendo en cuenta que el puntaje regional más alto de Research es 20.72).
 
-Por otro lado, al contemplar las diferencias regionales para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: por lo menos el 80\% de los datos con un Total Score $≥$ a 5 son parte de la región Africa (al tener en cuenta que la región Africa tiene los algunos de los puntajes más bajos para las diferentes variables).
+Por otro lado, al contemplar las diferencias regionales para la resolución de la pregunta problema de este estudio, se plantea la siguiente hipótesis: la proporción de países pertenecientes a la región 'Europe' en el AI Global Index es mayor al 40% (al tener en cuenta que la región Europe tiene la mayar cantidad de países por región).
 
 Finalmente, con el propósito de realizar una comparación regional para determinar cuáles son las zonas con mayor potencial de desarrollo en IA se plantea la siguiente hipótesis sobre dos grupos regionales: el puntaje medio del índice Total Score en Europe es mayor a el promedio de Total Score en Estados Unidos (considerando que en múltiples sectores se considera a Europa y Estados Unidos como regiones altamente desarrolladas).
 
@@ -1094,7 +1094,30 @@ IC = (`r m1`,  `r m2`)\\
 
 El intérvalo presentado indica que con una probabilidad del 95\%, la media de la población se encuentra entre `r m1` y `r m2`.
 
-ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
+Para complementar el análisis de las variables que influyen en el desarrollo de la IA, es pertinente examinar la distribución de los países según su región geográfica. Esto permite contextualizar los hallazgos y entender si ciertas regiones tienen una representación mayoritaria en el conjunto de datos estudiado. Un análisis más profundo, como la sugerencia de analizar la proporción de países en cada región que superan la media en indicadores clave de IA, podría ofrecer perspectivas aún más detalladas sobre las disparidades y fortalezas regionales. El siguiente análisis de la proporción regional sirve como base para tales investigaciones.
+
+Se toma como ejemplo la región 'Europe'. Al obtener una muestra aleatoria de los países incluidos en el AI Global Index y determinar la proporción de estos que pertenecen a la región 'Europe', es necesario establecer el intervalo de confianza donde se encontraría la verdadera proporción poblacional de países de esta región en el índice.
+
+Para obtener un intervalo de confianza del 95\% para la proporción de países de la región 'Europe', se realizó el siguiente procedimiento, asumiendo una muestra aleatoria y los resultados hipotéticos de dicha muestra:
+
+$n = 30$\\
+$x = 14$\\
+$\hat{p} = \frac{x}{n} = \frac{14}{30} \approx 0,4667$\\
+$IC = 0,95$\\
+$IC = 1 - \alpha$\\
+$\alpha = 0,05$\\
+$\frac{\alpha}{2} = 0,025$\\
+$Z_{\frac{\alpha}{2}} = \pm 1,96$\\
+
+Márgen de error = $Z_{\frac{\alpha}{2}} \times \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}$\\
+Márgen de error = $1,96 \times \sqrt{\frac{0,4667(1-0,4667)}{30}}$\\
+Márgen de error $\approx 0,1785$\\
+
+$IC = (\hat{p} \pm \text{Márgen de error})$\\
+$IC = (0,4667 - 0,1785 ; 0,4667 + 0,1785)$\\
+$IC = (0,2882 ; 0,6452)$\\
+
+El intervalo presentado indica que con una confianza del 95%, la proporción real de países pertenecientes a la región 'Europe' dentro del universo de países del AI Global Index se encuentra entre 0,2882 y 0,6452 (o entre 28,82% y 64,52%).
 
 \section{Prueba de hipótesis}
 
@@ -1207,12 +1230,46 @@ Paso 5.
 
 Con un nivel de significancia de 0.05, se concluye que el valor medio del índice Research es menor o igual a 20 puntos, ya que no se rechaza la hipótesis nula Ho: µ $≤$ 20 debido a que Z = `r z1` se encuentra en la región de no rechazo (región a la izquierda de Z crítico = `r z_crit`) como se aprecia en la figura 10.
 
-ESPACIO PARA VARIABLE CUALITATIVA (seguir el mismo formato)
+En este estudio se podría plantear la siguiente hipótesis respecto a la representación de la región 'Europe': la proporción de países pertenecientes a la región 'Europe' en el AI Global Index es mayor al 40%. Para comprobar la veracidad de esta afirmación con un determinado nivel de significancia, es necesario realizar una prueba de hipótesis para la proporción.
+
+A continuación, se presenta la prueba de hipótesis siguiendo el método del valor crítico (metodología de los 5 pasos) con el estadístico de prueba Z, utilizando los datos de la muestra aleatoria hipotética anterior:
+
+$n = 30$\\
+$x = 14$\\
+$\hat{p} \approx 0,4667$\\
+$p_0 = 0,40$\\
+
+Paso 1.\\
+$H_0: p \le 0,40$\\ 
+$H_a: p > 0,40$ \\
+
+Paso 2.\\
+$\alpha = 0,05$ªª
+
+Paso 3.\\
+$Z = \frac{(\hat{p} - p_0)}{\sqrt{\frac{p_0(1-p_0)}{n}}}$\\
+$Z = \frac{(0,4667 - 0,40)}{\sqrt{\frac{0,40(1-0,40)}{30}}}$\\
+$Z = \frac{0,0667}{0,08944} \approx 0,7458$\\
+
+Paso 4.\\
+Para una prueba de cola derecha con $\alpha = 0,05$, el valor crítico de Z es $Z_{(1-\alpha)} = Z_{0,95} \approx 1,645$.\\
+
+La regla de decisión es: si $Z_{calculado} > 1,645$, se rechaza $H_0$.
+En una figura análoga a la Figura 10 del documento original (source: 142), se presentaría gráficamente el posicionamiento de las regiones de rechazo y no rechazo, y la ubicación del valor Z calculado.
+
+Paso 5.\\
+Con un nivel de significancia de 0,05, se compara el valor Z calculado ($0,7458$) con el valor Z crítico ($1,645$).
+Dado que $Z = 0,7458$ no es mayor que $Z_{critico} = 1,645$ ($0,7458 < 1,645$), el estadístico de prueba cae en la región de no rechazo. Por lo tanto, no se rechaza la hipótesis nula ($H_0$).
+Se concluye que, con un nivel de significancia del 0,05, no existe evidencia estadística suficiente en la muestra para afirmar que la proporción de países de la región 'Europe' en el AI Global Index es mayor al 40%. Los datos muestrales son consistentes con la hipótesis de que la proporción es del 40% o menos.
 
 ESPACIO PARA DOS POBLACIONES (seguir el mismo formato)
 
 
-\section{Modelo de regresión lineal simple}
+\section{Modelo de regresión lineal}
+
+A contiuación se presenta la realización de dos modelos de regresión lineal, uno simple basado en el segundo objetivo específico: Determinar la influencia de los factores relacionados con la innovación mediante el índiceResearch en el desarrollo de la IA y uno múltiple que comprende los tres objetivos específicos que abarcan las variables Commerce, Research y Talent para realizar predicciones de Total Score.
+
+\subsection{Modelo de regresión lineal simple}
 
 Con el objetivo de determinar la influencia de los factores relacionados con la innovación mediante el índice Research en el desarrollo de la IA, se busca plantear un modelo de regresión lineal [5] simple. Para esto, se debe establecer la presencia de una relación lineal significativa (con un coeficiente de correlación lineal de Pearson $≥$ a 0.6 o $≤$ a -0.6) y visualizar la relación en un diagrama de disperción.
 
@@ -1428,7 +1485,7 @@ diferencia <- 0.05 - p_value
 Paso 4.\\
 Valor p = `r p_value`\\
 alfa - Valor p = `r diferencia`\\
-Valor p < $\alpha$
+Valor p < $\alpha$\\
 
 Paso 5.
 Con una significancia de 0.05, se rechaza la hipótesis nula ya que el Valor p `r p_value` es menor a  $\alpha$, por lo tanto se concluye ß1 $≠$ 0 y por lo tanto existe una relación lineal significativa entre el índice Research y Total Score.
@@ -1536,6 +1593,10 @@ knitr::kable(coef_multip,
   kableExtra::kable_styling(latex_options = c("HOLD_position", "scale_down"), font_size = 9)
 
 ```
+
+\[
+Y = 9.6347 + 0.1145 X_1 + 0.5711 * X_2 + 0.2432 X_3 + \varepsilon
+\]
 
 ```{r modelo_multip_summary_stats, echo=FALSE, results='asis'}
 summary_m <- summary(modelo_multip)
