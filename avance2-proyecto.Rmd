@@ -1000,6 +1000,8 @@ ggsave("figura8.png", plot = histograma_talent, width = 8, height = 9, dpi = 300
 \end{center}
 Figura 8. Distribución del Índice Talent agrupado por Región.
 
+En la Figura 8, se evidencia que las regiones de África, América y Medio Oriente presentan una fuerte concentración de países en los rangos más bajos del índice, lo cual indica una capacidad limitada para implementar soluciones de IA debido a la escasez de talento especializado. Por el contrario, Europa y Asia-Pacífico muestran una mayor dispersión, con países ubicados tanto en niveles bajos como medios e incluso altos, reflejando una mejor distribución del capital humano en estas regiones.
+
 
 ```{r figura9, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -1060,7 +1062,16 @@ ggsave("figura9.png", plot = figura_ojiva_talent, width = 8, height = 9, dpi = 3
 \begin{center}
 \includegraphics[width=\linewidth]{figura9.png}
 \end{center}
+
 Figura 9. Distribución acumulada del Índice Talent agrupado por Región.
+
+
+
+
+
+La Figura 9, que presenta la distribución acumulada, revela que más del 80\% de los países de África tienen un puntaje de talento cercano a 0, lo que refuerza el diagnóstico de limitación estructural en la formación de profesionales calificados. En América, aunque se observa mayor dispersión, la mayoría de los países no supera los 30 puntos. Europa y Asia-Pacífico superan el percentil 50 antes que otras regiones, evidenciando un mejor desempeño relativo en términos de formación e implementación de talento.
+
+
 
 \section{Intérvalos de confianza}
 
@@ -1225,6 +1236,10 @@ ggsave("figura10.png", plot = figura_prueba, width = 8, height = 5, dpi = 300)
 \end{center}
 
 Figura 10. Identificación de la región de rechazo
+
+
+El diagrama de caja en la Figura 10 complementa este análisis. África presenta una caja pequeña y próxima al valor mínimo, lo que indica poca variabilidad y un desempeño consistentemente bajo. América muestra una mediana baja y una dispersión ligeramente mayor, con un valor atípico que corresponde al puntaje de Estados Unidos. Asia-Pacífico destaca por una mediana más alta y una mayor dispersión, lo que sugiere que algunos países cuentan con ecosistemas de talento más robustos. Europa, nuevamente, presenta una distribución equilibrada, con menos valores extremos y una mediana superior. Medio Oriente refleja poca variabilidad y bajos niveles de talento, con un solo valor atípico hacia la parte superior del rango.
+
 
 Paso 5.
 
