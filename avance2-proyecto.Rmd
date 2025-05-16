@@ -1703,4 +1703,13 @@ Finalmente, el estudio confirma que el éxito en inteligencia artificial no depe
 
 [2]   W. Navidi, Statistics for Engineers and Scientists w/ CD-ROM. McGraw-Hill Sci./Eng./Math, 2004.
 
+[3] Academia Lab, "Teorema del límite central," Enciclopedia, 2025. [Online]. Available: https://academia-lab.com/enciclopedia/teorema-del-limite-central/. [Accessed: May 16, 2025].
+
+[4] Minitab, "¿Qué es un valor crítico?," Minitab Support, 2025. [Online]. Available: https://support.minitab.com/es-mx/minitab/help-and-how-to/statistics/basic-statistics/supporting-topics/basics/what-is-a-critical-value/. [Accessed: May 16, 2025].
+
+[5] Universidad de los Andes, "Regresión lineal: qué es y cómo funciona," Programas Uniandes, 2025. [Online]. Available: https://programas.uniandes.edu.co/blog/regresion-lineal. [Accessed: May 16, 2025].
+
+[6] D. Diez, M. Çetinkaya-Rundel, and C. Barr, OpenIntro Statistics: Fourth Edition. OpenIntro, Inc., 2019.
+
+
 \end{multicols}
