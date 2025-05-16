@@ -49,17 +49,15 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\newsavebox\pandoc@box
-\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
-  \sbox\pandoc@box{#1}%
-  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
-  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
-  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
-  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
-  \else\usebox{\pandoc@box}%
-  \fi%
-}
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
 % Set default figure placement to htbp
+\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
@@ -84,6 +82,9 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -353,7 +354,7 @@ En el rango de 5 a 30 se concentra la siguiente porción más significativa de l
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Fri May 16 09:33:49 2025
+% Fri May 16 09:55:32 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Región vs Índice Commerce} \\ 
   \hline
@@ -463,7 +464,7 @@ En contraste, a medida que aumentan los valores tanto del Índice Research como 
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Fri May 16 09:33:50 2025
+% Fri May 16 09:55:35 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Research (A) vs Total Score (B)} \\ 
   \hline
@@ -560,7 +561,7 @@ Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Fri May 16 09:33:50 2025
+% Fri May 16 09:55:38 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Talent (A) vs Total Score (B)} \\ 
   \hline
@@ -592,13 +593,24 @@ A   -   B & [0, 10] & (10, 20] & (20, 30] & (30, 40] & (40, 50] & (50, 60] & (60
 \end{center}
 Figura 8. Distribución del Índice Talent agrupado por Región.
 
+En la Figura 8, se evidencia que las regiones de África, América y Medio Oriente presentan una fuerte concentración de países en los rangos más bajos del índice, lo cual indica una capacidad limitada para implementar soluciones de IA debido a la escasez de talento especializado. Por el contrario, Europa y Asia-Pacífico muestran una mayor dispersión, con países ubicados tanto en niveles bajos como medios e incluso altos, reflejando una mejor distribución del capital humano en estas regiones.
+
 
 
 
 \begin{center}
 \includegraphics[width=\linewidth]{figura9.png}
 \end{center}
+
 Figura 9. Distribución acumulada del Índice Talent agrupado por Región.
+
+
+
+
+
+La Figura 9, que presenta la distribución acumulada, revela que más del 80\% de los países de África tienen un puntaje de talento cercano a 0, lo que refuerza el diagnóstico de limitación estructural en la formación de profesionales calificados. En América, aunque se observa mayor dispersión, la mayoría de los países no supera los 30 puntos. Europa y Asia-Pacífico superan el percentil 50 antes que otras regiones, evidenciando un mejor desempeño relativo en términos de formación e implementación de talento.
+
+
 
 \section{Intérvalos de confianza}
 
@@ -686,6 +698,10 @@ En la figura 10 se presenta gráficamente el posicionamiento de las regiones de 
 \end{center}
 
 Figura 10. Identificación de la región de rechazo
+
+
+El diagrama de caja en la Figura 10 complementa este análisis. África presenta una caja pequeña y próxima al valor mínimo, lo que indica poca variabilidad y un desempeño consistentemente bajo. América muestra una mediana baja y una dispersión ligeramente mayor, con un valor atípico que corresponde al puntaje de Estados Unidos. Asia-Pacífico destaca por una mediana más alta y una mayor dispersión, lo que sugiere que algunos países cuentan con ecosistemas de talento más robustos. Europa, nuevamente, presenta una distribución equilibrada, con menos valores extremos y una mediana superior. Medio Oriente refleja poca variabilidad y bajos niveles de talento, con un solo valor atípico hacia la parte superior del rango.
+
 
 Paso 5.
 
