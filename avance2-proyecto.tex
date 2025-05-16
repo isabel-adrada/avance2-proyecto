@@ -269,7 +269,7 @@ Americas presentan los rangos más amplios de todas las regiones que van desde 8
 
 Con respecto al coeeficiente de variación se puede afirmar que para la mayoría de los casos los datos son heterogéneos al presentar un coeficiente > a 50, sin embargo, el índice Talent y Total Score en Europe presentan variación significativa ya que el CV se encuentra en el rango de 10 a 50.
 
-En el caso de la covarianza, esta es positiva para todas las variables, lo cuál plantea la posibilidad de que estas tengan una relación lineal directa con el índice Total Score. Esto es confirmado con el coeficiente de correlación de Pearson, donde un valor superior a 0.8 indica hay una relación muy significativa, lo cuál es cierto para todos los indicadores en Americas y Middle East, Research en Asia-Pacific y Talent y Research en Europe. Por otro lado, una coeficiente entre 0.6 y 0.8 indica una relación significativa, la cuál está presente en Europe para Commerce y en Africa para Talent y Research.
+En el caso de la covarianza, esta es positiva para todas las variables, lo cuál plantea la posibilidad de una relación lineal directa con el índice Total Score. Esto es confirmado con el coeficiente de correlación lineal de Pearson, donde un valor superior a 0.8 indica hay una relación muy significativa, lo cuál es cierto para todos los indicadores en Americas y Middle East, Research en Asia-Pacific, Talent y Research en Europe. Por otro lado, una coeficiente entre 0.6 y 0.8 indica una relación significativa, la cuál está presente en Europe para Commerce y en Africa para Talent y Research.
 
 
 \end{multicols}
@@ -313,9 +313,9 @@ Africa & Total Score & 8.49 & 7.41 & 4.22 & 65.63 & 17.78 & 1.00\\
 
 \subsection{Índice Commerce}
 
-El indicador Commerce evalúa la capacidad de los países para convertir el conocimiento de IA en aplicaciones comerciales y soluciones de mercado. La Tabla 4 presenta la distribución global de este indicador en intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en cada rango. Este análisis es clave para identificar las economías líderes en la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
+El indicador Commerce evalúa la capacidad de los países para convertir el conocimiento de IA en aplicaciones comerciales. La Tabla 5 presenta la distribución del indicador en intervalos de 10 puntos, mostrando las frecuencias absolutas y relativas de países en por rango. Este análisis es clave para identificar las economías líderes en la comercialización de tecnologías de IA y qué regiones necesitan fortalecer sus ecosistemas de innovación empresarial.
 
-La Tabla 5 revela una concentración extrema en la capacidad comercial, con más del 65\% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100 puntos), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África y Latinoamérica.
+La Tabla 5 revela una concentración extrema en la capacidad comercial, con más del 65\% de los países ubicados por debajo de los 20 puntos (F.Rel.A = 0.65). Solo un pequeño grupo de naciones, liderado por Estados Unidos (100), supera los 80 puntos, demostrando su dominio en la transformación de investigación en productos comerciales. Los resultados destacan la brecha entre los polos tecnológicos consolidados y el resto del mundo, particularmente en regiones como África.
 
 \end{multicols}
 
@@ -353,7 +353,7 @@ En el rango de 5 a 30 se concentra la siguiente porción más significativa de l
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Thu May 15 08:25:55 2025
+% Thu May 15 18:09:34 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Región vs Índice Commerce} \\ 
   \hline
@@ -463,7 +463,7 @@ En contraste, a medida que aumentan los valores tanto del Índice Research como 
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Thu May 15 08:25:55 2025
+% Thu May 15 18:09:35 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Research (A) vs Total Score (B)} \\ 
   \hline
@@ -560,7 +560,7 @@ Intervalo & F.Absoluta & F.Relativa & F.Abs.Acum & F.Rel.Acum \\
 
 \renewcommand{\arraystretch}{1.3}
 \begin{scriptsize}% latex table generated in R 4.4.2 by xtable 1.8-4 package
-% Thu May 15 08:25:56 2025
+% Thu May 15 18:09:36 2025
 \begin{longtable}{lrrrrrrrrrrr}
 \caption{Tabla de Frecuencia Bivariada Índice Talent (A) vs Total Score (B)} \\ 
   \hline
@@ -619,6 +619,7 @@ $\alpha$/2 = 0.025\\
 Z~$\alpha$/2~ = ± 1.96\\
 Márgen de error = Z~$\alpha$/2~ * s/√n\\
 Márgen de error = 1.96 * 10.89/√30\\
+Márgen de error = 3.8969365\\
 IC = (x̄ ± Márgen de error)\\
 IC = (12.71,  20.51)\\
 
@@ -643,7 +644,7 @@ Ho: µ $≤$ 20\\
 Ha: µ > 20\\
 
 Paso 2.\\
-$\alpha$ = 0.05
+$\alpha$ = 0.05\\
 
 Paso 3.\\
 Z = (x̄ - µ)/(s/√n)\\
@@ -722,8 +723,8 @@ Para determinar la bondad del modelo se utiliza el coeficiente de determinación
 
 $R^2$ = 0.8947\\
 $R^2_{A}$ = 0.8929\\
-Estadístico F = `rf` con 1 y 60 grados de libertad\\
-Valor p = < 2.2e-16
+Estadístico F = 509.71 con 1 y 60 grados de libertad\\
+Valor p = < 2.2e-16\\
 
 Hay 4 supuestos respecto a $\epsilon$ [6] del modelo de regrersión lineal que se deben cumplir para verificar la validez de las predicciones del modelo, estos supuestos son: 
 
@@ -805,7 +806,7 @@ Figura 13. Distribución los residuos de los pronósticos de Total Score.
 
 
 
-Teniendo en cuenta los resultados de la comprobación de los supuestos, en primera instancia, se observa gráficamente en la Figura 11 y se identifica a través del coeficiente de correlación lineal de Pearson que hay una relación lineal muy significativa de 0.946 entre las variables índice Research y Total Score. Por otro lado, la bondad del modelo medida por el coeficiente de determinación es de 0.893, valor que brinda una alta confiabilidad a las predicciones del modelo, indicando que el 89.3\% de la variabilidad de las predicciones de Total Score pueden ser explicadas con el modelo de regresión mediante la variable Research. Es necesario considerar que las predicciones de un modelo solo son válidas dentro del rango de la muestra estudiada, en este caso, este corresponde a (0 - 100). Debido a que el rango de las muestras coincide con el rango de los resultados posibles (0 - 100), es válido realizar predicciones para cualquier valor del índice Research. Finalmente debido al cumplimiento de los supuestos probado anteriormente, puede considerarse fiable pronosticar con el modelo construido.
+Con el fin de comprobar la fiabilidad del modelo, en primera instancia, se observa gráficamente en la Figura 11 y se identifica a través del coeficiente de correlación lineal de Pearson que hay una relación lineal muy significativa de 0.946 entre las variables índice Research y Total Score. Por otro lado, la bondad del modelo medida por el coeficiente de determinación es de 0.893, valor que brinda una alta confiabilidad a las predicciones del modelo, indicando que el 89.3\% de la variabilidad de las predicciones de Total Score pueden ser explicadas con el modelo de regresión lineal mediante la variable Research. Es necesario considerar que las predicciones de un modelo solo son válidas dentro del rango de la muestra estudiada, en este caso, esta corresponde a (0 - 100). Debido a que el rango de las muestras coincide con el rango de los resultados posibles (0 - 100), es válido realizar predicciones  para Total Score con cualquier valor del índice Research. Finalmente debido al cumplimiento de los supuestos probado anteriormente, puede considerarse fiable pronosticar con el modelo construido.
 
 ESPACIO PARA MODELO DE REGRESIÓN LINEAL MÚLTIPLE (seguir mismo formato)
 
