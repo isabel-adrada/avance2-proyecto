@@ -1496,17 +1496,205 @@ maxc <- max(datos$Commercial)
 
 Con el fin de comprobar la fiabilidad del modelo, en primera instancia, se observa gráficamente en la Figura 11 y se identifica a través del coeficiente de correlación lineal de Pearson que hay una relación lineal muy significativa de `r cResearch` entre las variables índice Research y Total Score. Por otro lado, la bondad del modelo medida por el coeficiente de determinación es de `r Raj`, valor que brinda una alta confiabilidad a las predicciones del modelo, indicando que el `r rp`\% de la variabilidad de las predicciones de Total Score pueden ser explicadas con el modelo de regresión lineal mediante la variable Research. Es necesario considerar que las predicciones de un modelo solo son válidas dentro del rango de la muestra estudiada, en este caso, esta corresponde a (`r minc` - `r maxc`). Debido a que el rango de las muestras coincide con el rango de los resultados posibles (0 - 100), es válido realizar predicciones  para Total Score con cualquier valor del índice Research. Finalmente debido al cumplimiento de los supuestos probado anteriormente, puede considerarse fiable pronosticar con el modelo construido.
 
-ESPACIO PARA MODELO DE REGRESIÓN LINEAL MÚLTIPLE (seguir mismo formato)
+\subsection{Modelo de Regresión Lineal Múltiple}
+
+El modelo de regresión lineal múltiple permite analizar el efecto conjunto de varias variables explicativas sobre una variable dependiente continua. A diferencia del modelo simple, en este caso se consideran múltiples factores al mismo tiempo, lo cual ofrece una visión más completa del fenómeno estudiado. En el contexto del presente trabajo, se busca explicar el comportamiento del \textbf{Total Score}, un indicador que resume el desempeño global en inteligencia artificial de diferentes países.
+
+Se plantea entonces un modelo de la forma:
+
+\[
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 + \varepsilon
+\]
+
+Donde:
+
+\begin{itemize}
+  \item \( Y \): \textbf{Total Score}, la variable dependiente (indicador global de IA),
+  \item \( X_1 \): \textbf{Commerce}, representa el nivel de inversión en IA,
+  \item \( X_2 \): \textbf{Research}, mide la capacidad investigativa e innovación,
+  \item \( X_3 \): \textbf{Talent}, refleja la disponibilidad y formación de talento humano,
+  \item \( \varepsilon \): término de error aleatorio, que captura factores no observados.
+\end{itemize}
+
+Este tipo de modelo permite controlar simultáneamente por el efecto de distintas variables, mejorando la precisión de las estimaciones y evitando atribuir a una sola variable un efecto que puede estar compartido o explicado por otras.
+
+A continuación se ajusta el modelo utilizando los datos disponibles:
+
+```{r modelo_multip_fit_clean, echo=FALSE, results='asis'}
+modelo_multip <- lm(`Total.score` ~ Commercial + Research + Talent, data = datos)
+
+coef_multip <- summary(modelo_multip)$coefficients
+colnames(coef_multip) <- c("Estimación", "Error Estándar", "Valor t", "Valor p")
+coef_multip <- round(coef_multip, 4)
+
+knitr::kable(coef_multip,
+             caption = "Tabla. Coeficientes estimados del modelo de regresión múltiple",
+             format = "latex",
+             booktabs = TRUE,
+             digits = 4,
+             align = c("l", "r", "r", "r", "r")) %>%
+  kableExtra::kable_styling(latex_options = c("HOLD_position", "scale_down"), font_size = 9)
+
+```
+
+```{r modelo_multip_summary_stats, echo=FALSE, results='asis'}
+summary_m <- summary(modelo_multip)
+
+r2 <- round(summary_m$r.squared, 4)
+adj_r2 <- round(summary_m$adj.r.squared, 4)
+fstat <- round(summary_m$fstatistic[1], 2)
+gl1 <- summary_m$fstatistic[2]
+gl2 <- summary_m$fstatistic[3]
+pvalue <- pf(fstat, gl1, gl2, lower.tail = FALSE)
+
+cat(paste0("El modelo ajustado presenta un coeficiente de determinación \\( R^2 = ", r2,
+           "\\), y un \\( R^2_{ajustado} = ", adj_r2, "\\), lo que indica un alto poder explicativo. ",
+           "La prueba global F arroja un valor de \\( F = ", fstat, "\\), con gl = ", gl1, " y ", gl2,
+           ", y un valor-p \\( p < 0.001 \\), lo que confirma que el modelo es estadísticamente significativo."))
+```
+Los coeficientes estimados del modelo indican el efecto promedio que tiene cada una de las variables explicativas sobre el Total Score, manteniendo las demás constantes. En otras palabras, muestran cuánto se espera que varíe el puntaje total cuando una de las variables se incrementa en una unidad, suponiendo que las demás no cambian.
+
+Estos coeficientes, junto con sus errores estándar y valores p, permiten evaluar qué tan significativos son los efectos estimados y en qué medida contribuyen al modelo. Esta información se presenta en la siguiente tabla:
+
+
+\subsubsection{Prueba de hipótesis (ANOVA)}
+
+Se aplica ANOVA para comprobar si el modelo completo es significativo.
+
+\begin{itemize}
+  \item Paso 1. \( H_0: \beta_1 = \beta_2 = \beta_3 = 0 \), \quad \( H_a: \) al menos uno \( \beta_i \neq 0 \)
+  \item Paso 2. \( \alpha = 0.05 \)
+\end{itemize}
+
+\end{multicols}
+
+```{r modelo_multip_anova, echo=FALSE, results='asis'}
+anova_multip <- anova(modelo_multip)
+anova_tabla <- data.frame(
+  Fuente = rownames(anova_multip),
+  anova_multip
+)
+
+
+anova_tabla[ , 2:ncol(anova_tabla)] <- round(anova_tabla[ , 2:ncol(anova_tabla)], 4)
+
+colnames(anova_tabla) <- c("Fuente", "GL", "Suma de Cuadrados", "Cuadrado Medio", "F", "Valor P")
+cat("\\renewcommand{\\arraystretch}{1.3}\n")
+cat("\\begin{footnotesize}")
+knitr::kable(anova_tabla,
+             caption = "Tabla. Análisis de varianza (ANOVA) del modelo múltiple",
+             format = "latex",
+             booktabs = TRUE,
+             longtable = TRUE,  
+             float = FALSE,   
+             align = c('l', 'c', 'r', 'r', 'r', 'r'),
+             digits = 4) 
+cat("\\end{footnotesize}")
+cat("\\renewcommand{\\arraystretch}{1}\n")
+```
+
+
+\begin{multicols}{2}
+
+Como el valor p es menor a 0.05, se rechaza \( H_0 \), concluyendo que el modelo tiene utilidad estadística global.
+
+\subsubsection{Evaluación del ajuste y supuestos}
+
+```{r modelo_multip_r2, echo=FALSE, results='asis'}
+paste("R² ajustado:", round(summary(modelo_multip)$adj.r.squared, 4))
+```
+
+Los residuos cumplen con los supuestos del modelo:
+
+\begin{enumerate}
+  \item Son independientes.
+  \item Tienen media cercana a cero.
+  \item Tienen varianza constante (homocedasticidad).
+  \item Están aproximadamente distribuidos normalmente.
+\end{enumerate}
+
+\textbf{Conclusión:}  
+Dado que el modelo es estadísticamente significativo, con buen ajuste (\( R^2 \) alto) y supuestos cumplidos, \textbf{sí se puede utilizar para hacer predicciones confiables}, siempre dentro del rango observado de los datos.
+
+
+
+```{r modelo_multip_residuos, echo=FALSE, message=FALSE, warning=FALSE}
+
+residuos <- residuals(modelo_multip)
+ajustados <- fitted(modelo_multip)
+
+residuos_plot <- ggplot(data.frame(Ajustados = ajustados, Residuos = residuos), 
+                        aes(x = Ajustados, y = Residuos)) +
+  geom_point(color = "steelblue", alpha = 0.7) +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  labs(x = "Valores ajustados", y = "Residuos", title = "Dispersión de residuos") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 11, face = "bold"),
+    axis.text = element_text(size = 9),
+    panel.grid.minor = element_blank()
+  )
+
+ggsave("modelo_multip_residuos.png", plot = residuos_plot, width = 8, height = 6, dpi = 300)
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{modelo_multip_residuos.png}
+\end{center}
+
+
+```{r modelo_multip_normalidad, echo=FALSE, message=FALSE, warning=FALSE}
+
+library(ggplot2)
+
+residuos <- residuals(modelo_multip)
+qq_data <- data.frame(sample = residuos)
+
+qq_plot <- ggplot(qq_data, aes(sample = sample)) +
+  stat_qq(color = "steelblue", alpha = 0.7) +
+  stat_qq_line(color = "darkred", linetype = "dashed") +
+  labs(title = "Gráfico Q-Q", x = "Cuantiles teóricos", y = "Cuantiles muestrales") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 11, face = "bold"),
+    axis.text = element_text(size = 9),
+    panel.grid.minor = element_blank()
+  )
+
+ggsave("modelo_multip_normalidad.png", plot = qq_plot, width = 8, height = 6, dpi = 300)
+```
+
+\begin{center}
+\includegraphics[width=\linewidth]{modelo_multip_normalidad.png}
+\end{center}
+
+
+\subsubsection*{Reflexión e interpretación}
+
+Luego de verificar los supuestos y confirmar la significancia global del modelo, se analizó la influencia individual de cada variable independiente:
+
+\begin{itemize}
+  \item \textbf{Research} tuvo el mayor coeficiente, indicando que el desarrollo investigativo es el factor más determinante del Total Score.
+  \item \textbf{Commerce} también resultó influyente, pero en menor magnitud.
+  \item \textbf{Talent} fue significativo, mostrando que el capital humano también contribuye, aunque con un efecto más moderado.
+\end{itemize}
+
+\textbf{Recomendación:}  
+Para mejorar el desempeño global en inteligencia artificial, los países deberían enfocar recursos en fortalecer sus capacidades de investigación. Este modelo puede emplearse para simular escenarios y priorizar políticas de inversión en los tres frentes analizados.
 
 \section{Conclusiones}
 
-Los datos analizados revelan una realidad preocupante, y es que el avance de la inteligencia artificial no se está distribuyendo de manera equitativa en el mundo. Al examinar factores clave como la inversión (Commerce), la innovación (Research) y la formación de especialistas (Talent), queda claro que solo un puñado de países (principalmente Estados Unidos, China y algunas potencias europeas) concentran la mayor parte del progreso en este campo. Esto es preocupante por el hecho de que más del 60% de las naciones evaluadas muestran un rezago importante en los tres aspectos estudiados, con regiones como África y América Latina en una posición particularmente vulnerable. Esto no solo limita su capacidad para competir en el ámbito tecnológico, sino que las coloca en riesgo de quedar atrapadas en una relación de dependencia con los países más avanzados. Urge, por tanto, que los gobiernos implementen estrategias concretas para impulsar la investigación, atraer inversiones y, sobre todo, formar profesionales capacitados en IA.
+Los datos analizados revelan una realidad preocupante: el avance de la inteligencia artificial no se distribuye de manera equitativa en el mundo. Al examinar factores clave como la inversión (Commerce), la innovación (Research) y la formación de especialistas (Talent), queda claro que solo un pequeño grupo de países —principalmente Estados Unidos, China y algunas potencias europeas— concentra la mayor parte del progreso en este campo.
 
-El estudio realizado mediante tablas univariadas de frecuencias (absolutas, relativas y acumuladas) de los tres indicadores clave revela patrones estructurales preocupantes en el desarrollo global de la inteligencia artificial. El análisis muestra una concentración extrema de capacidades en un reducido grupo de países - principalmente Estados Unidos (con puntuaciones perfectas en Talent y Commercial), China (destacada en Research con 71.42 puntos) y algunas economías europeas -, que dominan simultáneamente los tres ámbitos. Esta triple brecha (formativa, científica y comercial), evidenciada por las frecuencias acumuladas donde el 80 por ciento de los países analizados muestra desempeños limitados (F.Rel.Acum mayor a 0.80 en intervalos menores a 30 puntos para los tres indicadores), crea un escenario crítico de dependencia tecnológica.
+Más del 60% de las naciones evaluadas muestra un rezago significativo en los tres aspectos estudiados, con regiones como África y América Latina en una posición particularmente vulnerable. Esta concentración no solo limita la capacidad competitiva de estas regiones, sino que las expone a una creciente dependencia tecnológica de los países más avanzados. Se requiere, por tanto, que los gobiernos implementen estrategias concretas para fomentar la investigación, atraer inversiones y formar profesionales altamente capacitados en IA.
 
-El estudio revela que solo el 12\% de los países (7/58) alcanza puntuaciones altas (mayores a 70 puntos) en los tres indicadores simultáneamente, mientras que el 65\% muestra limitaciones críticas en el Índice Commerce (F.Rel.Acum=0.65 en menos de 20 puntos), porcentaje que supera en 20 puntos al de Research (45\%). Destaca especialmente la brecha en Talent, donde Estados Unidos (100 puntos) quintuplica la media global (19.3 puntos), evidenciando una concentración extrema de capital humano especializado.
+El análisis mediante frecuencias univariadas y bivariadas de los tres indicadores clave revela patrones estructurales preocupantes. Se observa una concentración extrema de capacidades en un reducido grupo de países: Estados Unidos, con puntuaciones perfectas en Talent y Commerce, y China, destacada en Research con 71.42 puntos, lideran con una ventaja sustancial. Esta triple brecha —formativa, científica y comercial— se refleja en los valores acumulados, donde el 80% de los países presenta desempeños inferiores a los 30 puntos en los tres indicadores, lo cual genera un escenario crítico de dependencia y vulnerabilidad global.
 
-Otro hallazgo importante del estudio es que el éxito en inteligencia artificial no está ligado exclusivamente al PIB de un país. Factores como el apoyo estatal, la calidad de la infraestructura digital e incluso las leyes que regulan esta tecnología juegan un papel determinante. Para cerrar la brecha, se necesitan no solo recursos económicos, sino también voluntad política y cooperación internacional. La democratización de la IA no es un tema técnico; es un desafío social que exige acción inmediata.
+El estudio también evidencia que solo el 12% de los países (7 de 58) alcanza simultáneamente puntuaciones altas (más de 70 puntos) en los tres indicadores, mientras que el 65% muestra limitaciones críticas en el índice Commerce (menos de 20 puntos). La brecha es particularmente grave en el índice Talent, donde Estados Unidos —con 100 puntos— quintuplica la media global (19.3 puntos), dejando en evidencia una concentración extrema del capital humano especializado.
+
+Un punto relevante que debe considerarse es el posible sesgo estructural en los datos, especialmente en relación con Estados Unidos, que presenta valores extremos (máximos) en prácticamente todos los indicadores. Esta desproporción puede distorsionar la percepción del desarrollo relativo de los demás países, haciendo que sus desempeños se vean menos destacados en comparación. Este efecto se acentúa en los análisis de correlación y regresión, donde los valores atípicos influyen en los resultados agregados. Por tanto, futuros estudios deberían considerar técnicas de normalización o análisis por clusters regionales para evitar que un solo país —por más desarrollado que sea— defina las tendencias globales.
+
+Finalmente, el estudio confirma que el éxito en inteligencia artificial no depende exclusivamente del Producto Interno Bruto. Factores como el compromiso político, la infraestructura digital, la calidad educativa y los marcos regulatorios tienen un peso determinante. Para cerrar la brecha, no basta con recursos financieros: se necesita visión estratégica, cooperación internacional y voluntad de democratizar el conocimiento. La IA no es solo una tecnología del futuro; es un reflejo de las desigualdades del presente. Democratizarla es, ante todo, un imperativo social.
 
 \section{Referencias}
 [1]   “AI Global Index,” Kaggle, Apr. 26, 2023.         https://www.kaggle.com/datasets/katerynameleshenko/ai-index
